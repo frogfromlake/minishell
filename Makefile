@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/02/07 16:14:53 by fquist           ###   ########.fr        #
+#    Updated: 2022/02/07 16:23:17 by dmontema         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INCLUDES	= -I./include -I./$(LIBFTDIR)/include
 LIBRARIES	= -L./$(LIBFTDIR)/ -lft
 
 SDIR		= src
-SRCS		= 
+SRCS		= main.c
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))
 
