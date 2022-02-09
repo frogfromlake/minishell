@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/09 13:10:34 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/09 13:50:56 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,27 @@
 # define CYAN	"\033[0;36m"
 # define WHITE	"\033[0;37m"
 # define RESET	"\033[0m"
+
+/* ************************************************************************** */
+/* 	DATA STRUCTURES															  */
+/* ************************************************************************** */
+typedef struct	s_cmd
+{
+	char *cmd;
+	char *args;
+}				t_cmd;
+
+typedef struct	s_token
+{
+	t_cmd			cmd;
+	struct s_token	*next;
+}				t_token;
+
+typedef struct	s_redirect
+{
+	char	*infile;
+	char	*outfile;
+	char	*errfile;
+}				t_redirect;
 
 #endif
