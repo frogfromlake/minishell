@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/10 19:43:24 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/22 22:57:48 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include "libft.h"
 
 /* ************************************************************************** */
-/* 	COLOURS																	  */
+/* 	DEFINES																	  */
 /* ************************************************************************** */
 # define BLACK	"\033[0;30m"
 # define RED	"\033[0;31m"
@@ -39,6 +39,33 @@
 # define CYAN	"\033[0;36m"
 # define WHITE	"\033[0;37m"
 # define RESET	"\033[0m"
+
+# define SIGINT 2
+# define SIGHUP 1
+# define SIGQUIT 3
+# define SIGABRT 6
+# define GENERAL_STATE -5
+# define SQUOTED_STATE -2
+# define DQUOTED_STATE -3
+# define END -4
+# define HERE_DOC -7
+# define PIPEIN -3
+# define PIPEOUT -2
+# define ERROR -1
+# define VAR_NAME 0
+# define VAR_CONTENT 1
+# define VAR_VALUE 0
+# define NEW_NODE 1
+# define TRUE 1
+# define FALSE 0
+# define EXIT 1
+# define NO_EXIT 0
+# define NORIGHTS 13
+# define NOFILE 2
+# define LOG 0
+# define HEAD 0
+# define NEW 1
+
 
 /* ************************************************************************** */
 /* 	DATA STRUCTURES															  */
@@ -56,5 +83,10 @@ int	parser(t_cmd **commands, char *args);
 /* 	BUILTIN FUNCS															  */
 /* ************************************************************************** */
 char	*get_cwd();
+
+/* ************************************************************************** */
+/* 	FUNCTIONS																  */
+/* ************************************************************************** */
+void	print_shell(void);
 
 #endif

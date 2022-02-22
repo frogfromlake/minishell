@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/10 20:58:00 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/22 22:56:59 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,43 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-// returns 1 if str is one of the builtin funcs
-
-// int is_builtin(char *str)
-// {
-// 	if (!ft_strcmp(str, "echo") || !ft_strcmp(str, "echo -n"))
-// 	if (!ft_strcmp(str, "echo"))
-// }
-
-static void	print_ms(void)
+static char	*get_prompt(void)
 {
-	char	*path;
+	char	*str;
 
-	path = getcwd(NULL, 0);
-	printf("%sminishell@fquist-dmontema%s:", CYAN, RESET);
-	printf("%s%s%s$ ", PURPLE, path, RESET);
+	str = readline("\033[1;32m°º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐:\e[0m");
+	return (str);
 }
 
-int	main(int argc, char *argv[], char **envp)
+static void	bitchy_snake_shell(t_cmd **head)
 {
-	(void) argc;
-	(void) argv;
-	(void) envp;
-	char	*usr_input;
-	t_cmd	*commands;
+	char	*read;
 
-	// printf("%s\n", *envp);
-	print_ms();
-	while (1)
+	(void)head;
+	print_shell();
+	while (true)
 	{
-		usr_input = readline(NULL);
-		parser(&commands, usr_input);
-		free(usr_input);
-		print_ms();
+		read = get_prompt();
+		if (read && !ft_strcmp(read, ""))
+		{
+			// do stuff
+		}
+		if (EOF || !ft_strcmp(read, "exit"))
+		{
+			write(1, "logout\n", 8);
+			exit(EXIT_SUCCESS);
+		}
 	}
+}
+
+int	main(int argc, char *argv[], char **environ)
+{
+	t_cmd	*head;
+
+	(void)argc;
+	(void)argv;
+	(void)environ;
+	head = NULL;
+	bitchy_snake_shell(&head);
 	return (0);
 }
