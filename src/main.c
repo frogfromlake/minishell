@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/22 21:45:59 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/22 21:50:24 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	bitchy_snake_shell(t_cmd **head)
 	while (true)
 	{
 		read = get_prompt();
+		if (!ft_strcmp(read, "exit"))
+			exit(EXIT_SUCCESS);
 	}
 }
 
