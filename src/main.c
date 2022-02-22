@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/22 22:56:59 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/22 23:07:11 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*get_prompt(void)
 {
 	char	*str;
 
-	str = readline("\033[1;32m°º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐:\e[0m");
+	str = readline("\033[1;32m°º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐: \e[0m");
 	return (str);
 }
 
@@ -37,10 +37,14 @@ static void	bitchy_snake_shell(t_cmd **head)
 		{
 			// do stuff
 		}
-		if (EOF || !ft_strcmp(read, "exit"))
+		if (!read || !ft_strcmp(read, "exit"))
 		{
 			write(1, "logout\n", 8);
 			exit(EXIT_SUCCESS);
+		}
+		if (!ft_strcmp(read, "pwd"))
+		{
+			printf("%s\n", get_cwd());
 		}
 	}
 }
