@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/22 21:50:24 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/22 22:48:20 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*get_prompt(void)
 {
 	char	*str;
 
-	str = readline("\033[1;32m°º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐: \e[0m");
+	str = readline("\033[1;32m°º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐:\e[0m");
 	return (str);
 }
 
@@ -33,8 +33,15 @@ static void	bitchy_snake_shell(t_cmd **head)
 	while (true)
 	{
 		read = get_prompt();
-		if (!ft_strcmp(read, "exit"))
+		if (read && !ft_strcmp(read, ""))
+		{
+			// do stuff
+		}
+		if (EOF || !ft_strcmp(read, "exit"))
+		{
+			write(1, "logout\n", 8);
 			exit(EXIT_SUCCESS);
+		}
 	}
 }
 
