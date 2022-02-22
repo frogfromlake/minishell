@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/09 13:50:56 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/10 19:43:24 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,18 @@
 /* ************************************************************************** */
 /* 	DATA STRUCTURES															  */
 /* ************************************************************************** */
+
 typedef struct	s_cmd
 {
-	char *cmd;
-	char *args;
+	char			*cmd;
+	struct s_token	*next;
 }				t_cmd;
 
-typedef struct	s_token
-{
-	t_cmd			cmd;
-	struct s_token	*next;
-}				t_token;
+int	parser(t_cmd **commands, char *args);
 
-typedef struct	s_redirect
-{
-	char	*infile;
-	char	*outfile;
-	char	*errfile;
-}				t_redirect;
+/* ************************************************************************** */
+/* 	BUILTIN FUNCS															  */
+/* ************************************************************************** */
+char	*get_cwd();
 
 #endif

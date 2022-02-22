@@ -6,7 +6,7 @@
 #    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/02/08 22:53:30 by dmontema         ###   ########.fr        #
+#    Updated: 2022/02/10 19:41:39 by dmontema         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INCLUDES	= -I./include -I./$(LIBFTDIR)/include
 LIBRARIES	= -L./$(LIBFTDIR)/ -lft
 
 SDIR		= src
-SRCS		= main.c
+SRCS		= main.c parser.c
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))
 
