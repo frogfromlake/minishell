@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 13:26:17 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/09 21:17:50 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/22 17:38:51 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	execute()
 		dup2(fdout, 1);
 		close(fdout);
 		// Create child prc
-		id = fork();)
+		id = fork();
 		if (id == 0) 
 		{ 
 			//child 

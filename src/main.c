@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/09 11:18:46 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/22 21:45:59 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,58 +16,34 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-static void	print_ms(void)
+static char	*get_prompt(void)
 {
-	char	*path;
+	char	*str;
 
-	path = getcwd(NULL, 0);
-	printf("%sminishell@fquist-dmontema%s:", CYAN, RESET);
-	printf("%s%s%s$ ", PURPLE, path, RESET);
+	str = readline("\033[1;32m°º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐: \e[0m");
+	return (str);
 }
 
-// SIGNAL HANDLING: ctrl + c, ctrl + '\'
-// void sig_handl(int sig)
-// {
-// 	if (sig == SIGINT)
-// 	{
-// 		printf("Interrupted.\n");
-// 		// print_ms();
-// 		return ;
-// 	}
-// 	else if (sig == SIGQUIT)
-// 	{
-// 		printf("%d: Quit.\n", sig);
-// 		exit(EXIT_SUCCESS);
-// 	}
-// }
-
-int	main(int argc, char *argv[])
+static void	bitchy_snake_shell(t_cmd **head)
 {
-	(void) argc;
-	(void) argv;
-	char	*usr_input;
+	char	*read;
 
-	print_ms();
-	while (1)
+	(void)head;
+	print_shell();
+	while (true)
 	{
-		usr_input = readline(NULL);
-		if (!ft_strcmp(usr_input, "pwd"))
-		{
-			char *path;
-			path = getcwd(NULL, 0);
-			printf("%s\n", path);
-		}
-		else
-			printf("%sUNKNOWN command%s\n", RED, RESET);
-		free(usr_input);
-		print_ms();
+		read = get_prompt();
 	}
-	// SIGNAL HANDLING: ctrl + c, ctrl + '\'
-	// signal(SIGINT, &sig_handl);
-	// signal(SIGQUIT, &sig_handl);
-	// while (1)
-	// {
-	// 	pause();
-	// }
+}
+
+int	main(int argc, char *argv[], char **environ)
+{
+	t_cmd	*head;
+
+	(void)argc;
+	(void)argv;
+	(void)environ;
+	head = NULL;
+	bitchy_snake_shell(&head);
 	return (0);
 }
