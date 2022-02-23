@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/23 17:21:57 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/23 18:34:43 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*get_prompt(void)
 	return (str);
 }
 
-static void	bitchy_snake_shell(t_cmd **head)
+static void	bitchy_snake_shell(t_token **head)
 {
 	char	*read;
 
@@ -50,6 +50,7 @@ static void	bitchy_snake_shell(t_cmd **head)
 	while (true)
 	{
 		read = get_prompt();
+		printf("%s\n", read);
 		if (read != NULL && !ft_strcmp(read, ""))
 		{
 			add_history(read);
@@ -72,7 +73,7 @@ static void	bitchy_snake_shell(t_cmd **head)
 
 int	main(int argc, char *argv[], char **environ)
 {
-	t_cmd	*head;
+	t_token	*head;
 
 	(void)argc;
 	(void)argv;

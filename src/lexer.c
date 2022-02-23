@@ -6,9 +6,13 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:40:37 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/22 17:40:53 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/23 17:56:02 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	lexer(t_token **head, char *input)
+{
+	
+}

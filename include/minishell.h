@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/23 16:50:01 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/23 18:33:05 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,41 @@
 /* 	DATA STRUCTURES															  */
 /* ************************************************************************** */
 
-typedef struct	s_cmd
+typedef enum e_type
+{
+	COMMAND = 0,
+	SQUOTE = '\'',
+	DQUOTE = '\"',
+	PIPE = '|',
+	LPAREN = '(',
+	RPAREN = ')',
+	GREAT = '>',
+	LESS = '<',
+	AND = 152,
+	LESSLESS = 240,
+	GREATGREAT = 248,
+	OR = 496,
+	AMPERSAND = '&',
+}			t_type;
+
+typedef struct s_token
 {
 	char			*cmd;
+	int				type;
 	struct s_token	*next;
-}				t_cmd;
+	struct s_token	*prev;
+}				t_token;
 
-int	parser(t_cmd **commands, char *args);
 
 /* ************************************************************************** */
 /* 	BUILTIN FUNCS															  */
 /* ************************************************************************** */
-char	*get_cwd();
+char	*get_cwd(void);
 
 /* ************************************************************************** */
 /* 	FUNCTIONS																  */
 /* ************************************************************************** */
+int		parser(t_token **commands, char *args);
 void	print_shell(void);
 
 #endif

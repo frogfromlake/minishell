@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/10 17:56:03 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/23 18:33:10 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void print_args(char **args)
 	}
 }
 
-int	parser(t_cmd **commands, char *usr_input)
+int	parser(t_token **commands, char *usr_input)
 {
 	(void)	commands;
 	char	**args;
