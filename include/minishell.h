@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/22 22:46:49 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/23 16:50:01 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include <string.h>
 # include <stdlib.h>
 # include "libft.h"
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 /* ************************************************************************** */
 /* 	DEFINES																	  */
@@ -73,22 +76,16 @@
 
 typedef struct	s_cmd
 {
-	char *cmd;
-	char *args;
+	char			*cmd;
+	struct s_token	*next;
 }				t_cmd;
 
-typedef struct	s_token
-{
-	t_cmd			cmd;
-	struct s_token	*next;
-}				t_token;
+int	parser(t_cmd **commands, char *args);
 
-typedef struct	s_redirect
-{
-	char	*infile;
-	char	*outfile;
-	char	*errfile;
-}				t_redirect;
+/* ************************************************************************** */
+/* 	BUILTIN FUNCS															  */
+/* ************************************************************************** */
+char	*get_cwd();
 
 /* ************************************************************************** */
 /* 	FUNCTIONS																  */

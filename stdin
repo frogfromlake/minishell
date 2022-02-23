@@ -1,2 +1,0 @@
-SRCS		= main.c
-OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))
