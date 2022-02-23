@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/23 18:33:05 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/23 22:02:54 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,33 @@ typedef enum e_type
 typedef struct s_token
 {
 	char			*cmd;
+	int				state;
 	int				type;
 	struct s_token	*next;
 	struct s_token	*prev;
 }				t_token;
 
+typedef struct s_node
+{
+	t_token			*args;
+	t_token			*here_doc;
+	char			*cmdpath;
+	char			**cmd_arr;
+	int				in;
+	int				out;
+	t_type			type;
+	struct s_node	*next;
+	struct s_node	*prev;
+}				t_node;
+
+t_node	*new_node();
+t_node	*get_last_node(t_node *head);
+t_node	*append_node(t_node **head, t_node *new);
+t_token	*new_token(char *input);
+t_token	*get_last_token(t_token *head);
+t_token	*append_token(t_token **head, t_token *new);
+void	print_nodes(t_node *head);
+void	free_list(t_node **lst, bool exit, bool exit_status);
 
 /* ************************************************************************** */
 /* 	BUILTIN FUNCS															  */
@@ -110,5 +132,8 @@ char	*get_cwd(void);
 /* ************************************************************************** */
 int		parser(t_token **commands, char *args);
 void	print_shell(void);
+
+int	check_whitespace(char c);
+int	lexer(t_node **head, char *input);
 
 #endif

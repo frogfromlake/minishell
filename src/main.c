@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/23 18:34:43 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/23 22:27:46 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <unistd.h>
 
-static int	check_whitespace(char c)
+int	check_whitespace(char c)
 {
 	if (c == ' ' || c == '\n' || c == '\t')
 		return (1);
@@ -41,7 +41,7 @@ static char	*get_prompt(void)
 	return (str);
 }
 
-static void	bitchy_snake_shell(t_token **head)
+static void	bitchy_snake_shell(t_node **head)
 {
 	char	*read;
 
@@ -50,14 +50,16 @@ static void	bitchy_snake_shell(t_token **head)
 	while (true)
 	{
 		read = get_prompt();
-		printf("%s\n", read);
-		if (read != NULL && !ft_strcmp(read, ""))
+		if (read != NULL && ft_strcmp(read, ""))
 		{
 			add_history(read);
 			if (!check_empty_input(read))
 			{
 				// do stuff
+				lexer(head, read);
+				print_nodes(*head);
 			}
+			free_list(head, false, false);
 		}
 		if (read == NULL || !ft_strcmp(read, "exit"))
 		{
@@ -73,7 +75,7 @@ static void	bitchy_snake_shell(t_token **head)
 
 int	main(int argc, char *argv[], char **environ)
 {
-	t_token	*head;
+	t_node	*head;
 
 	(void)argc;
 	(void)argv;
