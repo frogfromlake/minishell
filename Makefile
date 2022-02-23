@@ -6,14 +6,14 @@
 #    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/02/23 21:41:35 by dmontema         ###   ########.fr        #
+#    Updated: 2022/02/23 23:55:06 by dmontema         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 
 LIBFTDIR	= libs/libft
 INCLUDES	= -I./include -I./$(LIBFTDIR)/include

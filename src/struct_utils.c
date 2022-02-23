@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:58 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/23 22:26:18 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/24 00:49:46 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token	*new_token(char *input)
 	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (NULL);
-	new->cmd = "";
+	new->cmd = input;
 	new->type = COMMAND;
 	new->next = NULL;
 	new->prev = NULL;
@@ -98,6 +98,16 @@ void	print_nodes(t_node *head)
 	while (head)
 	{
 		printf("%d\n", head->type);
+		print_tokens(head->args);
+		head = head->next;
+	}
+}
+
+void	print_tokens(t_token *head)
+{
+	while (head)
+	{
+		printf("%s\n", head->cmd);
 		head = head->next;
 	}
 }

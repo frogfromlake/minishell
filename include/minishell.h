@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/23 22:02:54 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/24 00:49:29 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ typedef struct s_token
 typedef struct s_node
 {
 	t_token			*args;
-	t_token			*here_doc;
+	t_token	
+			*here_doc;
 	char			*cmdpath;
 	char			**cmd_arr;
 	int				in;
@@ -120,6 +121,7 @@ t_token	*new_token(char *input);
 t_token	*get_last_token(t_token *head);
 t_token	*append_token(t_token **head, t_token *new);
 void	print_nodes(t_node *head);
+void	print_tokens(t_token *head);
 void	free_list(t_node **lst, bool exit, bool exit_status);
 
 /* ************************************************************************** */

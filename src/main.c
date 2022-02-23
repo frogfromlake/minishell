@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/23 22:27:46 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/24 00:11:53 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,6 @@ static void	bitchy_snake_shell(t_node **head)
 			write(1, "logout\n", 8);
 			exit(EXIT_SUCCESS);
 		}
-		// if (!ft_strcmp(read, "pwd"))
-		// {
-		// 	printf("%s\n", get_cwd());
-		// }
 	}
 }
 
