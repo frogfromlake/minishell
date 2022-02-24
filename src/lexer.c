@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:40:37 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/24 00:44:48 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/24 20:31:04 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,59 @@ static bool	is_pipe_or_sth(int c)
 	return (false);
 }
 
-char	*get_word(char **input)
+char	*get_word(char **input, int cmd, int opt)
 {
 	int		i;
 	int		size;
 	char	*res;
 
 	size = 0;
-	while ((*input)[size] && !check_whitespace((*input)[size]))
+	while ((*input)[size] && !is_pipe_or_sth((*input)[size]))
 		size++;
 	res = ft_calloc(size + 1, sizeof(char));
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (!check_whitespace(**input) && **input)
+	if (!cmd || opt == 1)
 	{
-		res[i] = **input;
-		i++;
-		(*input)++;
+		while (**input && !check_whitespace(**input))
+		{
+			res[i] = **input;
+			i++;
+			(*input)++;
+		}
+	}
+	else
+	{
+		while (**input && !is_pipe_or_sth(**input))
+		{
+			res[i] = **input;
+			i++;
+			(*input)++;
+		}
+
 	}
 	return (res);
 }
 
 int	create_tokens(t_node **node, char **input)
 {
-	t_token *new;
+	t_token	*new;
+	int		opt;
+	int		cmd_present;
 
+	cmd_present = 0;
 	while(**input && !is_pipe_or_sth(**input))
 	{
-		new = append_token(&(*node)->args, new_token(get_word(input)));
+		opt = 0;
+		if (**input == '-')
+			opt++;
+		new = new_token(get_word(input, cmd_present++, opt));
+		if (new->cmd[0] == '-')
+			new->is_option = 1;
+		// new = append_token(&(*node)->args, new_token(get_word(input, cmd_present)));
+		// cmd_present++;
+		append_token(&(*node)->args, new);
 		while (check_whitespace(**input))
 			(*input)++;
 	}
@@ -87,12 +111,7 @@ int	lexer(t_node **head, char *input)
 		else if (new->type != COMMAND)
 			input++;
 		else
-		{
-			//create tokens
 			create_tokens(&new, &input);
-			// while (!check_whitespace(*input) && *input)
-			// 	input++;
-		}
 	}
 	return (1);
 }

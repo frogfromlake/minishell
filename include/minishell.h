@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/24 00:49:29 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/24 19:45:22 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ typedef enum e_type
 typedef struct s_token
 {
 	char			*cmd;
+	// int				cmd_present;
+	int				is_option;
 	int				state;
 	int				type;
 	struct s_token	*next;
@@ -103,8 +105,7 @@ typedef struct s_token
 typedef struct s_node
 {
 	t_token			*args;
-	t_token	
-			*here_doc;
+	t_token			*here_doc;
 	char			*cmdpath;
 	char			**cmd_arr;
 	int				in;

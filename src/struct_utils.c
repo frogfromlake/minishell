@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:58 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/24 00:49:46 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/24 20:12:20 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_token	*new_token(char *input)
 	if (!new)
 		return (NULL);
 	new->cmd = input;
+	new->is_option = 0;
 	new->type = COMMAND;
 	new->next = NULL;
 	new->prev = NULL;
@@ -62,6 +63,7 @@ t_node	*new_node()
 	new->here_doc = NULL;
 	new->cmdpath = NULL;
 	new->cmd_arr = NULL;
+	// new->cmd_present = 0;
 	new->in = PIPEIN;
 	new->out = PIPEOUT;
 	new->next = NULL;
