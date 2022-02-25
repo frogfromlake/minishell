@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:58 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/24 20:12:20 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/25 18:21:17 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,24 +95,32 @@ t_node	*append_node(t_node **head, t_node *new)
 	return (new);
 }
 
-void	print_nodes(t_node *head)
+void	print_nodes(t_node *node)
 {
-	while (head)
+	t_token	*args;
+	
+	while (node)
 	{
-		printf("%d\n", head->type);
-		print_tokens(head->args);
-		head = head->next;
+		printf("Type: %d\n", node->type);
+		args = node->args;
+		while (args)
+		{
+			printf("Cmd: %s\n", args->cmd);
+			args = args->next;
+		}
+		node = node->next;
 	}
 }
 
-void	print_tokens(t_token *head)
-{
-	while (head)
-	{
-		printf("%s\n", head->cmd);
-		head = head->next;
-	}
-}
+// char	*print_tokens(t_token *head)
+// {
+// 	while (head)
+// 	{
+// 		printf("%s\n", head->cmd);
+// 		head = head->next;
+// 	}
+// 	return (0);
+// }
 
 void	free_list(t_node **lst, bool exit, bool exit_status)
 {

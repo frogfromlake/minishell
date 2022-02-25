@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/24 19:45:22 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/25 18:21:40 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,14 @@ typedef struct s_node
 	struct s_node	*prev;
 }				t_node;
 
-t_node	*new_node();
+t_node	*new_node(void);
 t_node	*get_last_node(t_node *head);
 t_node	*append_node(t_node **head, t_node *new);
 t_token	*new_token(char *input);
 t_token	*get_last_token(t_token *head);
 t_token	*append_token(t_token **head, t_token *new);
-void	print_nodes(t_node *head);
-void	print_tokens(t_token *head);
+void	print_nodes(t_node *node);
+char	*print_tokens(t_token *head);
 void	free_list(t_node **lst, bool exit, bool exit_status);
 
 /* ************************************************************************** */
