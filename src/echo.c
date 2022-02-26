@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getcwd.c                                           :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/10 19:39:40 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/10 19:45:49 by dmontema         ###   ########.fr       */
+/*   Created: 2022/02/23 17:19:47 by fquist            #+#    #+#             */
+/*   Updated: 2022/02/26 18:35:23 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
-char	*get_cwd()
+
+void	ft_echo(t_node **node)
 {
-	return (getcwd(NULL, 0));
+	t_token	*token;
+
+	token = (*node)->args;
+	if (token->next->next)
+		printf("%s", token->next->next->cmd);
+	else
+		printf("%s\n", token->next->cmd);
+	return ;
 }

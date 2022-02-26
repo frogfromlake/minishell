@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/25 18:21:40 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/26 18:23:35 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ void	free_list(t_node **lst, bool exit, bool exit_status);
 /* ************************************************************************** */
 /* 	BUILTIN FUNCS															  */
 /* ************************************************************************** */
-char	*get_cwd(void);
+int		ft_pwd(void);
+void	ft_echo(t_node **node);
 
 /* ************************************************************************** */
 /* 	FUNCTIONS																  */
@@ -136,7 +137,7 @@ char	*get_cwd(void);
 int		parser(t_token **commands, char *args);
 void	print_shell(void);
 
-int	check_whitespace(char c);
-int	lexer(t_node **head, char *input);
+int		check_whitespace(char c);
+int		lexer(t_node **head, char *input);
 
 #endif
