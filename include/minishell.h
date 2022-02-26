@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/26 22:03:03 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/26 22:05:54 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@
 # define HEAD 0
 # define NEW 1
 
-
 /* ************************************************************************** */
 /* 	DATA STRUCTURES															  */
 /* ************************************************************************** */
@@ -80,36 +79,36 @@ typedef enum e_type
 	SQUOTE = '\'',
 	DQUOTE = '\"',
 	PIPE = '|',
-	LPAREN = '(',
-	RPAREN = ')',
-	GREAT = '>',
-	LESS = '<',
-	AND = 152,
-	LESSLESS = 240,
-	GREATGREAT = 248,
 	OR = 496,
 	AMPERSAND = '&',
+	AND = 152,
+	LESS = '<',
+	LESSLESS = 240,
+	GREAT = '>',
+	GREATGREAT = 248,
+	LPAREN = '(',
+	RPAREN = ')',
 }			t_type;
 
 typedef struct s_token
 {
 	char			*cmd;
-	int				is_option;
-	int				state;
 	int				type;
+	bool			is_option;
+	int				state;
 	struct s_token	*next;
 	struct s_token	*prev;
 }				t_token;
 
 typedef struct s_node
 {
+	t_type			type;
 	t_token			*args;
 	t_token			*here_doc;
 	char			*cmdpath;
 	char			**cmd_arr;
 	int				in;
 	int				out;
-	t_type			type;
 	struct s_node	*next;
 	struct s_node	*prev;
 }				t_node;
@@ -121,7 +120,7 @@ t_token	*new_token(char *input);
 t_token	*get_last_token(t_token *head);
 t_token	*append_token(t_token **head, t_token *new);
 void	print_nodes(t_node *node);
-char	*print_tokens(t_token *head);
+void	print_tokens(t_token *token);
 void	free_list(t_node **lst, bool exit, bool exit_status);
 char	*get_prompt(void);
 
@@ -140,7 +139,17 @@ void	ft_env(char **environ);
 int		parser(t_token **commands, char *args);
 void	print_shell(void);
 
-int		check_whitespace(char c);
+/* 	LEXER																	  */
 int		lexer(t_node **head, char *input);
+int		define_type(char *input);
+int		create_tokens(t_node **node, char **input);
+int		create_redir_token(t_node **node, char **input);
+char	*get_word(char **input, int cmd, int opt);
+char	*get_quoted_word(char **input);
+
+int		check_whitespace(char c);
+bool	is_metachar(int c);
+bool	is_quoted(char c);
+
 
 #endif
