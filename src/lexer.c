@@ -6,60 +6,11 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:40:37 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/26 18:56:12 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/26 20:12:42 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static bool	is_pipe_or_sth(int c)
-{
-	if (c == PIPE || c == AMPERSAND || c == LPAREN || c == RPAREN || c == GREAT || c == LESS)
-		return (true);
-	return (false);
-}
-
-static bool	is_quoted(char c)
-{
-	if (c == SQUOTE || c == DQUOTE)
-		return (true);
-	else
-		return (false);
-}
-
-char	*get_word(char **input, int cmd, int opt)
-{
-	int		i;
-	int		size;
-	char	*res;
-
-	size = 0;
-	while ((*input)[size] && !is_pipe_or_sth((*input)[size]))
-		size++;
-	res = ft_calloc(size + 1, sizeof(char));
-	if (!res)
-		return (NULL);
-	i = 0;
-	if (!cmd || opt == 1)
-	{
-		while (**input && !check_whitespace(**input))
-		{
-			res[i] = **input;
-			i++;
-			(*input)++;
-		}
-	}
-	else
-	{
-		while (**input && !is_pipe_or_sth(**input) && !is_quoted(**input))
-		{
-			res[i] = **input;
-			i++;
-			(*input)++;
-		}
-	}
-	return (res);
-}
 
 int	create_redir_token(t_node **node, char **input)
 {
@@ -68,28 +19,6 @@ int	create_redir_token(t_node **node, char **input)
 		(*input)++;
 	append_token(&(*node)->args, new_token(get_word(input, 0, 0)));
 	return (1);
-}
-
-char	*get_quoted_word(char **input)
-{
-	int		i;
-	int		size;
-	char	*res;
-
-	size = 1;
-	while ((*input)[size] && !is_quoted((*input)[size]))
-		size++;
-	res = ft_calloc(++size, sizeof(char));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (**input && i < size)
-	{
-		res[i] = **input;
-		i++;
-		(*input)++;
-	}
-	return (res);
 }
 
 int	create_tokens(t_node **node, char **input)
@@ -104,7 +33,7 @@ int	create_tokens(t_node **node, char **input)
 	else
 	{
 		cmd_present = 0;
-		while ((**input && !is_pipe_or_sth(**input)))
+		while ((**input && !is_metachar(**input)))
 		{
 			opt = 0;
 			if (**input == '-')

@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/26 19:22:21 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/26 20:11:51 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,17 @@ void	ft_cd(t_node **node);
 int		parser(t_token **commands, char *args);
 void	print_shell(void);
 
-int		check_whitespace(char c);
+/* 	LEXER																	  */
 int		lexer(t_node **head, char *input);
+int		define_type(char *input);
+int		create_tokens(t_node **node, char **input);
+int		create_redir_token(t_node **node, char **input);
+char	*get_word(char **input, int cmd, int opt);
+char	*get_quoted_word(char **input);
+
+int		check_whitespace(char c);
+bool	is_metachar(int c);
+bool	is_quoted(char c);
+
 
 #endif
