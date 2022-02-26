@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:40:37 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/25 22:10:54 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/26 18:56:12 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static bool	is_quoted(char c)
 	else
 		return (false);
 }
-
 
 char	*get_word(char **input, int cmd, int opt)
 {

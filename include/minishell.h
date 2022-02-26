@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/26 18:23:35 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/26 19:19:26 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@
 # define HEAD 0
 # define NEW 1
 
-
 /* ************************************************************************** */
 /* 	DATA STRUCTURES															  */
 /* ************************************************************************** */
@@ -80,37 +79,36 @@ typedef enum e_type
 	SQUOTE = '\'',
 	DQUOTE = '\"',
 	PIPE = '|',
-	LPAREN = '(',
-	RPAREN = ')',
-	GREAT = '>',
-	LESS = '<',
-	AND = 152,
-	LESSLESS = 240,
-	GREATGREAT = 248,
 	OR = 496,
 	AMPERSAND = '&',
+	AND = 152,
+	LESS = '<',
+	LESSLESS = 240,
+	GREAT = '>',
+	GREATGREAT = 248,
+	LPAREN = '(',
+	RPAREN = ')',
 }			t_type;
 
 typedef struct s_token
 {
 	char			*cmd;
-	// int				cmd_present;
-	int				is_option;
-	int				state;
 	int				type;
+	bool			is_option;
+	int				state;
 	struct s_token	*next;
 	struct s_token	*prev;
 }				t_token;
 
 typedef struct s_node
 {
+	t_type			type;
 	t_token			*args;
 	t_token			*here_doc;
 	char			*cmdpath;
 	char			**cmd_arr;
 	int				in;
 	int				out;
-	t_type			type;
 	struct s_node	*next;
 	struct s_node	*prev;
 }				t_node;
@@ -122,7 +120,7 @@ t_token	*new_token(char *input);
 t_token	*get_last_token(t_token *head);
 t_token	*append_token(t_token **head, t_token *new);
 void	print_nodes(t_node *node);
-char	*print_tokens(t_token *head);
+void	print_tokens(t_token *token);
 void	free_list(t_node **lst, bool exit, bool exit_status);
 
 /* ************************************************************************** */

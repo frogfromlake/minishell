@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/26 18:38:24 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/26 19:15:50 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static void	bitchy_snake_shell(t_node **head)
 {
 	char	*read;
 
-	(void)head;
 	print_shell();
 	while (true)
 	{
@@ -59,6 +58,8 @@ static void	bitchy_snake_shell(t_node **head)
 				lexer(head, read);
 				print_nodes(*head);
 			}
+			if (!ft_strcmp((*head)->args->cmd, "echo"))
+				ft_echo(head);
 			free_list(head, false, false);
 		}
 		if (read == NULL || !ft_strcmp(read, "exit"))
