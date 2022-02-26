@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/26 19:02:42 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/26 21:49:30 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,21 @@ static int	check_empty_input(char *input)
 		return (0);
 }
 
-static char	*get_short_pwd(void)
-{
-	char	*path;
-
-	path = getcwd(NULL, 5);
-	return (ft_strrchr(path, '/'));
-}
-
-static char	*get_prompt(void)
+char	*get_prompt(void)
 {
 	char	*str;
+	char	*colorized;
 
-	printf("\033[1;32m%s ", get_short_pwd());
-	str = readline("\033[1;32m°º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐: \e[0m");
-	return (str);
+	str = "\033[1;32m °º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐$ \e[0m";
+	colorized = ft_strjoin(PURPLE, ft_strrchr(getcwd(NULL, 0), '/'));
+	return (readline(ft_strjoin(colorized, str)));
 }
 
-static void	bitchy_snake_shell(t_node **head)
+static void	bitchy_snake_shell(t_node **head, char **environ)
 {
 	char	*read;
 
-	(void)head;
+	(void)environ;
 	print_shell();
 	while (true)
 	{
@@ -67,14 +60,12 @@ static void	bitchy_snake_shell(t_node **head)
 				// do stuff
 				lexer(head, read);
 				print_nodes(*head);
-				ft_cd(head);
+				// ft_pwd();
+				// ft_cd(head, environ);
+				ft_exit(head);
+				// ft_env(environ);
 			}
 			free_list(head, false, false);
-		}
-		if (read == NULL || !ft_strcmp(read, "exit"))
-		{
-			write(1, "logout\n", 8);
-			exit(EXIT_SUCCESS);
 		}
 	}
 }
@@ -87,6 +78,6 @@ int	main(int argc, char *argv[], char **environ)
 	(void)argv;
 	(void)environ;
 	head = NULL;
-	bitchy_snake_shell(&head);
+	bitchy_snake_shell(&head, environ);
 	return (0);
 }

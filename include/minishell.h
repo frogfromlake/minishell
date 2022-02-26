@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/26 18:45:38 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/26 22:03:03 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 /* ************************************************************************** */
 # define BLACK	"\033[0;30m"
 # define RED	"\033[0;31m"
-# define GREEN	"\033[0;32m"
+# define GREEN	"\033[1;32m"
 # define YELLOW	"\033[0;33m"
 # define BLUE	"\033[0;34m"
 # define PURPLE	"\033[0;35m"
@@ -94,7 +94,6 @@ typedef enum e_type
 typedef struct s_token
 {
 	char			*cmd;
-	// int				cmd_present;
 	int				is_option;
 	int				state;
 	int				type;
@@ -124,13 +123,16 @@ t_token	*append_token(t_token **head, t_token *new);
 void	print_nodes(t_node *node);
 char	*print_tokens(t_token *head);
 void	free_list(t_node **lst, bool exit, bool exit_status);
+char	*get_prompt(void);
 
 /* ************************************************************************** */
 /* 	BUILTIN FUNCS															  */
 /* ************************************************************************** */
 int		ft_pwd(void);
 void	ft_echo(t_node **node);
-void	ft_cd(t_node **node);
+void	ft_cd(t_node **node, char **environ);
+void	ft_exit(t_node **node);
+void	ft_env(char **environ);
 
 /* ************************************************************************** */
 /* 	FUNCTIONS																  */

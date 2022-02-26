@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/26 18:37:24 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/26 20:42:43 by fquist           ###   ########.fr       */
+/*   Created: 2022/02/26 21:35:21 by fquist            #+#    #+#             */
+/*   Updated: 2022/02/26 21:50:40 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_cd(t_node **node, char **environ)
+void	ft_exit(t_node **node)
 {
 	t_token	*token;
-	char	*home;
-	int		i;
 
-	i = 0;
 	token = (*node)->args;
-	while (environ[i])
+	if (!ft_strcmp(token->cmd, "exit"))
 	{
-		if (!ft_strncmp(environ[i], "HOME", 4))
-			home = ft_strchr(environ[i], '/');
-		i++;
+		write(1, "logout\n", 8);
+		exit(EXIT_SUCCESS);
 	}
-	if (!token->next || !ft_strcmp(token->next->cmd, "~"))
-		chdir(home);
-	else
-		chdir(token->next->cmd);
 }
