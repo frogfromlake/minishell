@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/26 22:09:26 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/27 18:08:45 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ char	*get_prompt(void)
 	char	*str;
 	char	*colorized;
 
-	str = "\033[1;32m °º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐$ \e[0m";
-	colorized = ft_strjoin(PURPLE, ft_strrchr(getcwd(NULL, 0), '/'));
+	str = "\033[0;32m °º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐$ \e[0m";
+	colorized = ft_strjoin(GREEN, ft_strrchr(getcwd(NULL, 0), '/'));
 	return (readline(ft_strjoin(colorized, str)));
 }
 
@@ -58,12 +58,12 @@ static void	bitchy_snake_shell(t_node **head, char **environ)
 			if (!check_empty_input(read))
 			{
 				// do stuff
-				lexer(head, read);
-				print_nodes(*head);
+				// lexer(head, read);
+				// print_nodes(*head);
 				// ft_pwd();
 				// ft_cd(head, environ);
 				// ft_exit(head);
-				// ft_env(environ);
+				ft_env(environ);
 			}
 			free_list(head, false, false);
 		}
