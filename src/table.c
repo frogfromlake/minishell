@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   table.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 18:00:22 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/28 18:07:52 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/28 18:28:38 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_table	*new_table()
 	if (!new)
 		return (NULL);
 	new->exec = NULL;
-	new->args = NULL;
+	new->tokens = NULL;
 	new->redir_in = NULL;
 	new->redir_out = NULL;
 	new->redir_out = NULL;

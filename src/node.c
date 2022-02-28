@@ -6,20 +6,20 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 18:59:54 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/28 18:13:16 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/28 21:17:48 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_node	*new_node()
+t_node	*new_node(void)
 {
 	t_node	*new;
 
 	new = ft_calloc(1, sizeof(t_node));
 	if (!new)
 		return (NULL);
-	new->args = NULL;
+	new->tokens = NULL;
 	new->here_doc = NULL;
 	new->cmdpath = NULL;
 	new->cmd_arr = NULL;
@@ -56,7 +56,7 @@ t_node	*append_node(t_node **head, t_node *new)
 
 // Commandtable
 
-t_table	*new_element(void)
+t_table	*new_table(void)
 {
 	t_table	*new;
 
@@ -70,7 +70,7 @@ t_table	*new_element(void)
 	return (new);
 }
 
-t_table	*get_last_element(t_table *head)
+t_table	*get_last_table(t_table *head)
 {
 	if (!head)
 		return (NULL);
@@ -79,7 +79,7 @@ t_table	*get_last_element(t_table *head)
 	return (head);
 }
 
-t_table	*append_element(t_table **head, t_table *new)
+t_table	*append_table(t_table **head, t_table *new)
 {
 	t_table	*last;
 
@@ -87,7 +87,7 @@ t_table	*append_element(t_table **head, t_table *new)
 		*head = new;
 	else
 	{
-		last = get_last_element(*head);
+		last = get_last_table(*head);
 		last->next = new;
 		new->prev = last;
 	}

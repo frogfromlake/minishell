@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/28 18:00:08 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/28 21:44:13 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typedef enum e_type
 
 typedef struct s_token
 {
-	char			*cmd;
+	char			*name;
 	int				type;
 	bool			is_option;
 	int				state;
@@ -104,7 +104,7 @@ typedef struct s_token
 typedef struct s_node
 {
 	t_type			type;
-	t_token			*args;
+	t_token			*tokens;
 	t_token			*here_doc;
 	char			*cmdpath;
 	char			**cmd_arr;
@@ -125,10 +125,9 @@ typedef struct s_table
 	struct s_table	*prev;
 }			t_table;
 
-t_table	*new_element(void);
-t_table	*get_last_element(t_table *head);
-t_table	*append_nelement(t_table **head, t_table *new);
-
+t_table	*new_table(void);
+t_table	*get_last_table(t_table *head);
+t_table	*append_table(t_table **head, t_table *new);
 t_node	*new_node(void);
 t_node	*get_last_node(t_node *head);
 t_node	*append_node(t_node **head, t_node *new);
@@ -138,8 +137,12 @@ t_token	*append_token(t_token **head, t_token *new);
 
 void	print_nodes(t_node *node);
 void	print_tokens(t_token *token);
+void	print_cmd_table(t_table *table);
 void	free_list(t_node **lst, bool exit, bool exit_status);
 char	*get_prompt(void);
+void	print_shell(void);
+void	free_table(t_table **lst, bool exit, bool exit_status);
+char	*str_join(char const *s1, char const *s2, const char *s3);
 
 /* ************************************************************************** */
 /* 	BUILTIN FUNCS															  */

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:02:45 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/26 20:12:28 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/28 20:53:24 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_word(char **input, int cmd, int opt)
+char	*get_word(char **input, int name, int opt)
 {
 	int		i;
 	int		size;
@@ -25,7 +25,7 @@ char	*get_word(char **input, int cmd, int opt)
 	if (!res)
 		return (NULL);
 	i = 0;
-	if (!cmd || opt == 1)
+	if (!name || opt == 1)
 	{
 		while (**input && !check_whitespace(**input))
 		{
