@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/28 16:48:48 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/28 17:50:26 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static void	bitchy_snake_shell(t_node **head, char **environ)
 			{
 				// do stuff
 				lexer(head, read);
+				print_nodes(*head);
 				parser(head);
-				// print_nodes(*head);
 				// ft_pwd();
 				// ft_cd(head, environ);
 				// ft_exit(head);
@@ -75,10 +75,12 @@ static void	bitchy_snake_shell(t_node **head, char **environ)
 int	main(int argc, char *argv[], char **environ)
 {
 	t_node	*head;
+	t_table	*cmds;
 
 	(void)argc;
 	(void)argv;
 	// (void)environ;
+	cmds = NULL;
 	head = NULL;
 	bitchy_snake_shell(&head, environ);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/28 16:48:30 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/28 18:00:08 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,19 @@ typedef struct s_node
 	struct s_node	*prev;
 }				t_node;
 
+typedef struct s_table
+{
+	char			*exe;
+	char			*args;
+	char			*redir_in;
+	char			*redir_out;
+	struct s_table	*next;
+	struct s_table	*prev;
+}			t_table;
+
+t_table	*new_element(void);
+t_table	*get_last_element(t_table *head);
+t_table	*append_nelement(t_table **head, t_table *new);
 t_node	*new_node(void);
 t_node	*get_last_node(t_node *head);
 t_node	*append_node(t_node **head, t_node *new);
