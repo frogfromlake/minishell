@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/28 18:06:42 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/28 18:00:08 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,15 +114,20 @@ typedef struct s_node
 	struct s_node	*prev;
 }				t_node;
 
-typedef struct	s_table
+
+typedef struct s_table
 {
-	char	*exec;
-	char	*args;
-	char	*redir_in;
-	char	*redir_out;
+	char			*exe;
+	char			*args;
+	char			*redir_in;
+	char			*redir_out;
 	struct s_table	*next;
 	struct s_table	*prev;
-}				t_table;
+}			t_table;
+
+t_table	*new_element(void);
+t_table	*get_last_element(t_table *head);
+t_table	*append_nelement(t_table **head, t_table *new);
 
 t_node	*new_node(void);
 t_node	*get_last_node(t_node *head);
@@ -130,9 +135,6 @@ t_node	*append_node(t_node **head, t_node *new);
 t_token	*new_token(char *input);
 t_token	*get_last_token(t_token *head);
 t_token	*append_token(t_token **head, t_token *new);
-t_table	*new_table();
-t_table	*get_last_table(t_table *head);
-t_table	*append_table(t_table **head, t_table *new);
 
 void	print_nodes(t_node *node);
 void	print_tokens(t_token *token);

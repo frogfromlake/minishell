@@ -59,8 +59,8 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 			{
 				// do stuff
 				lexer(head, read);
+				print_nodes(*head);
 				parser(head);
-				// print_nodes(*head);
 				// ft_pwd();
 				// ft_cd(head, environ);
 				// ft_exit(head);
@@ -75,11 +75,14 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 int	main(int argc, char *argv[], char **environ)
 {
 	t_node	*head;
+	t_table	*cmds;
 	t_table *table;
+
 
 	(void)argc;
 	(void)argv;
 	// (void)environ;
+	cmds = NULL;
 	head = NULL;
 	table = NULL;
 	bitchy_snake_shell(&head, &table, environ);
