@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/27 18:08:25 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/28 16:48:30 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,13 @@ void	ft_echo(t_node **node);
 void	ft_cd(t_node **node, char **environ);
 void	ft_exit(t_node **node);
 void	ft_env(char **environ);
+char	*lstlast(t_token *lst);
+int		lstsize(t_token *lst);
 
 /* ************************************************************************** */
 /* 	FUNCTIONS																  */
 /* ************************************************************************** */
-int		parser(t_token **commands, char *args);
+int		parser(t_node **commands);
 void	print_shell(void);
 
 /* 	LEXER																	  */
