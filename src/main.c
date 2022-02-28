@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/28 23:03:45 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/28 23:41:35 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 			{
 				// do stuff
 				lexer(head, read);
-				// print_nodes(*head);
+				print_nodes(*head);
 				parser(head, table);
 				print_cmd_table(*table);
 				// ft_pwd();
