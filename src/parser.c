@@ -6,13 +6,19 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/28 22:02:37 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/28 23:03:34 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	parser(t_node **node, t_table **table)
+{
+	create_cmd_table(node, table);
+	return (0);
+}
+
+void	create_cmd_table(t_node **node, t_table **table)
 {
 	t_node	*help;
 	t_table	*new;
@@ -102,5 +108,4 @@ int	parser(t_node **node, t_table **table)
 			help = help->next;
 		}
 	}
-	return (0);
 }
