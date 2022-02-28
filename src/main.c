@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/28 16:48:48 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/28 17:57:53 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*get_prompt(void)
 	return (readline(ft_strjoin(colorized, str)));
 }
 
-static void	bitchy_snake_shell(t_node **head, char **environ)
+static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 {
 	char	*read;
 
@@ -75,11 +75,13 @@ static void	bitchy_snake_shell(t_node **head, char **environ)
 int	main(int argc, char *argv[], char **environ)
 {
 	t_node	*head;
+	t_table *table;
 
 	(void)argc;
 	(void)argv;
 	// (void)environ;
 	head = NULL;
-	bitchy_snake_shell(&head, environ);
+	table = NULL;
+	bitchy_snake_shell(&head, &table, environ);
 	return (0);
 }
