@@ -6,7 +6,7 @@
 #    By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/02/26 22:06:22 by fquist           ###   ########.fr        #
+#    Updated: 2022/02/28 16:44:13 by fquist           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ SRCS		=	header.c \
 				echo.c \
 				cd.c \
 				exit.c \
-				env.c
+				env.c \
+				parser.c
 
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))
