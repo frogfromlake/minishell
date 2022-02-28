@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
 /*   Updated: 2022/02/28 18:00:08 by fquist           ###   ########.fr       */
@@ -114,6 +114,7 @@ typedef struct s_node
 	struct s_node	*prev;
 }				t_node;
 
+
 typedef struct s_table
 {
 	char			*exe;
@@ -127,12 +128,14 @@ typedef struct s_table
 t_table	*new_element(void);
 t_table	*get_last_element(t_table *head);
 t_table	*append_nelement(t_table **head, t_table *new);
+
 t_node	*new_node(void);
 t_node	*get_last_node(t_node *head);
 t_node	*append_node(t_node **head, t_node *new);
 t_token	*new_token(char *input);
 t_token	*get_last_token(t_token *head);
 t_token	*append_token(t_token **head, t_token *new);
+
 void	print_nodes(t_node *node);
 void	print_tokens(t_token *token);
 void	free_list(t_node **lst, bool exit, bool exit_status);
@@ -152,8 +155,6 @@ int		lstsize(t_token *lst);
 /* ************************************************************************** */
 /* 	FUNCTIONS																  */
 /* ************************************************************************** */
-int		parser(t_node **commands);
-void	print_shell(void);
 
 /* 	LEXER																	  */
 int		lexer(t_node **head, char *input);
@@ -162,6 +163,8 @@ int		create_tokens(t_node **node, char **input);
 int		create_redir_token(t_node **node, char **input);
 char	*get_word(char **input, int cmd, int opt);
 char	*get_quoted_word(char **input);
+
+int		parser(t_node **node, t_table **table);
 
 int		check_whitespace(char c);
 bool	is_metachar(int c);
