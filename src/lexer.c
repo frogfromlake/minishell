@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:40:37 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/26 20:12:42 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/28 21:37:42 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	create_redir_token(t_node **node, char **input)
 	while (**input == LESS || **input == GREAT
 		|| check_whitespace(**input))
 		(*input)++;
-	append_token(&(*node)->args, new_token(get_word(input, 0, 0)));
+	append_token(&(*node)->tokens, new_token(get_word(input, 0, 0)));
 	return (1);
 }
 
@@ -42,9 +42,9 @@ int	create_tokens(t_node **node, char **input)
 				new = new_token(get_quoted_word(input));
 			else
 				new = new_token(get_word(input, cmd_present++, opt));
-			if (new->cmd[0] == '-')
+			if (new->name[0] == '-')
 				new->is_option = 1;
-			append_token(&(*node)->args, new);
+			append_token(&(*node)->tokens, new);
 			while (check_whitespace(**input))
 				(*input)++;
 		}

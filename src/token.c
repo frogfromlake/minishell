@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 18:58:22 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/26 19:18:10 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/02/28 20:54:04 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 t_token	*new_token(char *input)
 {
-	(void) input;
 	t_token	*new;
 
 	new = ft_calloc(1, sizeof(t_token));
 	if (!new)
 		return (NULL);
-	new->cmd = input;
+	new->name = input;
 	new->is_option = 0;
 	new->type = COMMAND;
 	new->next = NULL;
