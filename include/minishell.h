@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/28 21:44:13 by fquist           ###   ########.fr       */
+/*   Updated: 2022/02/28 23:07:35 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,10 @@ typedef struct s_table
 	struct s_table	*prev;
 }			t_table;
 
+
+/* ************************************************************************** */
+/* 	STRUCT UTILS															  */
+/* ************************************************************************** */
 t_table	*new_table(void);
 t_table	*get_last_table(t_table *head);
 t_table	*append_table(t_table **head, t_table *new);
@@ -139,10 +143,33 @@ void	print_nodes(t_node *node);
 void	print_tokens(t_token *token);
 void	print_cmd_table(t_table *table);
 void	free_list(t_node **lst, bool exit, bool exit_status);
-char	*get_prompt(void);
-void	print_shell(void);
 void	free_table(t_table **lst, bool exit, bool exit_status);
 char	*str_join(char const *s1, char const *s2, const char *s3);
+
+/* ************************************************************************** */
+/* 	SHELL																	  */
+/* ************************************************************************** */
+char	*get_prompt(void);
+void	print_shell(void);
+
+/* ************************************************************************** */
+/* 	LEXER																	  */
+/* ************************************************************************** */
+int		lexer(t_node **head, char *input);
+int		define_type(char *input);
+int		create_tokens(t_node **node, char **input);
+int		create_redir_token(t_node **node, char **input);
+char	*get_word(char **input, int cmd, int opt);
+char	*get_quoted_word(char **input);
+int		check_whitespace(char c);
+bool	is_metachar(int c);
+bool	is_quoted(char c);
+
+/* ************************************************************************** */
+/* 	PARSER																	  */
+/* ************************************************************************** */
+int		parser(t_node **node, t_table **table);
+void	create_cmd_table(t_node **node, t_table **table);
 
 /* ************************************************************************** */
 /* 	BUILTIN FUNCS															  */
@@ -155,23 +182,7 @@ void	ft_env(char **environ);
 char	*lstlast(t_token *lst);
 int		lstsize(t_token *lst);
 
-/* ************************************************************************** */
-/* 	FUNCTIONS																  */
-/* ************************************************************************** */
 
-/* 	LEXER																	  */
-int		lexer(t_node **head, char *input);
-int		define_type(char *input);
-int		create_tokens(t_node **node, char **input);
-int		create_redir_token(t_node **node, char **input);
-char	*get_word(char **input, int cmd, int opt);
-char	*get_quoted_word(char **input);
-
-int		parser(t_node **node, t_table **table);
-
-int		check_whitespace(char c);
-bool	is_metachar(int c);
-bool	is_quoted(char c);
 
 
 #endif
