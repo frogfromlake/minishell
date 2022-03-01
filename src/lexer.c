@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:40:37 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/28 21:37:42 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 15:16:12 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int	create_tokens(t_node **node, char **input)
 	else
 	{
 		cmd_present = 0;
-		while ((**input && !is_metachar(**input)))
+		while ((**input && !check_metachar(**input)))
 		{
 			opt = 0;
 			if (**input == '-')
 				opt++;
-			if (is_quoted(**input))
+			if (check_quotes(**input))
 				new = new_token(get_quoted_word(input));
 			else
 				new = new_token(get_word(input, cmd_present++, opt));

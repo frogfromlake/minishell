@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:02:45 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/28 20:53:24 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 15:16:12 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_word(char **input, int name, int opt)
 	char	*res;
 
 	size = 0;
-	while ((*input)[size] && !is_metachar((*input)[size]))
+	while ((*input)[size] && !check_metachar((*input)[size]))
 		size++;
 	res = ft_calloc(size + 1, sizeof(char));
 	if (!res)
@@ -36,7 +36,7 @@ char	*get_word(char **input, int name, int opt)
 	}
 	else
 	{
-		while (**input && !is_metachar(**input) && !is_quoted(**input))
+		while (**input && !check_metachar(**input) && !check_quotes(**input))
 		{
 			res[i] = **input;
 			i++;
@@ -53,7 +53,7 @@ char	*get_quoted_word(char **input)
 	char	*res;
 
 	size = 1;
-	while ((*input)[size] && !is_quoted((*input)[size]))
+	while ((*input)[size] && !check_quotes((*input)[size]))
 		size++;
 	res = ft_calloc(++size, sizeof(char));
 	if (!res)
@@ -65,20 +65,6 @@ char	*get_quoted_word(char **input)
 		i++;
 		(*input)++;
 	}
+	res = ft_strtrim(res, "\"");
 	return (res);
-}
-
-bool	is_metachar(int c)
-{
-	if (c == PIPE || c == AMPERSAND || c == LESS || c == GREAT || c == LPAREN || c == RPAREN)
-		return (true);
-	return (false);
-}
-
-bool	is_quoted(char c)
-{
-	if (c == SQUOTE || c == DQUOTE)
-		return (true);
-	else
-		return (false);
 }

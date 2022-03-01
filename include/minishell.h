@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/01 02:27:52 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 15:22:51 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,9 @@ int		create_tokens(t_node **node, char **input);
 int		create_redir_token(t_node **node, char **input);
 char	*get_word(char **input, int cmd, int opt);
 char	*get_quoted_word(char **input);
-int		check_whitespace(char c);
-bool	is_metachar(int c);
-bool	is_quoted(char c);
+bool	check_whitespace(char c);
+bool	check_metachar(char c);
+bool	check_quotes(char c);
 
 /* ************************************************************************** */
 /* 	PARSER																	  */
