@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:02:45 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/01 15:16:12 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/01 15:36:53 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ char	*get_quoted_word(char **input)
 		i++;
 		(*input)++;
 	}
-	res = ft_strtrim(res, "\"");
+	// res = ft_strtrim(res, "\"");
 	return (res);
 }
