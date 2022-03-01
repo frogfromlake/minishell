@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/28 23:07:35 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 01:53:10 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct s_table
 	char			*args;
 	char			*redir_in;
 	char			*redir_out;
+	int				opt;
 	struct s_table	*next;
 	struct s_table	*prev;
 }			t_table;
@@ -170,6 +171,7 @@ bool	is_quoted(char c);
 /* ************************************************************************** */
 int		parser(t_node **node, t_table **table);
 void	create_cmd_table(t_node **node, t_table **table);
+int		echo_parse(t_token *help, t_table **new);
 
 /* ************************************************************************** */
 /* 	BUILTIN FUNCS															  */

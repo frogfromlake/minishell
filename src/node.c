@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 18:59:54 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/28 21:17:48 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 00:19:30 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,46 +48,6 @@ t_node	*append_node(t_node **head, t_node *new)
 	else
 	{
 		last = get_last_node(*head);
-		last->next = new;
-		new->prev = last;
-	}
-	return (new);
-}
-
-// Commandtable
-
-t_table	*new_table(void)
-{
-	t_table	*new;
-
-	new = ft_calloc(1, sizeof(t_table));
-	if (!new)
-		return (NULL);
-	new->exe = NULL;
-	new->args = NULL;
-	new->redir_in = NULL;
-	new->redir_out = NULL;
-	return (new);
-}
-
-t_table	*get_last_table(t_table *head)
-{
-	if (!head)
-		return (NULL);
-	while (head->next)
-		head = head->next;
-	return (head);
-}
-
-t_table	*append_table(t_table **head, t_table *new)
-{
-	t_table	*last;
-
-	if (!(*head))
-		*head = new;
-	else
-	{
-		last = get_last_table(*head);
 		last->next = new;
 		new->prev = last;
 	}

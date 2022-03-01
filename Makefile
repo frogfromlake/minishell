@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/02/28 16:44:13 by fquist           ###   ########.fr        #
+#    Updated: 2022/03/01 00:23:57 by dmontema         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS		=	header.c \
 				lexer_utils.c \
 				token.c \
 				node.c \
+				table.c \
 				struct_utils.c \
 				pwd.c \
 				echo.c \

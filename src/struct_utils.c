@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:58 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/28 21:57:43 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 00:09:51 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ void	print_nodes(t_node *node)
 {
 	while (node)
 	{
+		printf("NODE\n");
 		printf("Type: %d\n", node->type);
 		if (node->tokens)
 			print_tokens(node->tokens);
+		printf("--------\n");
 		node = node->next;
 	}
 }
@@ -27,8 +29,10 @@ void	print_tokens(t_token *token)
 {
 	while (token)
 	{
-		printf("has options: %d\n", token->type);
+		printf("TOKEN\n");
 		printf("name: %s\n", token->name);
+		printf("has options: %d\n", token->is_option);
+		printf("-------\n");
 		token = token->next;
 	}
 }

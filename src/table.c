@@ -3,29 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   table.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 18:00:22 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/28 18:28:38 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 00:20:07 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_table	*new_table()
+t_table	*new_table(void)
 {
 	t_table	*new;
 
 	new = ft_calloc(1, sizeof(t_table));
 	if (!new)
 		return (NULL);
-	new->exec = NULL;
-	new->tokens = NULL;
+	new->exe = NULL;
+	new->args = NULL;
 	new->redir_in = NULL;
 	new->redir_out = NULL;
-	new->redir_out = NULL;
-	new->next = NULL;
-	new->prev = NULL;
+	new->opt = 0;
 	return (new);
 }
 
