@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:19:47 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/01 03:04:56 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 15:42:21 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 void	ft_echo(t_table **table)
 {
-	int	i;
+	int		i;
+	char	*res;
 
 	i = 3;
+	res = malloc(sizeof(char));
 	if ((*table)->exe && !(*table)->args)
 		printf("\n");
 	else if ((*table)->exe && !ft_strncmp((*table)->args, "-n ", 3))
@@ -31,6 +33,10 @@ void	ft_echo(t_table **table)
 		&& ft_strlen((*table)->args) < 3)
 		return ;
 	else
-		printf("%s\n", (*table)->args);
+	{
+		res = ft_strtrim((*table)->args, "\"");
+		printf("%s\n", res);
+		free(res);
+	}
 	return ;
 }
