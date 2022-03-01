@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:19:47 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/01 15:42:21 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 15:51:37 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ void	ft_echo(t_table **table)
 			i++;
 		}
 	}
-	else if ((*table)->exe && !ft_strcmp((*table)->args, "-n")
-		&& ft_strlen((*table)->args) < 3)
+	else if (((*table)->exe && !ft_strcmp((*table)->args, "-n")
+			&& ft_strlen((*table)->args) < 3) || ((*table)->exe
+			&& !ft_strcmp((*table)->args, "\"-n\"")
+			&& ft_strlen((*table)->args) < 5))
 		return ;
 	else
 	{

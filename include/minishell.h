@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/01 15:34:47 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/01 22:46:26 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,13 @@ typedef struct s_table
 	struct s_table	*prev;
 }			t_table;
 
+typedef struct s_env
+{
+	char			*var;
+	int				val;
+	struct s_env	*next;
+}			t_env;
+
 
 /* ************************************************************************** */
 /* 	STRUCT UTILS															  */
@@ -139,6 +146,10 @@ t_node	*append_node(t_node **head, t_node *new);
 t_token	*new_token(char *input);
 t_token	*get_last_token(t_token *head);
 t_token	*append_token(t_token **head, t_token *new);
+t_env	*new_env(char *str);
+t_env	*insert_env(t_env **head, t_env *new);
+t_env	*append_env(t_env **head, t_env *new);
+t_env	*get_last_env(t_env *head);
 
 void	print_nodes(t_node *node);
 void	print_tokens(t_token *token);
@@ -146,6 +157,11 @@ void	print_cmd_table(t_table *table);
 void	free_list(t_node **lst, bool exit, bool exit_status);
 void	free_table(t_table **lst, bool exit, bool exit_status);
 char	*str_join(char const *s1, char const *s2, const char *s3);
+char	*lstlast(t_token *lst);
+int		lstsize(t_token *lst);
+void	init_t_env(void);
+
+
 
 /* ************************************************************************** */
 /* 	SHELL																	  */
@@ -180,10 +196,9 @@ int		ft_pwd(void);
 void	ft_echo(t_table **table);
 void	ft_cd(t_table **table, char **environ);
 void	ft_exit(t_table **table);
-void	ft_env(char **environ);
-char	*lstlast(t_token *lst);
-int		lstsize(t_token *lst);
-
+t_env	**ft_env(char **environ);
+void	ft_export(t_env **env, t_table *table);
+void	ft_unset(t_env **env, t_table *table);
 
 
 

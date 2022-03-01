@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
+#    By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/03/01 15:14:07 by dmontema         ###   ########.fr        #
+#    Updated: 2022/03/01 22:24:07 by fquist           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,9 @@ SRCS		=	header.c \
 				cd.c \
 				exit.c \
 				env.c \
-				parser.c
+				parser.c \
+				export.c \
+				unset.c
 
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))

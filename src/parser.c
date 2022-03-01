@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/01 14:18:44 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 23:21:28 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,12 @@ void	create_cmd_table(t_node **node, t_table **table)
 			else if (help->type == COMMAND)
 			{
 				new->exe = ft_strdup(help->tokens->name);
-				if (!ft_strcmp(new->exe, "echo"))
+				if (help->tokens->next)
+					new->args = ft_strdup(help->tokens->next->name);
+				else if (!ft_strcmp(new->exe, "echo"))
 				{
 					if (help->tokens->next)
 						echo_parse(help->tokens->next, &new);
-				}
-				else
-				{
-					if (help->tokens->next)
-						new->args = ft_strjoin(ft_strdup(help->tokens->next->name), "/");
 				}
 			}
 			help = help->next;
