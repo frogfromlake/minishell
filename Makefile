@@ -6,7 +6,11 @@
 #    By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/03/01 22:24:07 by fquist           ###   ########.fr        #
+=======
+#    Updated: 2022/03/01 20:09:06 by dmontema         ###   ########.fr        #
+>>>>>>> 77777e3ba7b0b9d2f004c649583c323dda2f552d
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +27,7 @@ SDIR		= src
 SRCS		=	header.c \
 				main.c \
 				lexer.c \
-				lexer_utils.c \
+				lexer_get_word.c \
 				lexer_checker.c \
 				token.c \
 				node.c \

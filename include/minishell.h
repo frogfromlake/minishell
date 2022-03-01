@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/01 22:46:26 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 23:34:07 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ typedef struct s_node
 	struct s_node	*prev;
 }				t_node;
 
-
 typedef struct s_table
 {
 	char			*exe;
@@ -176,11 +175,13 @@ int		lexer(t_node **head, char *input);
 int		define_type(char *input);
 int		create_tokens(t_node **node, char **input);
 int		create_redir_token(t_node **node, char **input);
-char	*get_word(char **input, int cmd, int opt);
-char	*get_quoted_word(char **input);
+char	*get_word_args(char **input);
+char	*get_word_ws(char **input);
+char	*get_word_quoted(char **input);
 bool	check_whitespace(char c);
 bool	check_metachar(char c);
 bool	check_quotes(char c);
+bool	check_redir(t_type type);
 
 /* ************************************************************************** */
 /* 	PARSER																	  */
