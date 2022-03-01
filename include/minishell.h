@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/01 15:22:51 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/01 15:34:47 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,8 +178,8 @@ int		echo_parse(t_token *help, t_table **new);
 /* ************************************************************************** */
 int		ft_pwd(void);
 void	ft_echo(t_table **table);
-void	ft_cd(t_node **node, char **environ);
-void	ft_exit(t_node **node);
+void	ft_cd(t_table **table, char **environ);
+void	ft_exit(t_table **table);
 void	ft_env(char **environ);
 char	*lstlast(t_token *lst);
 int		lstsize(t_token *lst);
