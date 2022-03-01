@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:13:39 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/01 15:20:48 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/01 15:56:54 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ bool	check_quotes(char c)
 {
 	if (c == SQUOTE || c == DQUOTE)
 		return (true);
-	else
-		return (false);
+	return (false);
+}
+
+bool	check_redir(t_type type)
+{
+	if (type == LESS || type == GREAT || type == LESSLESS || type == GREATGREAT)
+		return (true);
+	return (false);
 }

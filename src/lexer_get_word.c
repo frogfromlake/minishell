@@ -6,13 +6,13 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:02:45 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/01 15:36:53 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/01 20:06:47 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_word(char **input, int name, int opt)
+char	*get_word_args(char **input)
 {
 	int		i;
 	int		size;
@@ -25,28 +25,39 @@ char	*get_word(char **input, int name, int opt)
 	if (!res)
 		return (NULL);
 	i = 0;
-	if (!name || opt == 1)
+	while ((*input)[i] &&
+		!check_metachar((*input)[i]) && !check_quotes((*input)[i]))
 	{
-		while (**input && !check_whitespace(**input))
-		{
-			res[i] = **input;
-			i++;
-			(*input)++;
-		}
+		res[i] = (*input)[i];
+		i++;
 	}
-	else
-	{
-		while (**input && !check_metachar(**input) && !check_quotes(**input))
-		{
-			res[i] = **input;
-			i++;
-			(*input)++;
-		}
-	}
+	(*input) += i;
 	return (res);
 }
 
-char	*get_quoted_word(char **input)
+char	*get_word_ws(char **input)
+{
+	int		i;
+	int		size;
+	char	*res;
+
+	size = 0;
+	while ((*input)[size] && !check_whitespace((*input)[size]))
+		size++;
+	res = ft_calloc(size + 1, sizeof(char));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while ((*input)[i] && !check_whitespace((*input)[i]))
+	{
+		res[i] = (*input)[i];
+		i++;
+	}
+	(*input) += i;
+	return (res);
+}
+
+char	*get_word_quoted(char **input)
 {
 	int		i;
 	int		size;
@@ -59,12 +70,11 @@ char	*get_quoted_word(char **input)
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (**input && i < size)
+	while (i < size)
 	{
-		res[i] = **input;
+		res[i] = (*input)[i];
 		i++;
-		(*input)++;
 	}
-	// res = ft_strtrim(res, "\"");
+	(*input) += i;
 	return (res);
 }

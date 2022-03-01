@@ -6,7 +6,7 @@
 #    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/03/01 15:14:07 by dmontema         ###   ########.fr        #
+#    Updated: 2022/03/01 20:09:06 by dmontema         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SDIR		= src
 SRCS		=	header.c \
 				main.c \
 				lexer.c \
-				lexer_utils.c \
+				lexer_get_word.c \
 				lexer_checker.c \
 				token.c \
 				node.c \

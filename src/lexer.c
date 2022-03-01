@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:40:37 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/01 15:16:12 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/01 20:31:13 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,31 @@
 
 int	create_redir_token(t_node **node, char **input)
 {
-	while (**input == LESS || **input == GREAT
+	while (check_redir(**input)
 		|| check_whitespace(**input))
 		(*input)++;
-	append_token(&(*node)->tokens, new_token(get_word(input, 0, 0)));
+	append_token(&(*node)->tokens, new_token(get_word_ws(input)));
 	return (1);
 }
 
 int	create_tokens(t_node **node, char **input)
 {
 	t_token	*new;
-	int		opt;
 	int		cmd_present;
 
-	if ((*node)->type == LESS || (*node)->type == LESSLESS
-		|| (*node)->type == GREAT || (*node)->type == GREATGREAT)
+	if (check_redir((*node)->type))
 		create_redir_token(node, input);
 	else
 	{
 		cmd_present = 0;
 		while ((**input && !check_metachar(**input)))
 		{
-			opt = 0;
-			if (**input == '-')
-				opt++;
-			if (check_quotes(**input))
-				new = new_token(get_quoted_word(input));
+			if (!(cmd_present++) || **input == '-')
+				new = new_token(get_word_ws(input));
+			else if (check_quotes(**input))
+				new = new_token(get_word_quoted(input));
 			else
-				new = new_token(get_word(input, cmd_present++, opt));
+				new = new_token(get_word_args(input));
 			if (new->name[0] == '-')
 				new->is_option = 1;
 			append_token(&(*node)->tokens, new);
@@ -56,8 +53,7 @@ int	define_type(char *input)
 {
 	if (input[0] == LPAREN || input[0] == RPAREN)
 		return (input[0]);
-	if (input[0] == PIPE || input[0] == AMPERSAND
-		|| input[0] == LESS || input[0] == GREAT)
+	if (check_metachar(input[0]))
 	{
 		if (input[0] == input[1])
 			return (input[0] * 4);
@@ -82,8 +78,7 @@ int	lexer(t_node **head, char *input)
 		new->type = define_type(input);
 		if (new->type == AND || new->type == OR)
 			input += 2;
-		else if (new->type == COMMAND || new->type == LESS || new->type == GREAT
-			|| new->type == LESSLESS || new->type == GREATGREAT)
+		else if (new->type == COMMAND || check_redir(new->type))
 			create_tokens(&new, &input);
 		else
 			input++;
