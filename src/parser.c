@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/01 03:12:56 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/01 03:16:25 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ int	parser(t_node **node, t_table **table)
 	help = *table;
 	new = NULL;
 	create_cmd_table(node, table);
-	// while (help)
-	// {
-		
-	// 	help = help->next;
-	// }
 	return (0);
 }
 
@@ -32,7 +27,7 @@ void	create_cmd_table(t_node **node, t_table **table)
 {
 	t_node	*help;
 	t_table	*new;
-	// t_token	*tmp;
+
 	int		i;
 
 	i = 1;
@@ -130,7 +125,6 @@ int echo_parse(t_token *help, t_table **new)
 	}
 	else
 	{
-		printf("OK\n%s\n", help->name);
 		(*new)->args = ft_strdup(help->name);
 		help = help->next;
 		while (help)

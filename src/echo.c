@@ -6,24 +6,31 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:19:47 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/28 18:28:38 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 03:04:56 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-void	ft_echo(t_node **node)
+void	ft_echo(t_table **table)
 {
-	t_token	*token;
+	int	i;
 
-	token = (*node)->tokens;
-	if (!token->next)
+	i = 3;
+	if ((*table)->exe && !(*table)->args)
 		printf("\n");
-	if (token->next)
+	else if ((*table)->exe && !ft_strncmp((*table)->args, "-n ", 3))
 	{
+		while ((*table)->args[i])
+		{
+			printf("%c", (*table)->args[i]);
+			i++;
+		}
 	}
-	else
+	else if ((*table)->exe && !ft_strcmp((*table)->args, "-n")
+		&& ft_strlen((*table)->args) < 3)
 		return ;
+	else
+		printf("%s\n", (*table)->args);
 	return ;
 }
