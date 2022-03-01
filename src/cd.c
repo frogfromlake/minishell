@@ -6,28 +6,29 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 18:37:24 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/28 18:29:41 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 14:24:14 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_cd(t_node **node, char **environ)
+void	ft_cd(t_table **table, char **environ)
 {
-	t_token	*token;
+	t_table	*cmd;
 	char	*home;
 	int		i;
 
+	cmd = *table;
 	i = 0;
-	token = (*node)->tokens;
+	printf("%s\n", cmd->args);
 	while (environ[i])
 	{
 		if (!ft_strncmp(environ[i], "HOME", 4))
 			home = ft_strchr(environ[i], '/');
 		i++;
 	}
-	if (!token->next || !ft_strcmp(token->next->name, "~"))
+	if (!cmd->args || !ft_strcmp(cmd->args, "~"))
 		chdir(home);
 	else
-		chdir(token->next->name);
+		chdir(cmd->args);
 }

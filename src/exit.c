@@ -6,19 +6,20 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:35:21 by fquist            #+#    #+#             */
-/*   Updated: 2022/02/28 18:29:41 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/01 14:21:26 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit(t_node **node)
+void	ft_exit(t_table **table)
 {
-	t_token	*token;
+	t_table	*cmd;
 
-	token = (*node)->tokens;
-	if (!ft_strcmp(token->name, "exit"))
+	cmd = *table;
+	if (!ft_strcmp(cmd->exe, "exit"))
 	{
+		// free stuff
 		write(1, "logout\n", 8);
 		exit(EXIT_SUCCESS);
 	}
