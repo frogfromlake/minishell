@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 03:10:21 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 03:53:00 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,62 +25,49 @@ int	parser(t_node **node, t_table **table)
 
 void	create_cmd_table(t_node **node, t_table **table)
 {
-	t_node	*help;
+	t_node	*curr_n;
 	t_table	*new;
 
-	int		i;
-	i = 1;
-	help = *node;
-	while (help)
+	curr_n = *node;
+	while (curr_n)
 	{
-		if (help->type == PIPE)
+		if (curr_n->type == PIPE)
 		{
-			help = help->next;
-			continue;
+			curr_n = curr_n->next;
+			continue ;
 		}
 		new = append_table(table, new_table());
-		while (help && help->type != PIPE)
+		while (curr_n && curr_n->type != PIPE)
 		{
-			if (help->type == LESS)
+			if (check_redir(curr_n->type))
 			{
-				if (new->redir_in)
-					new->redir_in = str_join(new->redir_in, "< ", help->tokens->name);
-				else
-					new->redir_in = str_join("< ", help->tokens->name, " ");
-			}
-			if (help->type == GREAT)
-			{
-				if (new->redir_out)
-					new->redir_out = str_join(new->redir_out, "> ", help->tokens->name);
-				else
-					new->redir_out = str_join("> ", help->tokens->name, " ");
-			}
-			if (help->type == LESSLESS)
-			{
-				if (new->redir_in)
-					new->redir_in = str_join(new->redir_in, "<< ", help->tokens->name);
-				else
-					new->redir_in = str_join("<< ", help->tokens->name, " ");
-			}
-			if (help->type == GREATGREAT)
-			{
-				if (new->redir_out)
-					new->redir_out = str_join(new->redir_out, ">> ", help->tokens->name);
-				else
-					new->redir_in = str_join(">> ", help->tokens->name, " ");
-			}
-			else if (help->type == COMMAND)
-			{
-				new->exe = ft_strdup(help->tokens->name);
-				if (help->tokens->next)
-					new->args = ft_strdup(help->tokens->next->name);
-				else if (!ft_strcmp(new->exe, "echo"))
+				if (curr_n->type == LESS || curr_n->type == LESSLESS)
 				{
-					if (help->tokens->next)
-						echo_parser(help->tokens->next, &new);
+					if (new->redir_in)
+						new->redir_in = str_join(new->redir_in, " ", curr_n->tokens->name);
+					else
+						new->redir_in = ft_strdup(curr_n->tokens->name);
+				}
+				else
+				{
+					if (new->redir_out)
+						new->redir_out = str_join(new->redir_out, " ", curr_n->tokens->name);
+					else
+						new->redir_out = ft_strdup(curr_n->tokens->name);
 				}
 			}
-			help = help->next;
+			if (curr_n->type == COMMAND)
+			{
+				new->exe = ft_strdup(curr_n->tokens->name);
+				if (!ft_strcmp(new->exe, "echo"))
+				{
+					if (curr_n->tokens->next)
+						echo_parser(curr_n->tokens->next, &new);
+				}
+				else if (curr_n->tokens->next)
+					new->args = ft_strdup(curr_n->tokens->next->name);
+			}
+			curr_n = curr_n->next;
 		}
 	}
 }

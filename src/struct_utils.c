@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:58 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 02:58:40 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 03:50:05 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	print_tokens(t_token *token)
 
 void	print_cmd_table(t_table *table)
 {
+	if (!table)
+		printf("EMPTY!!!\n");
 	while (table)
 	{
 		printf("EXE: %s\n", table->exe);
