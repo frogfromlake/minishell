@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/01 23:34:07 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/02 01:57:50 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ typedef struct s_env
 	struct s_env	*next;
 }			t_env;
 
-
 /* ************************************************************************** */
 /* 	STRUCT UTILS															  */
 /* ************************************************************************** */
@@ -160,8 +159,6 @@ char	*lstlast(t_token *lst);
 int		lstsize(t_token *lst);
 void	init_t_env(void);
 
-
-
 /* ************************************************************************** */
 /* 	SHELL																	  */
 /* ************************************************************************** */
@@ -175,8 +172,9 @@ int		lexer(t_node **head, char *input);
 int		define_type(char *input);
 int		create_tokens(t_node **node, char **input);
 int		create_redir_token(t_node **node, char **input);
-char	*get_word_args(char **input);
 char	*get_word_ws(char **input);
+char	*get_word_args(char **input);
+char	*get_word_redir(t_type type, char **input);
 char	*get_word_quoted(char **input);
 bool	check_whitespace(char c);
 bool	check_metachar(char c);
@@ -200,7 +198,5 @@ void	ft_exit(t_table **table);
 t_env	**ft_env(char **environ);
 void	ft_export(t_env **env, t_table *table);
 void	ft_unset(t_env **env, t_table *table);
-
-
 
 #endif
