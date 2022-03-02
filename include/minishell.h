@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 02:26:03 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 02:48:26 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@
 typedef enum e_type
 {
 	COMMAND = 0,
+	OPTION = -2,
+	ARG,
 	SQUOTE = '\'',
 	DQUOTE = '\"',
 	PIPE = '|',
@@ -95,7 +97,6 @@ typedef struct s_token
 {
 	char			*name;
 	int				type;
-	bool			is_option;
 	int				state;
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -139,7 +140,7 @@ t_node	*new_node(void);
 t_node	*get_last_node(t_node *head);
 t_node	*append_node(t_node **head, t_node *new);
 
-t_token	*new_token(char *input);
+t_token	*new_token(char *input, t_type type);
 t_token	*get_last_token(t_token *head);
 t_token	*append_token(t_token **head, t_token *new);
 

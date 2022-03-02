@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 18:58:22 by dmontema          #+#    #+#             */
-/*   Updated: 2022/02/28 20:54:04 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/02 02:52:41 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*new_token(char *input)
+t_token	*new_token(char *input, t_type type)
 {
 	t_token	*new;
 
@@ -20,8 +20,7 @@ t_token	*new_token(char *input)
 	if (!new)
 		return (NULL);
 	new->name = input;
-	new->is_option = 0;
-	new->type = COMMAND;
+	new->type = type;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);

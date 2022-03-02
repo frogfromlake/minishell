@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:40:37 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 02:15:41 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 03:00:03 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	create_redir_token(t_node **node, char **input)
 	t_token	*new;
 
 	type = (*node)->type;
-	new = new_token(get_word_redir(type, input));
+	new = new_token(get_word_redir(type, input), type);
 	append_token(&(*node)->tokens, new);
 	new->type = type;
 	return (1);
@@ -36,14 +36,14 @@ int	create_tokens(t_node **node, char **input)
 		cmd_present = 0;
 		while ((**input && !check_metachar(**input)))
 		{
-			if (!(cmd_present++) || **input == '-')
-				new = new_token(get_word_ws(input));
+			if (!(cmd_present++))
+				new = new_token(get_word_ws(input), COMMAND);
+			else if (**input == '-')
+				new = new_token(get_word_ws(input), OPTION);
 			else if (check_quotes(**input))
-				new = new_token(get_word_quoted(input));
+				new = new_token(get_word_quoted(input), ARG);
 			else
-				new = new_token(get_word_args(input));
-			if (new->name[0] == '-')
-				new->is_option = 1;
+				new = new_token(get_word_args(input), ARG);
 			append_token(&(*node)->tokens, new);
 			while (check_whitespace(**input))
 				(*input)++;
