@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:02:45 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 02:27:40 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 02:34:28 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*get_word_redir(t_type type, char **input)
 	redir = false;
 	while (!redir || ((*input)[i] && !check_whitespace((*input)[i])))
 	{
-		if (check_whitespace((*input)[i]))
+		if (check_whitespace((*input)[i]) || !check_redir((*input)[i]))
 			redir = true;
 		res[i] = (*input)[i];
 		i++;
