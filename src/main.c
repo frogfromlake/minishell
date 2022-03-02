@@ -32,6 +32,8 @@ static void	pseudo_exec(t_table **table, char **environ)
 			ft_env(environ);
 		if (!ft_strcmp((*table)->exe, "exit"))
 			ft_exit(table);
+		if (!ft_strcmp((*table)->exe, "unset"))
+			ft_unset(ft_env(environ), curr);
 		curr = curr->next;
 	}
 }
@@ -77,7 +79,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 				lexer(head, read);
 				// print_nodes(*head);
 				parser(head, table);
-				// print_cmd_table(*table);
+				print_cmd_table(*table);
 				pseudo_exec(table, environ);
 				// ft_pwd();
 				// ft_cd(table, ft_env(environ));
@@ -95,12 +97,12 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 int	main(int argc, char *argv[], char **environ)
 {
 	t_node	*head;
-	t_table	*names;
+	// t_table	*names;
 	t_table *table;
 
 	(void) argc;
 	(void) argv;
-	names = NULL;
+	// names = NULL;
 	head = NULL;
 	table = NULL;
 	bitchy_snake_shell(&head, &table, environ);
