@@ -6,12 +6,35 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 03:47:03 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 04:25:32 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <unistd.h>
+
+static void	pseudo_exec(t_table **table, char **environ)
+{
+	t_table	*curr;
+
+	curr = *table;
+	while (curr)
+	{
+		if (!ft_strcmp((*table)->exe, "pwd"))
+			ft_pwd();
+		// if (!ft_strcmp((*table)->exe, "cd"))
+		// 	ft_cd(&curr, environ);
+		if (!ft_strcmp((*table)->exe, "echo"))
+			ft_echo(&curr);
+		if (!ft_strcmp((*table)->exe, "export"))
+			ft_export(ft_env(environ), curr);
+		if (!ft_strcmp((*table)->exe, "env")) // FIXME: doesn't print if export wasn't called before.
+			ft_env(environ);
+		if (!ft_strcmp((*table)->exe, "exit"))
+			ft_exit(table);
+		curr = curr->next;
+	}
+}
 
 static int	check_empty_input(char *input)
 {
@@ -51,11 +74,11 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 			add_history(read);
 			if (!check_empty_input(read))
 			{
-				// do stuff
 				lexer(head, read);
-				print_nodes(*head);
+				// print_nodes(*head);
 				parser(head, table);
-				print_cmd_table(*table);
+				// print_cmd_table(*table);
+				pseudo_exec(table, environ);
 				// ft_pwd();
 				// ft_cd(table, environ);
 				// ft_exit(table);
@@ -75,9 +98,8 @@ int	main(int argc, char *argv[], char **environ)
 	t_table	*names;
 	t_table *table;
 
-	(void)argc;
-	(void)argv;
-	// (void)environ;
+	(void) argc;
+	(void) argv;
 	names = NULL;
 	head = NULL;
 	table = NULL;

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 18:37:24 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/01 23:16:29 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/02 04:12:06 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//TODO: FIXME:hange environ to env
+//TODO: FIXME: change environ to env
 void	ft_cd(t_table **table, char **environ)
 {
 	t_table	*cmd;

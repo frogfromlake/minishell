@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:41:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/01 21:11:56 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/02 04:23:14 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,16 @@ t_env	**ft_env(char **environ)
 	static t_env	*env;
 	t_env			*tmp;
 
-	i = 0;
-	tmp = env;
 	if (!env)
 	{
+		i = 0;
 		while (environ[i])
 		{
 			append_env(&env, new_env(environ[i]));
 			i++;
 		}
 	}
+	tmp = env;
 	while (tmp)
 	{
 		printf("%s\n", tmp->var);
