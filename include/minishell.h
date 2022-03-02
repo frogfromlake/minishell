@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 02:48:26 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 03:10:25 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ bool	check_redir(t_type type);
 /* ************************************************************************** */
 void	create_cmd_table(t_node **node, t_table **table);
 int		parser(t_node **node, t_table **table);
-int		echo_parse(t_token *help, t_table **new);
+int		echo_parser(t_token *help, t_table **new);
 
 /* ************************************************************************** */
 /* 	BUILTIN FUNCS															  */

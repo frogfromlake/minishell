@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/01 23:33:38 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/02 03:10:21 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	create_cmd_table(t_node **node, t_table **table)
 	t_table	*new;
 
 	int		i;
-
 	i = 1;
 	help = *node;
 	while (help)
@@ -78,62 +77,10 @@ void	create_cmd_table(t_node **node, t_table **table)
 				else if (!ft_strcmp(new->exe, "echo"))
 				{
 					if (help->tokens->next)
-						echo_parse(help->tokens->next, &new);
+						echo_parser(help->tokens->next, &new);
 				}
 			}
 			help = help->next;
 		}
 	}
-}
-
-static bool is_echo_opt_valid(char *opt)
-{
-	int i;
-
-	i = 1;
-	while (opt[i])
-	{
-		if (opt[i] != 'n')
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
-int echo_parse(t_token *help, t_table **new)
-{
-	bool	echo_opt_valid;
-
-	echo_opt_valid = is_echo_opt_valid(help->name);
-	if (echo_opt_valid)
-	{
-		(*new)->args = ft_strdup("-n");
-		help = help->next;
-		while (help)
-		{
-			if (!ft_strcmp(help->name, "-n"))
-			{
-				help = help->next;
-				continue ;
-			}
-			else
-				break ;
-		}
-		while (help)
-		{
-			(*new)->args = str_join((*new)->args, " " ,help->name);
-			help = help->next;
-		}
-	}
-	else
-	{
-		(*new)->args = ft_strdup(help->name);
-		help = help->next;
-		while (help)
-		{
-			(*new)->args = str_join((*new)->args, " " ,help->name);
-			help = help->next;
-		}
-	}
-	return (1);
 }
