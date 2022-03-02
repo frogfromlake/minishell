@@ -6,7 +6,7 @@
 #    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/03/02 03:11:46 by dmontema         ###   ########.fr        #
+#    Updated: 2022/03/02 04:05:14 by dmontema         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS		=	header.c \
 				struct_utils.c \
 				parser.c \
 				echo_parser.c \
+				redir_parser.c \
 				pwd.c \
 				echo.c \
 				cd.c \
