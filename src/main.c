@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 18:52:58 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/02 19:09:56 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <unistd.h>
 
-static void	pseudo_exec(t_table **table, char **environ)
+static void	builtin_exec(t_table **table, char **environ)
 {
 	t_table	*curr;
 	t_env	**tmp;
 
 	curr = *table;
-	tmp = init_env_struct(environ);
+	tmp = get_env(environ);
 	while (curr)
 	{
 		if (!ft_strcmp((*table)->exe, "pwd"))
@@ -28,9 +28,9 @@ static void	pseudo_exec(t_table **table, char **environ)
 			ft_cd(&curr, tmp);
 		if (!ft_strcmp((*table)->exe, "echo"))
 			ft_echo(&curr);
-		if (!ft_strcmp((*table)->exe, "export")) // FIXME: should not print ft_env().
+		if (!ft_strcmp((*table)->exe, "export"))
 			ft_export(tmp, curr);
-		if (!ft_strcmp((*table)->exe, "env")) // FIXME: doesn't print if export wasn't called before.
+		if (!ft_strcmp((*table)->exe, "env"))
 			ft_env(environ);
 		if (!ft_strcmp((*table)->exe, "exit"))
 			ft_exit(table);
@@ -82,7 +82,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 				// print_nodes(*head);
 				parser(head, table);
 				print_cmd_table(*table);
-				pseudo_exec(table, environ);
+				builtin_exec(table, environ);
 			}
 			free_table(table, false, false);
 			free_list(head, false, false);

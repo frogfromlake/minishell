@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:41:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 18:58:05 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/02 19:09:14 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,7 @@ t_env	*append_env(t_env **head, t_env *new)
 	return (new);
 }
 
-t_env	*insert_env(t_env **current, t_env *new)
-{
-	new->next = (*current)->next;
-	(*current)->next = new;
-	return (new);
-}
-
-t_env	**init_env_struct(char **environ)
+t_env	**get_env(char **environ)
 {
 	static t_env	*env;
 	int				i;
@@ -75,12 +68,12 @@ t_env	**init_env_struct(char **environ)
 
 void	ft_env(char **environ)
 {
-	t_env	*tmp;
+	t_env	*curr;
 
-	tmp = *(init_env_struct(environ));
-	while (tmp)
+	curr = *(get_env(environ));
+	while (curr)
 	{
-		printf("%s\n", tmp->var);
-		tmp = tmp->next;
+		printf("%s\n", curr->var);
+		curr = curr->next;
 	}
 }

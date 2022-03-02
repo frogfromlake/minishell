@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 18:44:05 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/02 19:08:33 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ t_table	*append_table(t_table **head, t_table *new);
 t_env	*new_env(char *str);
 t_env	*get_last_env(t_env *head);
 t_env	*append_env(t_env **head, t_env *new);
-t_env	*insert_env(t_env **head, t_env *new);
+t_env	**get_env(char **environ);
 
 void	print_nodes(t_node *node);
 void	print_tokens(t_token *token);
@@ -204,6 +204,6 @@ void	ft_exit(t_table **table);
 void	ft_env(char **environ);
 void	ft_export(t_env **env, t_table *table);
 void	ft_unset(t_env **env, t_table *table);
-t_env	**init_env_struct(char **environ);
+
 
 #endif
