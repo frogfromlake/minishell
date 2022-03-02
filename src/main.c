@@ -6,14 +6,27 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 20:57:30 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 22:56:05 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <unistd.h>
 
-static void	builtin_exec(t_table **table, char **environ)
+bool	check_builtin(t_table *table)
+{
+	if (!ft_strcmp(table->exe, "pwd")
+		|| !ft_strcmp(table->exe, "cd")
+		|| !ft_strcmp(table->exe, "echo")
+		|| !ft_strcmp(table->exe, "export")
+		|| !ft_strcmp(table->exe, "env")
+		|| !ft_strcmp(table->exe, "exit")
+		|| !ft_strcmp(table->exe, "unset"))
+		return (true);
+	return (false);
+}
+
+int	builtin_exec(t_table **table, char **environ)
 {
 	t_table	*curr;
 	t_env	**tmp;
@@ -26,7 +39,7 @@ static void	builtin_exec(t_table **table, char **environ)
 	tmp = get_env(environ);
 	while (curr)
 	{
-		if (curr->log_op == 0)
+		if (curr->log_op == 0 && check_builtin(curr))
 		{
 			if (!ft_strcmp((*table)->exe, "pwd"))
 				ft_pwd();
@@ -42,13 +55,15 @@ static void	builtin_exec(t_table **table, char **environ)
 				ft_exit(table);
 			if (!ft_strcmp((*table)->exe, "unset"))
 				ft_unset(tmp, curr);
-			if (!ft_strcmp((*table)->exe, "ls"))
-			{
-				set_cmd_path(curr);
-			}
+		}
+		else if (curr->log_op == 0)
+		{
+			if (set_cmd_path(curr))
+				printf("\nError: command not found.\n");
 		}
 		curr = curr->next;
 	}
+	return (0);
 }
 
 static int	check_empty_input(char *input)
@@ -92,7 +107,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 				lexer(head, read);
 				print_nodes(*head);
 				parser(head, table);
-				print_cmd_table(*table);
+				// print_cmd_table(*table);
 				builtin_exec(table, environ);
 				print_cmd_table(*table);
 			}

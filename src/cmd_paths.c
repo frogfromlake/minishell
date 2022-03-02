@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 18:50:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 20:57:04 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 22:37:11 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	set_cmd_path(t_table *table)
 	char	**cmd_paths;
 
 	i = 0;
-	printf("JEPP!\n");
 	if (access(table->exe, F_OK) == 0)
 		return (0);
 	cmd_paths = get_env_path();
@@ -67,7 +66,7 @@ char	**get_env_path(void)
 	int			i;
 	char		**cmd_paths;
 	extern char	**environ;
-
+	// change ENVIRON to t_env
 	i = 0;
 	if (environ == NULL)
 		return (NULL);
