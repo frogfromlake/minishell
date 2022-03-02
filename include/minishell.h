@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 04:29:28 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 18:44:05 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,8 +201,9 @@ int		ft_pwd(void);
 void	ft_echo(t_table **table);
 void	ft_cd(t_table **table, t_env **env);
 void	ft_exit(t_table **table);
-t_env	**ft_env(char **environ);
+void	ft_env(char **environ);
 void	ft_export(t_env **env, t_table *table);
 void	ft_unset(t_env **env, t_table *table);
+t_env	**init_env_struct(char **environ);
 
 #endif

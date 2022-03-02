@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 04:35:47 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 18:47:47 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,26 @@
 static void	pseudo_exec(t_table **table, char **environ)
 {
 	t_table	*curr;
+	t_env	**tmp;
 
 	curr = *table;
+	tmp = init_env_struct(environ);
 	while (curr)
 	{
 		if (!ft_strcmp((*table)->exe, "pwd"))
 			ft_pwd();
 		if (!ft_strcmp((*table)->exe, "cd"))
-			ft_cd(&curr, ft_env(environ));
+			ft_cd(&curr, tmp);
 		if (!ft_strcmp((*table)->exe, "echo"))
 			ft_echo(&curr);
 		if (!ft_strcmp((*table)->exe, "export")) // FIXME: should not print ft_env().
-			ft_export(ft_env(environ), curr);
+			ft_export(tmp, curr);
 		if (!ft_strcmp((*table)->exe, "env")) // FIXME: doesn't print if export wasn't called before.
 			ft_env(environ);
 		if (!ft_strcmp((*table)->exe, "exit"))
 			ft_exit(table);
 		if (!ft_strcmp((*table)->exe, "unset"))
-			ft_unset(ft_env(environ), curr);
+			ft_unset(tmp, curr);
 		curr = curr->next;
 	}
 }
@@ -81,12 +83,6 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 				parser(head, table);
 				print_cmd_table(*table);
 				pseudo_exec(table, environ);
-				// ft_pwd();
-				// ft_cd(table, ft_env(environ));
-				// ft_exit(table);
-				// ft_echo(table);
-				// ft_export(ft_env(environ), *table);
-				// ft_env(environ);
 			}
 			free_table(table, false, false);
 			free_list(head, false, false);
