@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 01:57:50 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 02:26:03 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,29 +135,33 @@ typedef struct s_env
 /* ************************************************************************** */
 /* 	STRUCT UTILS															  */
 /* ************************************************************************** */
-t_table	*new_table(void);
-t_table	*get_last_table(t_table *head);
-t_table	*append_table(t_table **head, t_table *new);
 t_node	*new_node(void);
 t_node	*get_last_node(t_node *head);
 t_node	*append_node(t_node **head, t_node *new);
+
 t_token	*new_token(char *input);
 t_token	*get_last_token(t_token *head);
 t_token	*append_token(t_token **head, t_token *new);
+
+t_table	*new_table(void);
+t_table	*get_last_table(t_table *head);
+t_table	*append_table(t_table **head, t_table *new);
+
 t_env	*new_env(char *str);
-t_env	*insert_env(t_env **head, t_env *new);
-t_env	*append_env(t_env **head, t_env *new);
 t_env	*get_last_env(t_env *head);
+t_env	*append_env(t_env **head, t_env *new);
+t_env	*insert_env(t_env **head, t_env *new);
 
 void	print_nodes(t_node *node);
 void	print_tokens(t_token *token);
 void	print_cmd_table(t_table *table);
+
 void	free_list(t_node **lst, bool exit, bool exit_status);
 void	free_table(t_table **lst, bool exit, bool exit_status);
+
 char	*str_join(char const *s1, char const *s2, const char *s3);
 char	*lstlast(t_token *lst);
 int		lstsize(t_token *lst);
-void	init_t_env(void);
 
 /* ************************************************************************** */
 /* 	SHELL																	  */
@@ -184,8 +188,8 @@ bool	check_redir(t_type type);
 /* ************************************************************************** */
 /* 	PARSER																	  */
 /* ************************************************************************** */
-int		parser(t_node **node, t_table **table);
 void	create_cmd_table(t_node **node, t_table **table);
+int		parser(t_node **node, t_table **table);
 int		echo_parse(t_token *help, t_table **new);
 
 /* ************************************************************************** */

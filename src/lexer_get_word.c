@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:02:45 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 02:06:02 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 02:27:40 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,9 @@ char	*get_word_redir(t_type type, char **input)
 	bool	redir;
 	char	*res;
 
-	size = 0;
 	if (type == LESS || type == GREAT)
 		size = 3;
-	else if (type == LESSLESS || type == GREATGREAT)
+	else
 		size = 4;
 	while ((*input)[size] && !check_whitespace((*input)[size]))
 		size++;
