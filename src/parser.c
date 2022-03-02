@@ -14,11 +14,11 @@
 
 int	parser(t_node **node, t_table **table)
 {
-	t_table	*help;
-	t_table	*new;
+	// t_table	*help;
+	// t_table	*new;
 
-	help = *table;
-	new = NULL;
+	// help = *table;
+	// new = NULL;
 	create_cmd_table(node, table);
 	return (0);
 }
