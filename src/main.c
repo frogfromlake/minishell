@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 04:30:27 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 04:35:47 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	pseudo_exec(t_table **table, char **environ)
 			ft_cd(&curr, ft_env(environ));
 		if (!ft_strcmp((*table)->exe, "echo"))
 			ft_echo(&curr);
-		if (!ft_strcmp((*table)->exe, "export"))
+		if (!ft_strcmp((*table)->exe, "export")) // FIXME: should not print ft_env().
 			ft_export(ft_env(environ), curr);
 		if (!ft_strcmp((*table)->exe, "env")) // FIXME: doesn't print if export wasn't called before.
 			ft_env(environ);
