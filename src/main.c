@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 04:25:32 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 04:30:27 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static void	pseudo_exec(t_table **table, char **environ)
 	{
 		if (!ft_strcmp((*table)->exe, "pwd"))
 			ft_pwd();
-		// if (!ft_strcmp((*table)->exe, "cd"))
-		// 	ft_cd(&curr, environ);
+		if (!ft_strcmp((*table)->exe, "cd"))
+			ft_cd(&curr, ft_env(environ));
 		if (!ft_strcmp((*table)->exe, "echo"))
 			ft_echo(&curr);
 		if (!ft_strcmp((*table)->exe, "export"))
@@ -80,7 +80,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 				// print_cmd_table(*table);
 				pseudo_exec(table, environ);
 				// ft_pwd();
-				// ft_cd(table, environ);
+				// ft_cd(table, ft_env(environ));
 				// ft_exit(table);
 				// ft_echo(table);
 				// ft_export(ft_env(environ), *table);
