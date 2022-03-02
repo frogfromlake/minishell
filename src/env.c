@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:41:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 18:45:30 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/02 18:58:05 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_env(char **environ)
 {
 	t_env	*tmp;
 
-	tmp = init_env_struct(environ);
+	tmp = *(init_env_struct(environ));
 	while (tmp)
 	{
 		printf("%s\n", tmp->var);

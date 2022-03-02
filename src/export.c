@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 18:33:15 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/02 19:02:42 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,11 @@ void	ft_export(t_env **env, t_table *table)
 	{
 		if (ft_strchr(table->args, '=') && table->args[0] != '=')
 		{
-			while (tmp)
-			{
-				if (!ft_strncmp(tmp->var, "_=", 2))
-				{
-					existing = check_var_existence(env, table->args);
-					if (!existing)
-						insert_env(&tmp, new_env(table->args));
-					else
-						ft_strcpy(existing->var, table->args);
-				}
-				tmp = tmp->next;
-			}
+			existing = check_var_existence(env, table->args);
+			if (!existing)
+				append_env(env, new_env(table->args));
+			else
+				ft_strcpy(existing->var, table->args);
 		}
 	}
 }
