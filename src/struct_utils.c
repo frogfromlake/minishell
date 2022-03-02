@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:58 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 03:50:05 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 20:14:31 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ void	print_cmd_table(t_table *table)
 	{
 		printf("EXE: %s\n", table->exe);
 		printf("ARGS: %s\n", table->args);
+		printf("LOG_OP: %d\n", table->log_op);
 		printf("REDIR_IN: %s\n", table->redir_in);
 		printf("REDIR_OUT: %s\n", table->redir_out);
+		printf("----------\n");
 		table = table->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 19:08:33 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 20:52:08 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct s_table
 {
 	char			*exe;
 	char			*args;
+	t_type			log_op;
 	char			*redir_in;
 	char			*redir_out;
 	int				opt;
@@ -185,6 +186,7 @@ bool	check_whitespace(char c);
 bool	check_metachar(char c);
 bool	check_quotes(char c);
 bool	check_redir(t_type type);
+bool	check_log_op(int c);
 
 /* ************************************************************************** */
 /* 	PARSER																	  */
@@ -205,5 +207,8 @@ void	ft_env(char **environ);
 void	ft_export(t_env **env, t_table *table);
 void	ft_unset(t_env **env, t_table *table);
 
+int		set_cmd_path(t_table *table);
+char	**get_env_path(void);
+void	append_slash(char **cmd_paths);
 
 #endif

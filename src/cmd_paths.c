@@ -3,57 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 18:50:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 16:21:42 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/02 20:57:04 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**get_env_path(void);
-static void	append_slash(char **cmd_paths);
+// char	**get_commands(const char *cmd_str, int *code)
+// {
+// 	char	**cmd_args;
 
-char	**get_commands(const char *cmd_str, int *code)
-{
-	char	**cmd_args;
+// 	cmd_args = ft_split(cmd_str, ' ');
+// 	if (cmd_args == NULL)
+// 	{
+// 		*code = ENOMEM;
+// 		return (NULL);
+// 	}
+// 	*code = set_cmd_path(&cmd_args[0]);
+// 	if (*code != 0)
+// 	{
+// 		file_error("pipex", "command not found", cmd_args[0]);
+// 		ft_free_split(cmd_args);
+// 		return (NULL);
+// 	}
+// 	return (cmd_args);
+// }
 
-	cmd_args = ft_split(cmd_str, ' ');
-	if (cmd_args == NULL)
-	{
-		*code = ENOMEM;
-		return (NULL);
-	}
-	*code = set_cmd_path(&cmd_args[0]);
-	if (*code != 0)
-	{
-		file_error("pipex", "command not found", cmd_args[0]);
-		ft_free_split(cmd_args);
-		return (NULL);
-	}
-	return (cmd_args);
-}
-
-int	set_cmd_path(char **cmd)
+int	set_cmd_path(t_table *table)
 {
 	int		i;
 	char	*tmp;
 	char	**cmd_paths;
 
 	i = 0;
-	if (access(*cmd, F_OK) == 0)
+	printf("JEPP!\n");
+	if (access(table->exe, F_OK) == 0)
 		return (0);
 	cmd_paths = get_env_path();
 	if (cmd_paths == NULL)
 		return (ENOMEM);
 	while (cmd_paths[i])
 	{
-		tmp = ft_strjoin(cmd_paths[i], *cmd);
+		tmp = ft_strjoin(cmd_paths[i], table->exe);
 		if (access(tmp, F_OK) == 0)
 		{
-			free(*cmd);
-			*cmd = tmp;
+			// free(*cmd);
+			table->exe = tmp;
 			ft_free_split(cmd_paths);
 			return (0);
 		}
@@ -64,7 +62,7 @@ int	set_cmd_path(char **cmd)
 	return (127);
 }
 
-static char	**get_env_path(void)
+char	**get_env_path(void)
 {
 	int			i;
 	char		**cmd_paths;
@@ -89,7 +87,7 @@ static char	**get_env_path(void)
 	return (cmd_paths);
 }
 
-static void	append_slash(char **cmd_paths)
+void	append_slash(char **cmd_paths)
 {
 	int		i;
 	char	*tmp;

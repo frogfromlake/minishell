@@ -6,7 +6,7 @@
 #    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/03/02 04:05:14 by dmontema         ###   ########.fr        #
+#    Updated: 2022/03/02 20:33:28 by dmontema         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS		=	header.c \
 				env.c \
 				export.c \
 				unset.c \
+				cmd_paths.c
 
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))

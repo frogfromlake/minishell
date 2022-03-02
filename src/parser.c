@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 04:06:38 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 20:10:58 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ void	create_cmd_table(t_node **node, t_table **table)
 	curr_n = *node;
 	while (curr_n)
 	{
-		if (curr_n->type == PIPE)
+		new = append_table(table, new_table());
+		if (check_log_op(curr_n->type))
 		{
+			new->log_op = curr_n->type;
 			curr_n = curr_n->next;
 			continue ;
 		}
-		new = append_table(table, new_table());
-		while (curr_n && curr_n->type != PIPE)
+		while (curr_n && !check_log_op(curr_n->type))
 		{
 			if (check_redir(curr_n->type))
 				redir_parser(curr_n->tokens, &new);

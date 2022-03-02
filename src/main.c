@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 19:09:56 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 20:57:30 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,36 @@ static void	builtin_exec(t_table **table, char **environ)
 {
 	t_table	*curr;
 	t_env	**tmp;
+	char	**test;
+	int		i;
 
+	i = 0;
+	test = malloc(sizeof(char *));
 	curr = *table;
 	tmp = get_env(environ);
 	while (curr)
 	{
-		if (!ft_strcmp((*table)->exe, "pwd"))
-			ft_pwd();
-		if (!ft_strcmp((*table)->exe, "cd"))
-			ft_cd(&curr, tmp);
-		if (!ft_strcmp((*table)->exe, "echo"))
-			ft_echo(&curr);
-		if (!ft_strcmp((*table)->exe, "export"))
-			ft_export(tmp, curr);
-		if (!ft_strcmp((*table)->exe, "env"))
-			ft_env(environ);
-		if (!ft_strcmp((*table)->exe, "exit"))
-			ft_exit(table);
-		if (!ft_strcmp((*table)->exe, "unset"))
-			ft_unset(tmp, curr);
+		if (curr->log_op == 0)
+		{
+			if (!ft_strcmp((*table)->exe, "pwd"))
+				ft_pwd();
+			if (!ft_strcmp((*table)->exe, "cd"))
+				ft_cd(&curr, tmp);
+			if (!ft_strcmp((*table)->exe, "echo"))
+				ft_echo(&curr);
+			if (!ft_strcmp((*table)->exe, "export"))
+				ft_export(tmp, curr);
+			if (!ft_strcmp((*table)->exe, "env"))
+				ft_env(environ);
+			if (!ft_strcmp((*table)->exe, "exit"))
+				ft_exit(table);
+			if (!ft_strcmp((*table)->exe, "unset"))
+				ft_unset(tmp, curr);
+			if (!ft_strcmp((*table)->exe, "ls"))
+			{
+				set_cmd_path(curr);
+			}
+		}
 		curr = curr->next;
 	}
 }
@@ -79,10 +90,11 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 			if (!check_empty_input(read))
 			{
 				lexer(head, read);
-				// print_nodes(*head);
+				print_nodes(*head);
 				parser(head, table);
 				print_cmd_table(*table);
 				builtin_exec(table, environ);
+				print_cmd_table(*table);
 			}
 			free_table(table, false, false);
 			free_list(head, false, false);

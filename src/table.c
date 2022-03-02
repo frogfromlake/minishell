@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 18:00:22 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/01 00:20:07 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/02 20:02:31 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_table	*new_table(void)
 		return (NULL);
 	new->exe = NULL;
 	new->args = NULL;
+	new->log_op = 0;
 	new->redir_in = NULL;
 	new->redir_out = NULL;
 	new->opt = 0;
