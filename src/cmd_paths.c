@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 18:50:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/03 06:37:23 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/03 23:42:19 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-t_table	**get_commands(const char *cmd_str, int *code)
-{
-	t_table	**cmd_args;
-
-	cmd_args = ft_split(cmd_str, ' '); // !
-	if (cmd_args == NULL)
-	{
-		*code = ENOMEM;
-		return (NULL);
-	}
-	*code = set_cmd_path(&(*cmd_args));
-	if (*code != 0)
-	{
-		file_error("minishell", "command not found", cmd_args[0]);
-		ft_free_lst(cmd_args);
-		return (NULL);
-	}
-	return (cmd_args);
-}
 
 int	set_cmd_path(t_table **table)
 {

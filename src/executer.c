@@ -6,13 +6,13 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/03 23:38:24 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 23:41:40 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
-void	executer(t_table *table)
-{
+// void	executer(t_table *table)
+// {
 	
-}
+// }
