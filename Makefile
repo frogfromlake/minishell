@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
+#    By: nelix <nelix@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/03/02 20:33:28 by dmontema         ###   ########.fr        #
+#    Updated: 2022/03/03 05:28:30 by nelix            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,12 @@ CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror -g
 
 LIBFTDIR	= libs/libft
-INCLUDES	= -I./include -I./$(LIBFTDIR)/include
-LIBRARIES	= -L./$(LIBFTDIR)/ -lft
+INCLUDES	= -I./include-I./$(LIBFTDIR)/include
+LIBRARIES	= -L./$(LIBFTDIR)/ -lft -lreadline
 
 SDIR		= src
-SRCS		=	header.c \
-				main.c \
+SRCS		=	main.c \
+				header.c \
 				lexer.c \
 				lexer_get_word.c \
 				lexer_checker.c \
@@ -39,7 +39,11 @@ SRCS		=	header.c \
 				env.c \
 				export.c \
 				unset.c \
-				cmd_paths.c
+				cmd_paths.c \
+				executer.c \
+				childs.c \
+				pipes.c \
+				utils.c
 
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))

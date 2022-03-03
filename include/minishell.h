@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 22:54:53 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 06:36:30 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <stdlib.h>
-# include "libft.h"
+# include "../libs/libft/include/libft.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -208,9 +208,23 @@ void	ft_env(char **environ);
 void	ft_export(t_env **env, t_table *table);
 void	ft_unset(t_env **env, t_table *table);
 
-int		set_cmd_path(t_table *table);
+int		set_cmd_path(t_table **table);
 char	**get_env_path(void);
 void	append_slash(char **cmd_paths);
 int		builtin_exec(t_table **table, char **environ);
+
+int		executer(t_table **table);
+pid_t	*create_child_prcs(int childs, t_table **table, bool here_doc);
+void	child_prc(int childs, int i, int **pipes, t_table **table);
+int		child_prc_exec(int pipe_read, int pipe_write, t_table *str_cmd);
+int		**create_pipes_arr(int n);
+void	free_pipes_arr(int **arr, int elements);
+int		close_pipes(int **pipes, int childs, int child_nbr);
+int		error_msg(char *error_msg, int r_value);
+int		open_file(char *file, int mod, int rights);
+int		file_error(char *name_b, char *msg, char *name_a);
+int		child_wait_pid(pid_t *pid, int n);
+t_table	**get_commands(const char *cmd_str, int *code);
+
 
 #endif

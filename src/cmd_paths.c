@@ -3,54 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 18:50:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 22:37:11 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 06:37:23 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
-// char	**get_commands(const char *cmd_str, int *code)
-// {
-// 	char	**cmd_args;
+t_table	**get_commands(const char *cmd_str, int *code)
+{
+	t_table	**cmd_args;
 
-// 	cmd_args = ft_split(cmd_str, ' ');
-// 	if (cmd_args == NULL)
-// 	{
-// 		*code = ENOMEM;
-// 		return (NULL);
-// 	}
-// 	*code = set_cmd_path(&cmd_args[0]);
-// 	if (*code != 0)
-// 	{
-// 		file_error("pipex", "command not found", cmd_args[0]);
-// 		ft_free_split(cmd_args);
-// 		return (NULL);
-// 	}
-// 	return (cmd_args);
-// }
+	cmd_args = ft_split(cmd_str, ' '); // !
+	if (cmd_args == NULL)
+	{
+		*code = ENOMEM;
+		return (NULL);
+	}
+	*code = set_cmd_path(&(*cmd_args));
+	if (*code != 0)
+	{
+		file_error("minishell", "command not found", cmd_args[0]);
+		ft_free_lst(cmd_args);
+		return (NULL);
+	}
+	return (cmd_args);
+}
 
-int	set_cmd_path(t_table *table)
+int	set_cmd_path(t_table **table)
 {
 	int		i;
 	char	*tmp;
 	char	**cmd_paths;
 
 	i = 0;
-	if (access(table->exe, F_OK) == 0)
+	if (access((*table)->exe, F_OK) == 0)
 		return (0);
 	cmd_paths = get_env_path();
 	if (cmd_paths == NULL)
 		return (ENOMEM);
 	while (cmd_paths[i])
 	{
-		tmp = ft_strjoin(cmd_paths[i], table->exe);
+		tmp = ft_strjoin(cmd_paths[i], (*table)->exe);
 		if (access(tmp, F_OK) == 0)
 		{
-			// free(*cmd);
-			table->exe = tmp;
+			(*table)->exe = tmp;
 			ft_free_split(cmd_paths);
 			return (0);
 		}

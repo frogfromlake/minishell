@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 22:56:05 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 04:05:43 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <unistd.h>
+#include "../include/minishell.h"
 
 bool	check_builtin(t_table *table)
 {
@@ -30,11 +29,7 @@ int	builtin_exec(t_table **table, char **environ)
 {
 	t_table	*curr;
 	t_env	**tmp;
-	char	**test;
-	int		i;
 
-	i = 0;
-	test = malloc(sizeof(char *));
 	curr = *table;
 	tmp = get_env(environ);
 	while (curr)
@@ -56,10 +51,12 @@ int	builtin_exec(t_table **table, char **environ)
 			if (!ft_strcmp((*table)->exe, "unset"))
 				ft_unset(tmp, curr);
 		}
-		else if (curr->log_op == 0)
+		else if (curr->log_op == 0 && !check_builtin(curr))
 		{
 			if (set_cmd_path(curr))
 				printf("\nError: command not found.\n");
+			else
+				executer(curr);
 		}
 		curr = curr->next;
 	}
