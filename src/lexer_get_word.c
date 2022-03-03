@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_get_word.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:02:45 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 02:34:28 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 04:00:03 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 char	*get_word_ws(char **input)
 {

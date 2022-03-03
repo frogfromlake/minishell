@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:13:39 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 20:10:14 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 03:59:58 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 bool	check_whitespace(char c)
 {

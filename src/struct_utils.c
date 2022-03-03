@@ -6,11 +6,11 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:58 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/03 23:34:13 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 23:38:50 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	print_nodes(t_node *node)
 {

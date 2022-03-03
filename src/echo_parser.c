@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 03:09:51 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/02 03:10:32 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 03:59:25 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 static bool	is_echo_opt_valid(char *opt)
 {

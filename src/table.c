@@ -6,11 +6,11 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 18:00:22 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/03 22:03:36 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 23:38:56 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 t_table	*new_table(void)
 {

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:41:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 19:09:14 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 03:59:38 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
+#include "../include/minishell.h"
 
 t_env	*new_env(char *str)
 {
