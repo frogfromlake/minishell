@@ -6,7 +6,7 @@
 #    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/03/02 20:33:28 by dmontema         ###   ########.fr        #
+#    Updated: 2022/03/03 21:33:57 by dmontema         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ header:
 # Linking
 .PHONY: $(NAME)
 $(NAME): libft header prep $(OBJS)
-	@$(CC) $(CFLAGS) -lreadline -o $(NAME) $(OBJS) $(LIBRARIES)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBRARIES) -lreadline
 	@printf $(UP)$(CUT)
 	@printf "%-54b %b" "$(OK_COLOR)$(NAME) compiled successfully!" "$(G)[✓]$(X)$(NO_COLOR)\n"
 

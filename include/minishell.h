@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 22:54:53 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 22:45:00 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,11 @@ typedef struct s_table
 	char			*exe;
 	char			*args;
 	t_type			log_op;
-	char			*redir_in;
-	char			*redir_out;
+	t_list			*redir_in;
+	t_list			*redir_out;
+	t_list			*infiles;
+	t_list			*outfiles;
+	t_list			*delimiter;
 	int				opt;
 	struct s_table	*next;
 	struct s_table	*prev;

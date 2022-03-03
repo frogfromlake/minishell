@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:40:37 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 03:00:03 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 21:49:19 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	create_redir_token(t_node **node, char **input)
 	t_token	*new;
 
 	type = (*node)->type;
-	new = new_token(get_word_redir(type, input), type);
+	while (check_redir(**input) || check_whitespace(**input))
+		(*input)++;
+	new = new_token(get_word_ws(input), type);
 	append_token(&(*node)->tokens, new);
 	new->type = type;
 	return (1);

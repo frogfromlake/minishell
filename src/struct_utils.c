@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:58 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/02 20:14:31 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/03 23:34:13 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	print_tokens(t_token *token)
 
 void	print_cmd_table(t_table *table)
 {
+	t_list	*tmp;
+
 	if (!table)
 		printf("EMPTY!!!\n");
 	while (table)
@@ -46,11 +48,54 @@ void	print_cmd_table(t_table *table)
 		printf("EXE: %s\n", table->exe);
 		printf("ARGS: %s\n", table->args);
 		printf("LOG_OP: %d\n", table->log_op);
-		printf("REDIR_IN: %s\n", table->redir_in);
-		printf("REDIR_OUT: %s\n", table->redir_out);
-		printf("----------\n");
+		tmp = table->redir_in;
+
+		printf("REDIR_IN: ");
+		while (tmp)
+		{
+			printf("%d ", *(int *) tmp->content);
+			tmp = tmp->next;
+		}
+		printf("\n");
+
+		tmp = table->infiles;
+		printf("INFILES: ");
+		while (tmp)
+		{
+			printf("%s ", (char *) tmp->content);
+			tmp = tmp->next;
+		}
+		printf("\n");
+
+		tmp = table->delimiter;
+		printf("DELIMITERS: ");
+		while (tmp)
+		{
+			printf("%s ", (char *) tmp->content);
+			tmp = tmp->next;
+		}
+		printf("\n");
+
+		tmp = table->redir_out;
+		printf("REDIR_OUT: ");
+		while (tmp)
+		{
+			printf("%d ", *(int *) tmp->content);
+			tmp = tmp->next;
+		}
+		printf("\n");
+
+		tmp = table->outfiles;
+		printf("OUTFILES: ");
+		while (tmp)
+		{
+			printf("%s ", (char *) tmp->content);
+			tmp = tmp->next;
+		}
+		printf("\n");
 		table = table->next;
 	}
+	printf("----------\n");
 }
 
 void	free_list(t_node **lst, bool exit, bool exit_status)
@@ -117,3 +162,16 @@ char	*str_join(char const *s1, char const *s2, char const *s3)
 	}
 	return (newstr);
 }
+
+// t_list	*ft_lstnew(int content)
+// {
+// 	t_list	*element_1;
+
+// 	element_1 = NULL;
+// 	element_1 = malloc(sizeof(t_list));
+// 	if (element_1 == NULL)
+// 		return (NULL);
+// 	element_1->content = content;
+// 	element_1->next = NULL;
+// 	return (element_1);
+// }
