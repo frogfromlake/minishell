@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/04 17:41:53 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/04 19:36:46 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ int	builtin_exec(t_table **table, t_env **env)
 				ft_exit(table);
 			if (!ft_strcmp((*table)->exe, "unset"))
 				ft_unset(env, curr);
-		}
-		else if (curr->log_op == 0 && !check_builtin(curr))
-		{
-			if (set_cmd_path(&curr, env))
-				printf("\nError: command not found.\n");
 		}
 		curr = curr->next;
 	}
@@ -100,12 +95,12 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 			if (!check_empty_input(read))
 			{
 				lexer(head, read);
-				print_nodes(*head);
+				// print_nodes(*head);
 				parser(head, table);
 				// print_cmd_table(*table);
 				builtin_exec(table, tmp);
 				executer(table, tmp);
-				print_cmd_table(*table);
+				// print_cmd_table(*table);
 			}
 			free_table(table, false, false);
 			free_list(head, false, false);
