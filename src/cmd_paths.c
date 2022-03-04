@@ -6,13 +6,13 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 18:50:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/03 23:42:19 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/04 03:15:47 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	set_cmd_path(t_table **table)
+int	set_cmd_path(t_table **table, t_env **env)
 {
 	int		i;
 	char	*tmp;
@@ -21,7 +21,7 @@ int	set_cmd_path(t_table **table)
 	i = 0;
 	if (access((*table)->exe, F_OK) == 0)
 		return (0);
-	cmd_paths = get_env_path();
+	cmd_paths = get_env_path(env);
 	if (cmd_paths == NULL)
 		return (ENOMEM);
 	while (cmd_paths[i])
@@ -29,7 +29,11 @@ int	set_cmd_path(t_table **table)
 		tmp = ft_strjoin(cmd_paths[i], (*table)->exe);
 		if (access(tmp, F_OK) == 0)
 		{
-			(*table)->exe = tmp;
+			free((*table)->exe);
+			free((*table)->cmd_arr[0]);
+			(*table)->exe = ft_strdup(tmp);
+			(*table)->cmd_arr[0] = ft_strdup(tmp);
+			free(tmp);
 			ft_free_split(cmd_paths);
 			return (0);
 		}
@@ -40,27 +44,26 @@ int	set_cmd_path(t_table **table)
 	return (127);
 }
 
-char	**get_env_path(void)
+char	**get_env_path(t_env **env)
 {
-	int			i;
 	char		**cmd_paths;
-	extern char	**environ;
-	// change ENVIRON to t_env
-	i = 0;
-	if (environ == NULL)
+	t_env		*tmp;
+
+	tmp = *env;
+	if (env == NULL)
 		return (NULL);
 	cmd_paths = NULL;
-	while (environ[i])
+	while (tmp)
 	{
-		if (ft_strncmp(environ[i], "PATH=", 5) == 0)
+		if (ft_strncmp(tmp->var, "PATH=", 5) == 0)
 		{
-			cmd_paths = ft_split((environ[i] + 5), ':');
+			cmd_paths = ft_split((tmp->var + 5), ':'); // ?????
 			if (cmd_paths == NULL)
 				return (NULL);
 			append_slash(cmd_paths);
 			break ;
 		}
-		i++;
+		tmp = tmp->next;
 	}
 	return (cmd_paths);
 }

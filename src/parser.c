@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/03 23:38:41 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/04 02:55:38 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,18 @@ void	create_cmd_table(t_node **node, t_table **table)
 			if (curr_n->type == COMMAND)
 			{
 				new->exe = ft_strdup(curr_n->tokens->name);
+				new->cmd_arr[0] = ft_strdup(new->exe);
+				new->args = ft_strdup(curr_n->tokens->name);
 				if (!ft_strcmp(new->exe, "echo"))
 				{
 					if (curr_n->tokens->next)
 						echo_parser(curr_n->tokens->next, &new);
 				}
 				else if (curr_n->tokens->next)
+				{
 					new->args = ft_strdup(curr_n->tokens->next->name);
+					new->cmd_arr[1] = ft_strdup(new->args);
+				}
 			}
 			curr_n = curr_n->next;
 		}

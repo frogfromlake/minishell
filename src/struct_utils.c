@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:58 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/03 23:38:50 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/04 02:57:51 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,14 @@ void	print_cmd_table(t_table *table)
 		printf("EMPTY!!!\n");
 	while (table)
 	{
+		printf("----------\n");
 		printf("EXE: %s\n", table->exe);
 		printf("ARGS: %s\n", table->args);
 		printf("LOG_OP: %d\n", table->log_op);
-		tmp = table->redir_in;
+		
+		printf("CMD_ARR: %s %s\n", table->cmd_arr[0], table->cmd_arr[1]);
 
+		tmp = table->redir_in;
 		printf("REDIR_IN: ");
 		while (tmp)
 		{
@@ -93,9 +96,9 @@ void	print_cmd_table(t_table *table)
 			tmp = tmp->next;
 		}
 		printf("\n");
+		printf("----------\n");
 		table = table->next;
 	}
-	printf("----------\n");
 }
 
 void	free_list(t_node **lst, bool exit, bool exit_status)
@@ -163,15 +166,25 @@ char	*str_join(char const *s1, char const *s2, char const *s3)
 	return (newstr);
 }
 
-// t_list	*ft_lstnew(int content)
-// {
-// 	t_list	*element_1;
+char	*ft_strjoin_ws(char const *s1, char const *s2)
+{
+	char	*newstr;
+	int		i;
+	int		j;
 
-// 	element_1 = NULL;
-// 	element_1 = malloc(sizeof(t_list));
-// 	if (element_1 == NULL)
-// 		return (NULL);
-// 	element_1->content = content;
-// 	element_1->next = NULL;
-// 	return (element_1);
-// }
+	newstr = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 2, sizeof(char));
+	i = 0;
+	while (s1[i])
+	{
+		newstr[i] = s1[i];
+		i++;
+	}
+	newstr[i++] = ' ';
+	j = 0;
+	while (s2[j])
+	{
+		newstr[i + j] = s2[j];
+		j++;
+	}
+	return (newstr);
+}

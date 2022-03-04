@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/03 23:41:14 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/04 02:51:26 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ typedef struct s_node
 	t_token			*tokens;
 	t_token			*here_doc;
 	char			*cmdpath;
-	char			**cmd_arr;
 	int				in;
 	int				out;
 	struct s_node	*next;
@@ -118,6 +117,7 @@ typedef struct s_node
 
 typedef struct s_table
 {
+	char			**cmd_arr;
 	char			*exe;
 	char			*args;
 	t_type			log_op;
@@ -166,6 +166,7 @@ void	free_list(t_node **lst, bool exit, bool exit_status);
 void	free_table(t_table **lst, bool exit, bool exit_status);
 
 char	*str_join(char const *s1, char const *s2, const char *s3);
+char	*ft_strjoin_ws(char const *s1, char const *s2);
 char	*lstlast(t_token *lst);
 int		lstsize(t_token *lst);
 
@@ -211,23 +212,12 @@ void	ft_env(char **environ);
 void	ft_export(t_env **env, t_table *table);
 void	ft_unset(t_env **env, t_table *table);
 
-int		set_cmd_path(t_table **table);
-char	**get_env_path(void);
+int		set_cmd_path(t_table **table, t_env **env);
+char	**get_env_path(t_env **env);
 void	append_slash(char **cmd_paths);
 int		builtin_exec(t_table **table, char **environ);
 
-int		executer(t_table **table);
-pid_t	*create_child_prcs(int childs, t_table **table, bool here_doc);
-void	child_prc(int childs, int i, int **pipes, t_table **table);
-int		child_prc_exec(int pipe_read, int pipe_write, t_table *str_cmd);
-int		**create_pipes_arr(int n);
-void	free_pipes_arr(int **arr, int elements);
-int		close_pipes(int **pipes, int childs, int child_nbr);
-int		error_msg(char *error_msg, int r_value);
-int		open_file(char *file, int mod, int rights);
-int		file_error(char *name_b, char *msg, char *name_a);
-int		child_wait_pid(pid_t *pid, int n);
-t_table	**get_commands(const char *cmd_str, int *code);
+void	executer(t_table **table, t_env **env);
 
 
 #endif

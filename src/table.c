@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 18:00:22 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/03 23:38:56 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/04 03:26:30 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_table	*new_table(void)
 	new->outfiles = NULL;
 	new->delimiter = NULL;
 	new->opt = 0;
+	new->cmd_arr = ft_calloc(3, sizeof(char *));
 	return (new);
 }
 
