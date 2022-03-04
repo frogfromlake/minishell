@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:41:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/03 03:59:38 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/04 17:00:23 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ t_env	**get_env(char **environ)
 	return (&env);
 }
 
-void	ft_env(char **environ)
+void	ft_env(t_env **env)
 {
-	t_env	*curr;
+	t_env	*tmp;
 
-	curr = *(get_env(environ));
-	while (curr)
+	tmp = *env;
+	while (tmp)
 	{
-		printf("%s\n", curr->var);
-		curr = curr->next;
+		printf("%s\n", tmp->var);
+		tmp = tmp->next;
 	}
 }

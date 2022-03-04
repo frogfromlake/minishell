@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/04 02:51:26 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/04 17:27:43 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
+# include <signal.h>
+
 
 /* ************************************************************************** */
 /* 	DEFINES																	  */
@@ -174,7 +176,7 @@ int		lstsize(t_token *lst);
 /* 	SHELL																	  */
 /* ************************************************************************** */
 char	*get_prompt(void);
-void	print_shell(void);
+void	print_header(void);
 
 /* ************************************************************************** */
 /* 	LEXER																	  */
@@ -208,16 +210,18 @@ int		ft_pwd(void);
 void	ft_echo(t_table **table);
 void	ft_cd(t_table **table, t_env **env);
 void	ft_exit(t_table **table);
-void	ft_env(char **environ);
+void	ft_env(t_env **env);
 void	ft_export(t_env **env, t_table *table);
 void	ft_unset(t_env **env, t_table *table);
 
 int		set_cmd_path(t_table **table, t_env **env);
 char	**get_env_path(t_env **env);
 void	append_slash(char **cmd_paths);
-int		builtin_exec(t_table **table, char **environ);
+int		builtin_exec(t_table **table, t_env **env);
 
 void	executer(t_table **table, t_env **env);
+int		*create_child_prcs(t_table **table, int childs, int pipes, t_env **env);
+
 
 
 #endif

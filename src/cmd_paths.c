@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 18:50:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/04 03:15:47 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/04 15:49:02 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**get_env_path(t_env **env)
 	{
 		if (ft_strncmp(tmp->var, "PATH=", 5) == 0)
 		{
-			cmd_paths = ft_split((tmp->var + 5), ':'); // ?????
+			cmd_paths = ft_split((tmp->var + 5), ':'); // ????? -> skips "PATH="
 			if (cmd_paths == NULL)
 				return (NULL);
 			append_slash(cmd_paths);

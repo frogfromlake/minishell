@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   header.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 20:37:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/03 03:59:52 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/04 17:03:28 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	print_shell(void)
+void	print_header(void)
 {
 	printf("\033[1;32m");
 	printf("\n");

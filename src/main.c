@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/04 03:16:13 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/04 17:41:53 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ bool	check_builtin(t_table *table)
 	return (false);
 }
 
-int	builtin_exec(t_table **table, char **environ)
+int	builtin_exec(t_table **table, t_env **env)
 {
 	t_table	*curr;
-	t_env	**tmp;
+	// t_env	**tmp;
 
 	curr = *table;
-	tmp = get_env(environ);
+	// tmp = get_env(environ);
 	while (curr)
 	{
 		if (curr->log_op == 0 && check_builtin(curr))
@@ -39,24 +39,22 @@ int	builtin_exec(t_table **table, char **environ)
 			if (!ft_strcmp((*table)->exe, "pwd"))
 				ft_pwd();
 			if (!ft_strcmp((*table)->exe, "cd"))
-				ft_cd(&curr, tmp);
+				ft_cd(&curr, env);
 			if (!ft_strcmp((*table)->exe, "echo"))
 				ft_echo(&curr);
 			if (!ft_strcmp((*table)->exe, "export"))
-				ft_export(tmp, curr);
+				ft_export(env, curr);
 			if (!ft_strcmp((*table)->exe, "env"))
-				ft_env(environ);
+				ft_env(env);
 			if (!ft_strcmp((*table)->exe, "exit"))
 				ft_exit(table);
 			if (!ft_strcmp((*table)->exe, "unset"))
-				ft_unset(tmp, curr);
+				ft_unset(env, curr);
 		}
 		else if (curr->log_op == 0 && !check_builtin(curr))
 		{
-			if (set_cmd_path(&curr, tmp))
+			if (set_cmd_path(&curr, env))
 				printf("\nError: command not found.\n");
-			else
-				executer(table, tmp);
 		}
 		curr = curr->next;
 	}
@@ -89,10 +87,10 @@ char	*get_prompt(void)
 static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 {
 	char	*read;
+	t_env	**tmp;
 
-	(void) environ;
-	(void) table;
-	print_shell();
+	tmp = get_env(environ);
+	print_header();
 	while (true)
 	{
 		read = get_prompt();
@@ -102,10 +100,11 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 			if (!check_empty_input(read))
 			{
 				lexer(head, read);
-				// print_nodes(*head);
+				print_nodes(*head);
 				parser(head, table);
 				// print_cmd_table(*table);
-				builtin_exec(table, environ);
+				builtin_exec(table, tmp);
+				executer(table, tmp);
 				print_cmd_table(*table);
 			}
 			free_table(table, false, false);
@@ -117,12 +116,10 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 int	main(int argc, char *argv[], char **environ)
 {
 	t_node	*head;
-	// t_table	*names;
-	t_table *table;
+	t_table	*table;
 
 	(void) argc;
 	(void) argv;
-	// names = NULL;
 	head = NULL;
 	table = NULL;
 	bitchy_snake_shell(&head, &table, environ);
