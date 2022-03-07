@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/04 19:14:14 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/07 23:00:17 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,21 +99,21 @@ typedef struct s_token
 {
 	char			*name;
 	int				type;
-	int				state;
 	struct s_token	*next;
 	struct s_token	*prev;
+	// int				state;
 }				t_token;
 
 typedef struct s_node
 {
 	t_type			type;
 	t_token			*tokens;
-	t_token			*here_doc;
-	char			*cmdpath;
-	int				in;
-	int				out;
 	struct s_node	*next;
 	struct s_node	*prev;
+	// t_token			*here_doc;
+	// char			*cmdpath;
+	// int				in;
+	// int				out;
 }				t_node;
 
 typedef struct s_table
@@ -193,6 +193,8 @@ bool	check_metachar(char c);
 bool	check_quotes(char c);
 bool	check_redir(t_type type);
 bool	check_log_op(int c);
+void	free_node(t_node **node);
+void	free_token(t_token **token);
 
 /* ************************************************************************** */
 /* 	PARSER																	  */

@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:40:37 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/03 23:38:28 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/08 00:49:42 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	create_tokens(t_node **node, char **input)
 			else if (check_quotes(**input))
 				new = new_token(get_word_quoted(input), ARG);
 			else
-				new = new_token(get_word_args(input), ARG);
+				new = new_token(get_word_ws(input), ARG);
 			append_token(&(*node)->tokens, new);
 			while (check_whitespace(**input))
 				(*input)++;

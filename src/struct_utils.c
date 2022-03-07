@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:58 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/07 20:44:31 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/07 22:49:59 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,8 @@ char	*ft_strjoin_ws(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
+	if (!s1 || !s2)
+		return (NULL);
 	newstr = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 2, sizeof(char));
 	i = 0;
 	while (s1[i])
