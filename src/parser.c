@@ -6,11 +6,40 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/04 20:59:29 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/07 21:43:41 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int get_cmd_arr_size(char **arr)
+{
+	int	res;
+
+	res = 0;
+	while (arr[res])
+		res++;
+	return (res);
+}
+
+int	insert_cmd_arr(char ***arr, char *str)
+{
+	int		i;
+	int		size;
+	char	**tmp;
+
+	tmp = *arr;
+	size = get_cmd_arr_size(tmp);
+	*arr = ft_calloc(size + 2, sizeof(char *));
+	i = 0;
+	while (tmp[i])
+	{
+		(*arr)[i] = ft_strdup(tmp[i]);
+		i++;
+	}
+	(*arr)[i] = ft_strdup(str);
+	return (1);
+}
 
 int	parser(t_node **node, t_table **table)
 {
@@ -25,7 +54,8 @@ int	parser(t_node **node, t_table **table)
 
 void	create_cmd_table(t_node **node, t_table **table)
 {
-	t_node	*curr_n; 
+	t_node	*curr_n;
+	t_token *token;
 	t_table	*new;
 
 	curr_n = *node;
@@ -45,15 +75,25 @@ void	create_cmd_table(t_node **node, t_table **table)
 			if (curr_n->type == COMMAND)
 			{
 				new->exe = ft_strdup(curr_n->tokens->name);
-				new->args = ft_strdup(curr_n->tokens->name);
 				if (!check_builtin(new))
 				{
 					if (set_cmd_path(&new, get_env(NULL)))
-						printf("\nError: command not found.\n");
-					if (curr_n->tokens->next)
+						printf("bitchy snake shell: command not found: %s\n", new->exe);
+					else
 					{
-						new->args = ft_strdup(curr_n->tokens->next->name);
-						new->cmd_arr[1] = ft_strdup(new->args);
+						if (curr_n->tokens->next)
+						{
+							token = curr_n->tokens->next;
+							while (token)
+							{
+								if (!new->args)
+									new->args = ft_strdup(token->name);
+								else
+									new->args = ft_strjoin_ws(new->args, token->name);
+								insert_cmd_arr(&new->cmd_arr, token->name);
+								token = token->next;
+							}
+						}
 					}
 				}
 				else if (!ft_strcmp(new->exe, "echo"))

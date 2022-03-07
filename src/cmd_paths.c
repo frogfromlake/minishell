@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 18:50:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/04 15:49:02 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/07 19:54:40 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ int	set_cmd_path(t_table **table, t_env **env)
 		tmp = ft_strjoin(cmd_paths[i], (*table)->exe);
 		if (access(tmp, F_OK) == 0)
 		{
-			free((*table)->exe);
 			free((*table)->cmd_arr[0]);
-			(*table)->exe = ft_strdup(tmp);
 			(*table)->cmd_arr[0] = ft_strdup(tmp);
 			free(tmp);
 			ft_free_split(cmd_paths);

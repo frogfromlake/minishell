@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/04 19:36:46 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/07 20:45:16 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 				// print_nodes(*head);
 				parser(head, table);
 				// print_cmd_table(*table);
-				builtin_exec(table, tmp);
+				// builtin_exec(table, tmp);
 				executer(table, tmp);
 				// print_cmd_table(*table);
 			}

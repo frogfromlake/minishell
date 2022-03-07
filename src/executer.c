@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/04 17:38:07 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/07 20:45:27 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ int	*create_child_prcs(t_table **table, int childs, int pipes, t_env **env)
 	(void)pipes;
 	pids = malloc(childs * sizeof(pid_t));
 	if (pids)
-	printf("childs: %d\n", childs);
+	// printf("childs: %d\n", childs);
 	while (i < childs)
 	{
 		pids[i] = fork();
-		printf("pid: %d\n", pids[i]);
+		// printf("pid: %d\n", pids[i]);
 		if (pids[i] < 0)
 			perror("Error: couldn't fork.");
 		if (pids[i] == 0)
