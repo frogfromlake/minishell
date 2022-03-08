@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/07 20:45:27 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/08 18:15:07 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,26 @@ int	*create_child_prcs(t_table **table, int childs, int pipes, t_env **env)
 {
 	int		i;
 	pid_t	*pids;
+	char	**env_arr;
 
 	i = 0;
 	(void)pipes;
 	pids = malloc(childs * sizeof(pid_t));
-	if (pids)
-	// printf("childs: %d\n", childs);
+	env_arr = get_env_arr(env);
 	while (i < childs)
 	{
 		pids[i] = fork();
-		// printf("pid: %d\n", pids[i]);
 		if (pids[i] < 0)
 			perror("Error: couldn't fork.");
 		if (pids[i] == 0)
 		{
- 			ft_free((void **)&pids);
-			execve((*table)->cmd_arr[0], (*table)->cmd_arr, &(*env)->var);
+			ft_free((void **)&pids);
+			execve((*table)->cmd_arr[0], (*table)->cmd_arr, env_arr);
 		}
 		if (pids[i] != 0)
 			waitpid(*pids, NULL, 0);
 		i++;
 	}
+	ft_free_array(env_arr, false, false);
 	return (pids);
 }

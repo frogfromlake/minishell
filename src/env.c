@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:41:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/04 17:00:23 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/08 18:07:26 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,30 @@ void	ft_env(t_env **env)
 		printf("%s\n", tmp->var);
 		tmp = tmp->next;
 	}
+}
+
+
+char	**get_env_arr(t_env **env)
+{
+	t_env	*tmp;
+	char	**env_arr;
+	int		i;
+
+	tmp = *env;
+	i = 0;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	env_arr = malloc(i * sizeof(char *));
+	tmp = *env;
+	i = 0;
+	while (tmp)
+	{
+		env_arr[i] = ft_strdup(tmp->var);
+		i++;
+		tmp = tmp->next;
+	}
+	return (env_arr);
 }
