@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/08 00:44:46 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/08 17:01:55 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	create_cmd_table(t_node **node, t_table **table)
 		}
 		while (curr_n && !check_log_op(curr_n->type))
 		{
-		printf("OK\n");
 			if (check_redir(curr_n->type))
 				redir_parser(curr_n->tokens, &new);
 			if (curr_n->type == COMMAND)
@@ -101,6 +100,13 @@ void	create_cmd_table(t_node **node, t_table **table)
 				{
 					if (curr_n->tokens->next)
 						echo_parser(curr_n->tokens->next, &new);
+				}
+				else 
+				{
+					if (curr_n->tokens->next)
+					{
+						new->args = ft_strdup(curr_n->tokens->next->name);
+					}
 				}
 			}
 			curr_n = curr_n->next;
