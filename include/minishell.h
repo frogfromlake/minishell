@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/09 17:20:42 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/09 18:15:59 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,5 +225,6 @@ int		*create_child_prcs(t_table **table, int childs, int pipes, t_env **env);
 
 bool	check_builtin(t_table *table);
 char	**get_env_arr(t_env **env);
+char	*get_env_var(char *str);
 
 #endif

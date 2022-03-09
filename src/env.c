@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:41:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/09 17:35:52 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/09 18:47:38 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,20 @@ char	**get_env_arr(t_env **env)
 		tmp = tmp->next;
 	}
 	return (env_arr);
+}
+
+char	*get_env_var(char *str)
+{
+	t_env	*env;
+
+	env = *get_env(NULL);
+	while (env)
+	{
+		if (!ft_strncmp(env->var, str, ft_strlen(str)))
+		{
+			return (ft_strchr(env->var, '=') + 1);
+		}
+		env = env->next;
+	}
+	return (NULL);
 }
