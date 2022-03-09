@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/08 18:10:00 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/09 17:01:40 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ bool	check_builtin(t_table *table)
 int	builtin_exec(t_table **table, t_env **env)
 {
 	t_table	*curr;
-	// t_env	**tmp;
 
 	curr = *table;
-	// tmp = get_env(environ);
 	while (curr)
 	{
 		if (curr->log_op == 0 && check_builtin(curr))
@@ -85,7 +83,6 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 	t_env	**tmp;
 
 	tmp = get_env(environ);
-	(void)	table;
 	print_header();
 	while (true)
 	{
@@ -96,10 +93,10 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 			if (!check_empty_input(read))
 			{
 				lexer(head, read);
-				print_nodes(*head);
+				// print_nodes(*head);
 				parser(head, table);
 				// free_node(head);
-				print_cmd_table(*table);
+				// print_cmd_table(*table);
 				builtin_exec(table, tmp);
 				executer(table, tmp);
 				// print_cmd_table(*table);

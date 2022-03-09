@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/08 18:15:07 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/09 17:34:32 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,17 @@ int	*create_child_prcs(t_table **table, int childs, int pipes, t_env **env)
 	int		i;
 	pid_t	*pids;
 	char	**env_arr;
+	extern char	**environ;
 
 	i = 0;
 	(void)pipes;
+	(void)env;
 	pids = malloc(childs * sizeof(pid_t));
+	if (!pids)
+		perror("Allocation for PIDS failed.");
 	env_arr = get_env_arr(env);
+	if (!env_arr)
+		perror("Error: ENV is corrupted.");
 	while (i < childs)
 	{
 		pids[i] = fork();
@@ -50,12 +56,13 @@ int	*create_child_prcs(t_table **table, int childs, int pipes, t_env **env)
 		if (pids[i] == 0)
 		{
 			ft_free((void **)&pids);
-			execve((*table)->cmd_arr[0], (*table)->cmd_arr, env_arr);
+			if (!execve((*table)->cmd_arr[0], (*table)->cmd_arr, env_arr))
+				perror("Error: could't execute command.");
+			// ft_free_array(env_arr, false, false);
 		}
 		if (pids[i] != 0)
 			waitpid(*pids, NULL, 0);
 		i++;
 	}
-	ft_free_array(env_arr, false, false);
 	return (pids);
 }

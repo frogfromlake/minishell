@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:41:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/08 18:07:26 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/09 17:35:52 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	ft_env(t_env **env)
 	}
 }
 
-
 char	**get_env_arr(t_env **env)
 {
 	t_env	*tmp;
@@ -91,7 +90,7 @@ char	**get_env_arr(t_env **env)
 		i++;
 		tmp = tmp->next;
 	}
-	env_arr = malloc(i * sizeof(char *));
+	env_arr = ft_calloc(i + 1, sizeof(char *));
 	tmp = *env;
 	i = 0;
 	while (tmp)
