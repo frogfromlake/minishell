@@ -6,20 +6,19 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/11 00:38:29 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/11 00:51:08 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	executer(t_table **table, t_env **env)
+void	executer(t_table **table)
 {
 	int		childs;
 	int		here_doc;
 	// t_table	*tmp;
 	// pid_t	*pids;
 
-	(void)env;
 	childs = 0;
 	// tmp = *table;
 	here_doc = 0;
@@ -35,19 +34,18 @@ void	executer(t_table **table, t_env **env)
 		// }
 	// 	tmp = tmp->next;
 	// }
-	create_child_prcs(table, env, childs, here_doc);
+	create_child_prcs(table, childs, here_doc);
 }
 
-void	create_child_prcs(t_table **table, t_env **env, int childs, bool here_doc) // CMD | CMD
+void	create_child_prcs(t_table **table, int childs, bool here_doc) // CMD | CMD
 {
 	(void) here_doc;
-	(void) env;
 	(void) childs;
 	t_table	*tmp1;
 	t_table	*tmp2;
-	extern char **environ;
+	char	**env_arr;
 	
-
+	env_arr = get_env_arr();
 	tmp1 = *table;
 	tmp2 = (*table)->next->next;
 	int fd[2];
@@ -68,7 +66,7 @@ void	create_child_prcs(t_table **table, t_env **env, int childs, bool here_doc) 
 	{
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-		execve(tmp2->cmd_arr[0], tmp2->cmd_arr, environ);
+		execve(tmp2->cmd_arr[0], tmp2->cmd_arr, env_arr);
 		close(fd[0]);
 		exit(EXIT_SUCCESS);
 	}

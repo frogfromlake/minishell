@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/11 00:38:39 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/11 00:50:18 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ char	**get_env_path(t_env **env);
 void	append_slash(char **cmd_paths);
 int		built_in_exec(t_table *table);
 
-void	executer(t_table **table, t_env **env);
+void	executer(t_table **table);
 // pid_t	*create_child_prcs(t_table **table, t_env **env, int childs, bool here_doc);
 
 bool	check_builtin(t_table *table);
@@ -236,7 +236,7 @@ int		get_env_size(t_env *env);
 // int		child_prc_exec(int pipe_read, int pipe_write, t_table *table, t_env **env);
 // int		file_error(char *name_b, char *msg, char *name_a);
 
-void	create_child_prcs(t_table **table, t_env **env, int childs, bool here_doc);
+void	create_child_prcs(t_table **table, int childs, bool here_doc);
 
 
 #endif
