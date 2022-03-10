@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:41:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/10 17:50:00 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/10 23:00:05 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_env	**get_env(char **environ)
 	static t_env	*env;
 	int				i;
 
-	if (!env)
+	if (!env && environ)
 	{
 		i = 0;
 		while (environ[i])
@@ -65,55 +65,14 @@ t_env	**get_env(char **environ)
 	return (&env);
 }
 
-void	ft_env(t_env **env)
+void	ft_env()
 {
 	t_env	*tmp;
 
-	tmp = *env;
+	tmp = *(get_env(NULL));
 	while (tmp)
 	{
 		printf("%s\n", tmp->var);
 		tmp = tmp->next;
 	}
-}
-
-char	**get_env_arr(t_env **env)
-{
-	t_env	*tmp;
-	char	**env_arr;
-	int		i;
-
-	tmp = *env;
-	i = 0;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	env_arr = ft_calloc(i + 1, sizeof(char *));
-	tmp = *env;
-	i = 0;
-	while (tmp)
-	{
-		env_arr[i] = ft_strdup(tmp->var);
-		i++;
-		tmp = tmp->next;
-	}
-	return (env_arr);
-}
-
-char	*get_env_var(char *str)
-{
-	t_env	*env;
-
-	env = *get_env(NULL);
-	while (env)
-	{
-		if (!ft_strncmp(env->var, str, ft_strlen(str)))
-		{
-			return (ft_strchr(env->var, '=') + 1);
-		}
-		env = env->next;
-	}
-	return (NULL);
 }

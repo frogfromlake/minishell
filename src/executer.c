@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/10 22:18:24 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/11 00:38:29 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,24 +77,24 @@ void	create_child_prcs(t_table **table, t_env **env, int childs, bool here_doc) 
 	waitpid(pid2, NULL, 0);
 }
 
-int	built_in_exec(t_table *table, t_env **env)
+int	built_in_exec(t_table *table)
 {
 	if (table->log_op == 0 && table->exe && check_builtin(table))
 	{
 		if (!ft_strcmp(table->exe, "pwd"))
 			ft_pwd();
 		if (!ft_strcmp(table->exe, "cd"))
-			ft_cd(table, env);
+			ft_cd(table);
 		if (!ft_strcmp(table->exe, "echo"))
 			ft_echo(table, -1);
 		if (!ft_strcmp(table->exe, "export"))
-			ft_export(env, table);
+			ft_export(table);
 		if (!ft_strcmp(table->exe, "env"))
-			ft_env(env);
+			ft_env();
 		if (!ft_strcmp(table->exe, "exit"))
 			ft_exit(table);
 		if (!ft_strcmp(table->exe, "unset"))
-			ft_unset(env, table);
+			ft_unset(table);
 	}
 	return (0);
 }

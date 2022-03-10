@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/03 03:59:49 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/11 00:35:55 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ static t_env *check_var_existence(t_env **env, char *args)
 	return (0);
 }
 
-void	ft_export(t_env **env, t_table *table)
+void	ft_export(t_table *table)
 {
+	t_env	**env;
 	t_env	*tmp;
 	t_env	*existing;
 	int		ascii;
 
 	ascii = 65;
+	env = get_env(NULL);
 	tmp = *env;
 	if (!table->args)
 	{

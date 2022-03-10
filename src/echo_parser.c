@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 03:09:51 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/09 19:03:47 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/11 00:41:43 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static bool	is_echo_opt_valid(char *opt)
 	return (true);
 }
 
-int echo_parser(t_token *help, t_table **new)
+int echo_parser(t_token *help, t_table **new) // FIXME: it segfaults, when the env var doesn't exist.
 {
 	bool	echo_opt_valid;
 

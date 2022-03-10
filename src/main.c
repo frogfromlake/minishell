@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/10 20:02:23 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/11 00:39:12 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,10 @@ char	*get_prompt(void)
 	return (readline(ft_strjoin(colorized, str)));
 }
 
-static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
+static void	bitchy_snake_shell(t_node **head, t_table **table)
 {
 	char	*read;
-	t_env	**tmp;
 
-	tmp = get_env(environ);
 	print_header();
 	while (true)
 	{
@@ -68,8 +66,8 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 				parser(head, table);
 				// free_node(head);
 				// print_cmd_table(*table);
-				// built_in_exec(*table, tmp);
-				executer(table, tmp);
+				built_in_exec(*table);
+				// executer(table, tmp);
 				// print_cmd_table(*table);
 			}
 			free_table(table, false, false);
@@ -89,6 +87,6 @@ int	main(int argc, char *argv[], char **environ)
 	head = NULL;
 	table = NULL;
 	get_env(environ);
-	bitchy_snake_shell(&head, &table, environ);
+	bitchy_snake_shell(&head, &table);
 	return (0);
 }

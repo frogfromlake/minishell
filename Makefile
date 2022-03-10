@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/03/09 17:56:46 by fquist           ###   ########.fr        #
+#    Updated: 2022/03/10 22:48:31 by dmontema         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS		=	main.c \
 				cd.c \
 				exit.c \
 				env.c \
+				env_utils.c \
 				export.c \
 				unset.c \
 				cmd_paths.c \
