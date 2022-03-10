@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/09 17:20:42 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/10 16:25:15 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,9 +208,9 @@ int		redir_parser(t_token *curr_t, t_table **new);
 /* 	BUILTIN FUNCS															  */
 /* ************************************************************************** */
 int		ft_pwd(void);
-void	ft_echo(t_table **table);
-void	ft_cd(t_table **table, t_env **env);
-void	ft_exit(t_table **table);
+void	ft_echo(t_table *table, int fd);
+void	ft_cd(t_table *table, t_env **env);
+void	ft_exit(t_table *table);
 void	ft_env(t_env **env);
 void	ft_export(t_env **env, t_table *table);
 void	ft_unset(t_env **env, t_table *table);
@@ -218,12 +218,23 @@ void	ft_unset(t_env **env, t_table *table);
 int		set_cmd_path(t_table **table, t_env **env);
 char	**get_env_path(t_env **env);
 void	append_slash(char **cmd_paths);
-int		builtin_exec(t_table **table, t_env **env);
+int		builtin_exec(t_table *table, t_env **env, int **pipes);
 
 void	executer(t_table **table, t_env **env);
-int		*create_child_prcs(t_table **table, int childs, int pipes, t_env **env);
+pid_t	*create_child_prcs(t_table **table, t_env **env, int childs, bool here_doc);
 
 bool	check_builtin(t_table *table);
 char	**get_env_arr(t_env **env);
+
+int		**create_pipes_arr(int n);
+void	free_pipes_arr(int **arr, int elements);
+int		close_pipes(int **pipes, int childs, int child_nbr);
+void	child_prc(int childs, int i, int **pipes, t_table *table, t_env **env);
+int		open_file(t_table *table, int mod, int rights);
+int		child_prc_exec(int pipe_read, int pipe_write, t_table *table, t_env **env);
+int		file_error(char *name_b, char *msg, char *name_a);
+
+
+
 
 #endif

@@ -3,22 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 18:37:24 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/03 03:59:19 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/10 16:21:30 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_cd(t_table **table, t_env **env)
+void	ft_cd(t_table *table, t_env **env)
 {
-	t_table	*cmd;
 	t_env	*curr_env;
 	char	*home;
 
-	cmd = *table;
 	curr_env = *env;
 	while (curr_env)
 	{
@@ -26,10 +24,8 @@ void	ft_cd(t_table **table, t_env **env)
 			home = ft_strchr(curr_env->var, '/');
 		curr_env = curr_env->next;
 	}
-	if (cmd->args)
-		chdir(cmd->args);
-	else if (!cmd->args || !ft_strcmp(cmd->args, "~"))
-	{
+	if (table->args)
+		chdir(table->args);
+	else if (!table->args || !ft_strcmp(table->args, "~"))
 		chdir(home);
-	}
 }

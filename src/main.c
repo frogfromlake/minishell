@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/09 17:01:40 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/10 16:21:43 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,35 +23,6 @@ bool	check_builtin(t_table *table)
 		|| !ft_strcmp(table->exe, "unset"))
 		return (true);
 	return (false);
-}
-
-int	builtin_exec(t_table **table, t_env **env)
-{
-	t_table	*curr;
-
-	curr = *table;
-	while (curr)
-	{
-		if (curr->log_op == 0 && check_builtin(curr))
-		{
-			if (!ft_strcmp((*table)->exe, "pwd"))
-				ft_pwd();
-			if (!ft_strcmp((*table)->exe, "cd"))
-				ft_cd(&curr, env);
-			if (!ft_strcmp((*table)->exe, "echo"))
-				ft_echo(&curr);
-			if (!ft_strcmp((*table)->exe, "export"))
-				ft_export(env, curr);
-			if (!ft_strcmp((*table)->exe, "env"))
-				ft_env(env);
-			if (!ft_strcmp((*table)->exe, "exit"))
-				ft_exit(table);
-			if (!ft_strcmp((*table)->exe, "unset"))
-				ft_unset(env, curr);
-		}
-		curr = curr->next;
-	}
-	return (0);
 }
 
 static int	check_empty_input(char *input)
@@ -97,7 +68,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 				parser(head, table);
 				// free_node(head);
 				// print_cmd_table(*table);
-				builtin_exec(table, tmp);
+				// builtin_exec(table, tmp);
 				executer(table, tmp);
 				// print_cmd_table(*table);
 			}
