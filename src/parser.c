@@ -6,13 +6,13 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/08 17:01:55 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/09 19:49:58 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int get_cmd_arr_size(char **arr)
+int	get_cmd_arr_size(char **arr)
 {
 	int	res;
 
@@ -43,11 +43,6 @@ int	insert_cmd_arr(char ***arr, char *str)
 
 int	parser(t_node **node, t_table **table)
 {
-	// t_table	*help;
-	// t_table	*new;
-
-	// help = *table;
-	// new = NULL;
 	create_cmd_table(node, table);
 	return (0);
 }
@@ -55,7 +50,7 @@ int	parser(t_node **node, t_table **table)
 void	create_cmd_table(t_node **node, t_table **table)
 {
 	t_node	*curr_n;
-	t_token *token;
+	t_token	*token;
 	t_table	*new;
 
 	curr_n = *node;

@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/10 16:25:15 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/10 17:50:11 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ pid_t	*create_child_prcs(t_table **table, t_env **env, int childs, bool here_doc
 
 bool	check_builtin(t_table *table);
 char	**get_env_arr(t_env **env);
+char	*get_env_var(char *str);
 
 int		**create_pipes_arr(int n);
 void	free_pipes_arr(int **arr, int elements);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 03:09:51 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/03 03:59:25 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/09 19:03:47 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ static bool	is_echo_opt_valid(char *opt)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
+	if (opt[i++] != '-')
+		return (false);
 	while (opt[i])
 	{
 		if (opt[i] != 'n')
@@ -47,17 +49,26 @@ int echo_parser(t_token *help, t_table **new)
 		}
 		while (help)
 		{
-			(*new)->args = str_join((*new)->args, " ", help->name);
+			if (*help->name == '$')
+				(*new)->args = str_join((*new)->args, " ", get_env_var(help->name + 1));
+			else
+				(*new)->args = str_join((*new)->args, " ", help->name);
 			help = help->next;
 		}
 	}
 	else
 	{
-		(*new)->args = ft_strdup(help->name);
+		if (*help->name == '$')
+				(*new)->args = ft_strdup(get_env_var(help->name + 1));
+		else
+			(*new)->args = ft_strdup(help->name);
 		help = help->next;
 		while (help)
 		{
-			(*new)->args = str_join((*new)->args, " ", help->name);
+			if (*help->name == '$')
+				(*new)->args = str_join((*new)->args, " ", get_env_var(help->name + 1));
+			else
+				(*new)->args = str_join((*new)->args, " ", help->name);
 			help = help->next;
 		}
 	}

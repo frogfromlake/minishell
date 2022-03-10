@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_get_word.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:02:45 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/03 04:00:03 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/09 19:16:21 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*get_word_quoted(char **input)
 	size = 1;
 	while ((*input)[size] && !check_quotes((*input)[size]))
 		size++;
-	res = ft_calloc(size + 1, sizeof(char));
+	res = ft_calloc(++size + 1, sizeof(char));
 	if (!res)
 		return (NULL);
 	i = 0;

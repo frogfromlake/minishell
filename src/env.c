@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:41:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/09 22:57:08 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/10 17:50:00 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,20 @@ char	**get_env_arr(t_env **env)
 		tmp = tmp->next;
 	}
 	return (env_arr);
+}
+
+char	*get_env_var(char *str)
+{
+	t_env	*env;
+
+	env = *get_env(NULL);
+	while (env)
+	{
+		if (!ft_strncmp(env->var, str, ft_strlen(str)))
+		{
+			return (ft_strchr(env->var, '=') + 1);
+		}
+		env = env->next;
+	}
+	return (NULL);
 }
