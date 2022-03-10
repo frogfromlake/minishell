@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/10 17:50:27 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/10 17:56:37 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ static void	bitchy_snake_shell(t_node **head, t_table **table, char **environ)
 				parser(head, table);
 				// free_node(head);
 				// print_cmd_table(*table);
-				// builtin_exec(table, tmp);
-				executer(table, tmp);
+				built_in_exec(*table, tmp);
+				// executer(table, tmp);
 				// print_cmd_table(*table);
 			}
 			free_table(table, false, false);
