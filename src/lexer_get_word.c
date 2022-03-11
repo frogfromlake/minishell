@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:02:45 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/09 19:16:21 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/11 23:07:15 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ char	*get_word_quoted(char **input)
 	int		i;
 	int		size;
 	char	*res;
+	char	quote;
 
+	quote = **input;
 	size = 1;
-	while ((*input)[size] && !check_quotes((*input)[size]))
+	while ((*input)[size] && (*input)[size] != quote)
 		size++;
 	res = ft_calloc(++size + 1, sizeof(char));
 	if (!res)

@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/11 00:50:18 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/11 20:18:00 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,5 +238,6 @@ int		get_env_size(t_env *env);
 
 void	create_child_prcs(t_table **table, int childs, bool here_doc);
 
+int	expander (t_node **node);
 
 #endif
