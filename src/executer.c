@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/11 20:26:01 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/11 21:38:55 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,17 @@ void	child_prc(int childs, int i, t_table *table, int fd[2], int tmp_fd_in)
 	if (i == 0)
 	{
 		close(fd[0]);
-		if (!dup2(fd[1], STDOUT_FILENO))
-			perror("first cmd: dup2 failed.");
+		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
-		execve(table->cmd_arr[0], table->cmd_arr, env_arr);
+		if (!built_in_exec(table) && table->cmd_arr[0])
+			execve(table->cmd_arr[0], table->cmd_arr, env_arr);
 	}
 	else
 	{
 		close(fd[0]);
 		dup2(tmp_fd_in, STDIN_FILENO);
 		close(fd[1]);
-		execve(table->cmd_arr[0], table->cmd_arr, env_arr);
+		if (!built_in_exec(table) && table->cmd_arr[0])
+			execve(table->cmd_arr[0], table->cmd_arr, env_arr);
 	}
 }

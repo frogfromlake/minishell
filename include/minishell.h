@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/11 19:49:56 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/11 21:44:27 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void	free_token(t_token **token);
 /* ************************************************************************** */
 /* 	PARSER																	  */
 /* ************************************************************************** */
-void	create_cmd_table(t_node **node, t_table **table);
+int		create_cmd_table(t_node **node, t_table **table);
 int		parser(t_node **node, t_table **table);
 int		echo_parser(t_token *help, t_table **new);
 int		redir_parser(t_token *curr_t, t_table **new);
@@ -231,7 +231,7 @@ int		**create_pipes_arr(int n);
 void	free_pipes_arr(int **arr, int elements);
 int		close_pipes(int **pipes, int childs, int child_nbr);
 
-void		create_child_prcs(t_table **table, int childs);
+void	create_child_prcs(t_table **table, int childs);
 int		child_wait_pid(pid_t *pid, int n);
 void	child_prc(int childs, int i, t_table *table, int fd[2], int tmp_fd_in);
 

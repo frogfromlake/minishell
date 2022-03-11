@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/09 19:49:58 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/11 21:47:01 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ int	insert_cmd_arr(char ***arr, char *str)
 
 int	parser(t_node **node, t_table **table)
 {
-	create_cmd_table(node, table);
+	if (!create_cmd_table(node, table))
+		return (-1);
 	return (0);
 }
 
-void	create_cmd_table(t_node **node, t_table **table)
+int	create_cmd_table(t_node **node, t_table **table)
 {
 	t_node	*curr_n;
 	t_token	*token;
@@ -73,7 +74,10 @@ void	create_cmd_table(t_node **node, t_table **table)
 				if (!check_builtin(new))
 				{
 					if (set_cmd_path(&new, get_env(NULL)))
+					{
 						printf("bitchy snake shell: command not found: %s\n", new->exe);
+						return (-1);
+					}
 					else
 					{
 						if (curr_n->tokens->next)
@@ -107,4 +111,5 @@ void	create_cmd_table(t_node **node, t_table **table)
 			curr_n = curr_n->next;
 		}
 	}
+	return (0);
 }
