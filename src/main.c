@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/11 23:47:51 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/12 00:00:55 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,29 @@ char	*get_prompt(void)
 	str = "\033[0;32m °º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐$ \e[0m";
 	colorized = ft_strjoin(GREEN, ft_strrchr(getcwd(NULL, 0), '/'));
 	return (readline(ft_strjoin(colorized, str)));
+}
+
+int	built_in_exec(t_table *table)
+{
+	if (table->log_op == 0 && table->exe && check_builtin(table))
+	{
+		if (!ft_strcmp(table->exe, "pwd"))
+			ft_pwd();
+		if (!ft_strcmp(table->exe, "cd"))
+			ft_cd(table);
+		if (!ft_strcmp(table->exe, "echo"))
+			ft_echo(table, -1);
+		if (!ft_strcmp(table->exe, "export"))
+			ft_export(table);
+		if (!ft_strcmp(table->exe, "env"))
+			ft_env();
+		if (!ft_strcmp(table->exe, "exit"))
+			ft_exit(table);
+		if (!ft_strcmp(table->exe, "unset"))
+			ft_unset(table);
+		return (1);
+	}
+	return (0);
 }
 
 static void	bitchy_snake_shell(t_node **head, t_table **table)
