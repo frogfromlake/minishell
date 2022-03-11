@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:24:41 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/11 21:47:01 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/11 23:00:52 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,11 @@ int	insert_cmd_arr(char ***arr, char *str)
 
 int	parser(t_node **node, t_table **table)
 {
-	if (!create_cmd_table(node, table))
-		return (-1);
+	create_cmd_table(node, table);
 	return (0);
 }
 
-int	create_cmd_table(t_node **node, t_table **table)
+void	create_cmd_table(t_node **node, t_table **table)
 {
 	t_node	*curr_n;
 	t_token	*token;
@@ -74,10 +73,7 @@ int	create_cmd_table(t_node **node, t_table **table)
 				if (!check_builtin(new))
 				{
 					if (set_cmd_path(&new, get_env(NULL)))
-					{
 						printf("bitchy snake shell: command not found: %s\n", new->exe);
-						return (-1);
-					}
 					else
 					{
 						if (curr_n->tokens->next)
@@ -111,5 +107,4 @@ int	create_cmd_table(t_node **node, t_table **table)
 			curr_n = curr_n->next;
 		}
 	}
-	return (0);
 }

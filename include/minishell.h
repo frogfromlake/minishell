@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/11 21:44:27 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/11 23:00:33 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void	free_token(t_token **token);
 /* ************************************************************************** */
 /* 	PARSER																	  */
 /* ************************************************************************** */
-int		create_cmd_table(t_node **node, t_table **table);
+void	create_cmd_table(t_node **node, t_table **table);
 int		parser(t_node **node, t_table **table);
 int		echo_parser(t_token *help, t_table **new);
 int		redir_parser(t_token *curr_t, t_table **new);
