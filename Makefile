@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
+#    By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/03/10 22:48:31 by dmontema         ###   ########.fr        #
+#    Updated: 2022/03/11 18:27:11 by fquist           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ SRCS		=	main.c \
 				cmd_paths.c \
 				executer.c \
 				free_lexer.c \
-				pipes.c
+				pipes.c \
+				utils.c
 
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))

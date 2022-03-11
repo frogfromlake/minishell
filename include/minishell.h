@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/11 00:50:18 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/11 19:49:56 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,22 +221,19 @@ void	append_slash(char **cmd_paths);
 int		built_in_exec(t_table *table);
 
 void	executer(t_table **table);
-// pid_t	*create_child_prcs(t_table **table, t_env **env, int childs, bool here_doc);
 
 bool	check_builtin(t_table *table);
-char	**get_env_arr();
+char	**get_env_arr(void);
 char	*get_env_var(char *str);
 int		get_env_size(t_env *env);
 
-// int		**create_pipes_arr(int n);
-// void	free_pipes_arr(int **arr, int elements);
-// int		close_pipes(int **pipes, int childs, int child_nbr);
-// void	child_prc(int childs, int i, int **pipes, t_table *table, t_env **env);
-// int		open_file(t_table *table, int mod, int rights);
-// int		child_prc_exec(int pipe_read, int pipe_write, t_table *table, t_env **env);
-// int		file_error(char *name_b, char *msg, char *name_a);
+int		**create_pipes_arr(int n);
+void	free_pipes_arr(int **arr, int elements);
+int		close_pipes(int **pipes, int childs, int child_nbr);
 
-void	create_child_prcs(t_table **table, int childs, bool here_doc);
+void		create_child_prcs(t_table **table, int childs);
+int		child_wait_pid(pid_t *pid, int n);
+void	child_prc(int childs, int i, t_table *table, int fd[2], int tmp_fd_in);
 
 
 #endif
