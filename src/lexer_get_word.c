@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:02:45 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/11 23:07:15 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/12 18:32:59 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ char	*get_word_ws(char **input)
 	char	*res;
 
 	size = 0;
-	while ((*input)[size] && !check_whitespace((*input)[size]))
+	while ((*input)[size] && !check_whitespace((*input)[size])
+		&& !check_metachar((*input)[size]))
 		size++;
 	res = ft_calloc(size + 1, sizeof(char));
 	if (!res)
 		return (NULL);
 	i = 0;
-	while ((*input)[i] && !check_whitespace((*input)[i]))
+	// while ((*input)[i] && !check_whitespace((*input)[i]))
+	while (i < size)
 	{
 		res[i] = (*input)[i];
 		i++;
