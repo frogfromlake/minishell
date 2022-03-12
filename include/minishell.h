@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/12 01:43:41 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/13 00:35:23 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@
 # define LOG 0
 # define HEAD 0
 # define NEW 1
-
+# define WRITE 1
+# define READ 0
 /* ************************************************************************** */
 /* 	DATA STRUCTURES															  */
 /* ************************************************************************** */
@@ -212,7 +213,7 @@ int		ft_pwd(void);
 void	ft_echo(t_table *table, int fd);
 void	ft_cd(t_table *table);
 void	ft_exit(t_table *table);
-void	ft_env();
+void	ft_env(void);
 void	ft_export(t_table *table);
 void	ft_unset(t_table *table);
 
@@ -234,9 +235,10 @@ int		close_pipes(int **pipes, int childs, int child_nbr);
 
 void	create_child_prcs(t_table **table, int childs);
 int		child_wait_pid(pid_t *pid, int n);
-void	child_prc(int childs, int i, t_table *table, int fd[2], int tmp_fd_in);
 
 int	expander (t_node **node);
-int		play(void);
+void	child_prc(int childs, int i, t_table *table, int fd[2]);
+int		open_file(char *file, int mod, int rights);
+int		file_error(char *name_b, char *msg, char *name_a);
 
 #endif

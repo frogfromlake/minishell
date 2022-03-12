@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 18:50:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/07 19:54:40 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/12 21:09:18 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	set_cmd_path(t_table **table, t_env **env)
 		i++;
 	}
 	ft_free_split(cmd_paths);
+	system("afplay error2.mp3");
 	return (127);
 }
 
