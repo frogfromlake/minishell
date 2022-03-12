@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/12 01:14:46 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/12 01:43:15 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 	char	*read;
 
 	print_header();
+	system("(afplay welcome.mp3&)");
+	system("(afplay snake.mp3&)");
 	while (true)
 	{
 		read = get_prompt();

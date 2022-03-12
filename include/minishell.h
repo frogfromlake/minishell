@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/12 00:02:16 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/12 01:43:41 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <readline/history.h>
 # include <sys/stat.h>
 # include <signal.h>
+
 
 /* ************************************************************************** */
 /* 	DEFINES																	  */
@@ -236,5 +237,6 @@ int		child_wait_pid(pid_t *pid, int n);
 void	child_prc(int childs, int i, t_table *table, int fd[2], int tmp_fd_in);
 
 int	expander (t_node **node);
+int		play(void);
 
 #endif
