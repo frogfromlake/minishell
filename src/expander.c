@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 19:47:19 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/11 23:55:37 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/12 01:24:13 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,23 @@ int	expander(t_node **node)
 	curr = *node;
 	while (curr)
 	{
-		if (!check_log_op(curr->type) && curr->type != LESSLESS)
+		if (!check_log_op(curr->type))
 		{
 			if (curr->tokens)
 			{
 				token = curr->tokens;
 				while (token)
 				{
-					if (check_quotes(*token->name) && *token->name == '\'' && check_quotes_closed(token->name))
+					// handle case with here_doc redir - TODO: maybe do this on the lexer
+					if (token->type == LESSLESS && check_quotes(*token->name) && check_quotes_closed(token->name))
+					{
+						quote = *token->name;
+						tmp = token->name;
+						token->name = ft_strtrim(token->name, &quote);
+						free(tmp);
+						printf("|%s|\n", token->name);
+					}
+					else if (check_quotes(*token->name) && *token->name == '\'' && check_quotes_closed(token->name)) // trim single quotes.
 					{
 						quote = *token->name;
 						tmp = token->name;
@@ -50,7 +59,6 @@ int	expander(t_node **node)
 					}
 					token = token->next;
 				}
-
 			}
 		}
 		curr = curr->next;
