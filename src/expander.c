@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 19:47:19 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/12 18:21:00 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/13 00:01:22 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	expander(t_node **node)
 						tmp = token->name;
 						token->name = ft_strtrim(token->name, &quote);
 						free(tmp);
-						printf("|%s|\n", token->name);
 					}
 					// trim single quotes and don't expand env var
 					else if (check_quotes(*token->name) && *token->name == '\'' && check_quotes_closed(token->name)) // trim single quotes.
@@ -61,18 +60,19 @@ int	expander(t_node **node)
 					}
 					// expand env var, if there a '$' char
 					// TODO: handle case, if env var doesn't exist - empty str 
-					// TODO: expand env vars on a double quoted string
+					// TODO: expand env vars on a double quoted string (complex expand)
 					else if (*token->name == '$')
 					{
 						tmp = token->name;
 						env_var = get_env_var(token->name + 1);
 						if (!env_var)
 						{
-							token->name = NULL;
+							token->prev->next = token->next;
+							free(tmp->name);
+							tmp = NULL;
 						}
-						else
+						else //simple expand
 							token->name = ft_strdup(env_var);
-							printf("hello\n");
 						free(tmp);
 					}
 					token = token->next;
@@ -81,6 +81,5 @@ int	expander(t_node **node)
 		}
 		curr = curr->next;
 	}
-	printf("\n");
 	return (1);
 }
