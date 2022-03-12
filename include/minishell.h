@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/11 23:00:33 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/12 01:19:56 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <readline/history.h>
 # include <sys/stat.h>
 # include <signal.h>
+
 
 /* ************************************************************************** */
 /* 	DEFINES																	  */
@@ -234,6 +235,6 @@ int		close_pipes(int **pipes, int childs, int child_nbr);
 void	create_child_prcs(t_table **table, int childs);
 int		child_wait_pid(pid_t *pid, int n);
 void	child_prc(int childs, int i, t_table *table, int fd[2], int tmp_fd_in);
-
+int		play(void);
 
 #endif
