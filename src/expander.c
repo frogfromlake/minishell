@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 19:47:19 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/13 00:01:22 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/13 00:41:03 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ int	expander(t_node **node)
 						if (!env_var)
 						{
 							token->prev->next = token->next;
-							free(tmp->name);
-							tmp = NULL;
+							// free(token); //TODO: delete token from list
 						}
 						else //simple expand
 							token->name = ft_strdup(env_var);
 						free(tmp);
+						tmp = NULL;
 					}
 					token = token->next;
 				}
