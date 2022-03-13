@@ -82,7 +82,13 @@ int	sb_append_int(t_stringbuilder *sb, int nbr)
 	if (!nbr_str)
 		return (1);
 	if (sb_append_str(sb, nbr_str))
+	{
+		free(nbr_str);
+		nbr_str = 0;
 		return (2);
+	}
+	free(nbr_str);
+	nbr_str = 0;
 	return (0);
 }
 
