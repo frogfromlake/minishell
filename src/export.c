@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/11 00:35:55 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/13 16:53:20 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	equal_strlen(char *args)
 	return (0);
 }
 
-static t_env *check_var_existence(t_env **env, char *args)
+static	t_env *check_var_existence(t_env **env, char *args)
 {
 	t_env	*tmp;
 

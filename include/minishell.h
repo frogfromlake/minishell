@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/13 00:35:23 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/13 20:47:35 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,11 +233,11 @@ int		**create_pipes_arr(int n);
 void	free_pipes_arr(int **arr, int elements);
 int		close_pipes(int **pipes, int childs, int child_nbr);
 
-void	create_child_prcs(t_table **table, int childs);
+int		create_child_prcs(t_table **table, int childs);
 int		child_wait_pid(pid_t *pid, int n);
 
-int	expander (t_node **node);
-void	child_prc(int childs, int i, t_table *table, int fd[2]);
+int		expander(t_node **node);
+void	child_prc_exec(t_table *table, int fd[2], int childs);
 int		open_file(char *file, int mod, int rights);
 int		file_error(char *name_b, char *msg, char *name_a);
 
