@@ -45,7 +45,9 @@ SRCS		=	main.c \
 				executer.c \
 				free_lexer.c \
 				pipes.c \
-				utils.c
+				utils.c \
+				stringbuilder.c \
+				stringbuilder_utils.c
 
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))

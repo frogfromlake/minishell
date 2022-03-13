@@ -31,7 +31,7 @@
 # include <readline/history.h>
 # include <sys/stat.h>
 # include <signal.h>
-
+# include "stringbuilder.h"
 
 /* ************************************************************************** */
 /* 	DEFINES																	  */
@@ -236,9 +236,11 @@ int		close_pipes(int **pipes, int childs, int child_nbr);
 void	create_child_prcs(t_table **table, int childs);
 int		child_wait_pid(pid_t *pid, int n);
 
-int	expander (t_node **node);
+int		expander (t_node **node);
 void	child_prc(int childs, int i, t_table *table, int fd[2]);
 int		open_file(char *file, int mod, int rights);
 int		file_error(char *name_b, char *msg, char *name_a);
+
+
 
 #endif

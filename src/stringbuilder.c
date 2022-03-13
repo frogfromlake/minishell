@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   stringbuilder.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/26 18:37:24 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/11 00:32:49 by dmontema         ###   ########.fr       */
+/*   Created: 2022/03/12 17:53:02 by dmontema          #+#    #+#             */
+/*   Updated: 2022/03/12 22:14:51 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../include/stringbuilder.h"
 
-void	ft_cd(t_table *table)
+t_stringbuilder	*sb_create()
 {
-	t_env	*curr_env;
-	char	*home;
+	t_stringbuilder	*sb;
 
-	curr_env = *(get_env(NULL));
-	while (curr_env)
-	{
-		if (!ft_strncmp(curr_env->var, "HOME", 4))
-			home = ft_strchr(curr_env->var, '/');
-		curr_env = curr_env->next;
-	}
-	if (table->args)
-		chdir(table->args);
-	else if (!table->args || !ft_strcmp(table->args, "~"))
-		chdir(home);
+	sb = ft_calloc(1, sizeof(t_stringbuilder));
+	if (!sb)
+		return (NULL);
+	sb->str = ft_calloc(1, sizeof(char));
+	sb->str = 0;
+	sb->len = 0;
+	return (sb);
+}
+
+int	sb_destroy(t_stringbuilder *sb)
+{
+	free(sb->str);
+	sb->str = NULL;
+	sb->len = 0;
+	free(sb);
+	sb = NULL;
+	return (0);
 }

@@ -75,6 +75,10 @@ int	expander(t_node **node)
 						free(tmp);
 						tmp = NULL;
 					}
+					else if (*token->name == "\"" && check_quotes_closed(token->name))
+					{
+						
+					}
 					token = token->next;
 				}
 			}
