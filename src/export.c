@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/11 00:35:55 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/14 14:43:19 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	equal_strlen(char *args)
 	return (0);
 }
 
-static t_env *check_var_existence(t_env **env, char *args)
+static	t_env *check_var_existence(t_env **env, char *args)
 {
 	t_env	*tmp;
 
