@@ -42,6 +42,7 @@ int	create_child_prcs(t_table **table, int childs)
 	int		tmp_fd2;
 	int		fd[2];
 
+	(void) tmp_fd_out;
 	i = 0;
 	tmp = *table;
 	tmp_fd_in = dup(STDIN_FILENO);
