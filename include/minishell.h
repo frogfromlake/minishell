@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/14 14:48:58 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/14 20:57:34 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ int		create_tokens(t_node **node, char **input);
 int		create_redir_token(t_node **node, char **input);
 char	*get_word_ws(char **input);
 char	*get_word_args(char **input);
-char	*get_word_redir(t_type type, char **input);
+char	*get_word_redir(char **input);
 char	*get_word_quoted(char **input);
 bool	check_whitespace(char c);
 bool	check_metachar(char c);

@@ -40,7 +40,7 @@ int	sb_append_char(t_stringbuilder *sb, char c)
 	return (0);
 }
 
-int	sb_append_str(t_stringbuilder *sb, char *str)
+int	sb_append_str(t_stringbuilder *sb, char *str) //FIXME: line too long!
 {
 	int		str_len;
 	char	*tmp;

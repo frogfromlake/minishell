@@ -20,13 +20,12 @@ char	*get_word_ws(char **input)
 
 	size = 0;
 	while ((*input)[size] && !check_whitespace((*input)[size])
-		&& !check_metachar((*input)[size]))
+		&& !check_metachar((*input)[size]) && !check_quotes((*input)[size]))
 		size++;
 	res = ft_calloc(size + 1, sizeof(char));
 	if (!res)
 		return (NULL);
 	i = 0;
-	// while ((*input)[i] && !check_whitespace((*input)[i]))
 	while (i < size)
 	{
 		res[i] = (*input)[i];
@@ -59,28 +58,22 @@ char	*get_word_args(char **input)
 	return (res);
 }
 
-char	*get_word_redir(t_type type, char **input)
+char	*get_word_redir(char **input)
 {
 	int		i;
 	int		size;
-	bool	redir;
 	char	*res;
 
-	if (type == LESS || type == GREAT)
-		size = 3;
-	else
-		size = 4;
-	while ((*input)[size] && !check_whitespace((*input)[size]))
+	size = 0;
+	while ((*input)[size] && !check_whitespace((*input)[size])
+		&& !check_metachar((*input)[size]))
 		size++;
 	res = ft_calloc(size + 1, sizeof(char));
 	if (!res)
 		return (NULL);
 	i = 0;
-	redir = false;
-	while (!redir || ((*input)[i] && !check_whitespace((*input)[i])))
+	while (i < size)
 	{
-		if (check_whitespace((*input)[i]) || !check_redir((*input)[i]))
-			redir = true;
 		res[i] = (*input)[i];
 		i++;
 	}

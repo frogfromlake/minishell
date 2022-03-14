@@ -20,7 +20,7 @@ int	create_redir_token(t_node **node, char **input)
 	type = (*node)->type;
 	while (check_redir(**input) || check_whitespace(**input))
 		(*input)++;
-	new = new_token(get_word_ws(input), type);
+	new = new_token(get_word_redir(input), type);
 	append_token(&(*node)->tokens, new);
 	new->type = type;
 	return (1);

@@ -26,7 +26,6 @@ char	*expand_get_word_ws(char **input)
 	if (!res)
 		return (NULL);
 	i = 0;
-	// while ((*input)[i] && !check_whitespace((*input)[i]))
 	while (i < size)
 	{
 		res[i] = (*input)[i];
@@ -96,6 +95,7 @@ int	expander(t_node **node)
 				while (token)
 				{
 					// handle case with here_doc redir - TODO: maybe do this on the lexer
+					// if the delimiter has no quotes whatsoever, it should expand the env vars from the input/here_doc
 					if (token->type == LESSLESS && check_quotes(*token->name) && check_quotes_closed(token->name))
 					{
 						quote = *token->name;
@@ -128,7 +128,7 @@ int	expander(t_node **node)
 						free(tmp);
 						tmp = NULL;
 					}
-					else if (*token->name == '\"' && check_quotes_closed(token->name))
+					else if (*token->name == '\"' && check_quotes_closed(token->name)) // expand env vars in a double quoted string
 					{
 						// tmp = token->name;
 						token->name = ft_strtrim(token->name, "\"");
