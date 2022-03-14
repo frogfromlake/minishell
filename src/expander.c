@@ -12,6 +12,59 @@
 
 #include "../include/minishell.h"
 
+char	*expand_get_word_ws(char **input)
+{
+	int		i;
+	int		size;
+	char	*res;
+
+	size = 0;
+	while ((*input)[size] && !check_whitespace((*input)[size])
+		&& !check_metachar((*input)[size]) && !check_quotes((*input)[size]))
+		size++;
+	res = ft_calloc(size + 1, sizeof(char));
+	if (!res)
+		return (NULL);
+	i = 0;
+	// while ((*input)[i] && !check_whitespace((*input)[i]))
+	while (i < size)
+	{
+		res[i] = (*input)[i];
+		i++;
+	}
+	(*input) += i;
+	return (res);
+}
+
+void	complex_expand(char **str)
+{
+	t_stringbuilder *sb;
+	char			*tmp;
+	char			*env_var;
+
+	sb = sb_create();
+	tmp = *str;
+	while (*tmp)
+	{
+		if (*tmp == '$')
+		{
+			tmp++;
+			env_var = expand_get_word_ws(&tmp);
+			sb_append_str(sb, get_env_var(env_var));
+			free(env_var);
+			env_var = NULL;
+			continue ;
+		}
+		else
+			sb_append_char(sb, *tmp);
+		tmp++;
+	}
+	tmp = *str;
+	*str = sb_get_str(sb);
+	sb_destroy(sb);
+	free(tmp);
+}
+
 bool	check_quotes_closed(char *str)
 {
 	char quote;
@@ -74,6 +127,14 @@ int	expander(t_node **node)
 							token->name = ft_strdup(env_var);
 						free(tmp);
 						tmp = NULL;
+					}
+					else if (*token->name == '\"' && check_quotes_closed(token->name))
+					{
+						// tmp = token->name;
+						token->name = ft_strtrim(token->name, "\"");
+						complex_expand(&token->name);
+						if (!(*token->name))
+							token->prev->next = token->next; //TODO: delete token from list
 					}
 					token = token->next;
 				}
