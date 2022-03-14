@@ -22,11 +22,8 @@ t_table	*new_table(void)
 	new->exe = NULL;
 	new->args = NULL;
 	new->log_op = 0;
-	new->redir_in = NULL;
-	new->redir_out = NULL;
-	new->infiles = NULL;
-	new->outfiles = NULL;
-	new->delimiter = NULL;
+	new->redir = NULL;
+	new->files = NULL;
 	new->opt = 0;
 	new->cmd_arr = ft_calloc(2, sizeof(char *));
 	return (new);

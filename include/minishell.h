@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/14 14:48:58 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/15 00:08:57 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,8 @@ typedef struct s_table
 	char			*exe;
 	char			*args;
 	t_type			log_op;
-	t_list			*redir_in;
-	t_list			*redir_out;
-	t_list			*infiles;
-	t_list			*outfiles;
-	t_list			*delimiter;
+	t_list			*redir;
+	t_list			*files;
 	int				opt;
 	struct s_table	*next;
 	struct s_table	*prev;
@@ -220,25 +217,19 @@ void	ft_unset(t_table *table);
 int		set_cmd_path(t_table **table, t_env **env);
 char	**get_env_path(t_env **env);
 void	append_slash(char **cmd_paths);
-int		built_in_exec(t_table *table);
-
-void	executer(t_table **table);
 
 bool	check_builtin(t_table *table);
 char	**get_env_arr(void);
 char	*get_env_var(char *str);
 int		get_env_size(t_env *env);
 
-int		**create_pipes_arr(int n);
-void	free_pipes_arr(int **arr, int elements);
-int		close_pipes(int **pipes, int childs, int child_nbr);
-
-int		create_child_prcs(t_table **table, int childs);
-int		child_wait_pid(pid_t *pid, int n);
-
 int		expander(t_node **node);
-void	child_prc_exec(t_table *table, int fd[2], int childs);
+
 int		open_file(char *file, int mod, int rights);
 int		file_error(char *name_b, char *msg, char *name_a);
+int		built_in_exec(t_table *table);
+int		exec_loop(t_table *table);
+int		create_prcs(t_table *table, int pid);
+void	route_stdin(t_table *table, int fd_read, int tmp_fd);
 
 #endif

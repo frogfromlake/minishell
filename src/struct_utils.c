@@ -59,8 +59,8 @@ void	print_cmd_table(t_table *table)
 		printf("ARGS: %s\n", table->args);
 		printf("LOG_OP: %d\n", table->log_op);
 
-		tmp = table->redir_in;
-		printf("REDIR_IN: ");
+		tmp = table->redir;
+		printf("REDIR: ");
 		while (tmp)
 		{
 			printf("%d ", *(int *) tmp->content);
@@ -68,35 +68,8 @@ void	print_cmd_table(t_table *table)
 		}
 		printf("\n");
 
-		tmp = table->infiles;
-		printf("INFILES: ");
-		while (tmp)
-		{
-			printf("%s ", (char *) tmp->content);
-			tmp = tmp->next;
-		}
-		printf("\n");
-
-		tmp = table->delimiter;
-		printf("DELIMITERS: ");
-		while (tmp)
-		{
-			printf("%s ", (char *) tmp->content);
-			tmp = tmp->next;
-		}
-		printf("\n");
-
-		tmp = table->redir_out;
-		printf("REDIR_OUT: ");
-		while (tmp)
-		{
-			printf("%d ", *(int *) tmp->content);
-			tmp = tmp->next;
-		}
-		printf("\n");
-
-		tmp = table->outfiles;
-		printf("OUTFILES: ");
+		tmp = table->files;
+		printf("FILES: ");
 		while (tmp)
 		{
 			printf("%s ", (char *) tmp->content);
