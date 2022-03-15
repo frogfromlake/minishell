@@ -12,6 +12,8 @@
 
 #include "../include/minishell.h"
 
+// TODO: adjust it to new parser and expander!!
+
 void	ft_echo(t_table *table, int fd)
 {
 	int		i;
