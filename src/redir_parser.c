@@ -27,9 +27,9 @@ static int	get_quoted_word(char *str, t_stringbuilder **sb)
 	return (++i);
 }
 
-static bool	check_quotes_closed(char *str)
+static bool	check_quotes_closed(char *str, t_stringbuilder **sb)
 {
-	char quote;
+	char	quote;
 
 	quote = *str;
 	while (*str)
@@ -38,6 +38,7 @@ static bool	check_quotes_closed(char *str)
 			return (true);
 		str++;
 	}
+	sb_destroy(*sb);
 	return (false);
 }
 
@@ -55,11 +56,8 @@ static int	check_redir_quotes(char *str, char **filename)
 		if (check_quotes(str[i]))
 		{
 			ret = 1;
-			if (!check_quotes_closed(&str[i]))
-			{
-				sb_destroy(sb);
+			if (!check_quotes_closed(&str[i], &sb))
 				return (-1);
-			}
 			i += get_quoted_word(&str[i], &sb);
 		}
 		else
@@ -76,7 +74,7 @@ static int	check_redir_quotes(char *str, char **filename)
 int	redir_parser(t_token *curr_t, t_table **new)
 {
 	t_type	type;
-	char 	*filename;
+	char	*filename;
 
 	type = curr_t->type;
 	filename = NULL;
