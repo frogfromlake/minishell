@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/15 16:03:04 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/15 22:22:42 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,5 +248,7 @@ void	route_stdout(t_table *table, int fd_write);
 int		heredoc(t_table *table, char *delimiter, int fd);
 void	exec(t_table *table);
 
+int		command_parser(t_token *token, t_table **new);
+int	define_echo_args(t_token *token, t_table **new);
 
 #endif

@@ -12,6 +12,8 @@
 
 #include "../include/minishell.h"
 
+// TODO: error handling, change name of check_redir_quotes
+
 static int	get_quoted_word(char *str, t_stringbuilder **sb)
 {
 	char	quote;
