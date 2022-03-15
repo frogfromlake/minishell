@@ -59,15 +59,24 @@ void	print_cmd_table(t_table *table)
 		printf("ARGS: %s\n", table->args);
 		printf("LOG_OP: %d\n", table->log_op);
 		printf("REDIR: ");
-		tmp = table->redir;
-		while (tmp)
+		if (table->redir)
 		{
-			printf("[%d %s] ", tmp->type, tmp->file);
-			tmp = tmp->next;
+			tmp = table->redir;
+			while (tmp)
+			{
+				printf("[%d %s] ", tmp->type, tmp->file);
+				tmp = tmp->next;
+			}
+			tmp = table->redir;
+			if (get_last_in_redir(tmp) || get_last_out_redir(tmp))
+			{
+				printf( "|");
+				if (get_last_in_redir(tmp))
+					printf(" [LAST IN: %s] ", get_last_in_redir(tmp)->file);
+				if (get_last_out_redir(tmp))
+				printf(" [LAST OUT: %s]", get_last_out_redir(tmp)->file);
+			}
 		}
-		tmp = table->redir;
-		printf("[LAST IN: %s ", get_last_in_redir(tmp)->file);
-		printf(", LAST OUT: %s] ", get_last_out_redir(tmp)->file);
 		printf("\n");
 		printf("----------\n");
 		table = table->next;
