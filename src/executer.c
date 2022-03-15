@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/15 00:58:00 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/15 02:56:25 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	exec_loop(t_table *table)
 	tmp = table;
 	while (tmp)
 	{
-		if (tmp->next == NULL && built_in_exec(tmp) && !tmp->redir)
+		if (tmp->next == NULL && !tmp->redir && built_in_exec(tmp))
 			return (1);
-		// else
-			// pid = create_prcs(tmp, pid);
+		else
+			pid = create_prcs(tmp, pid);
 		tmp = tmp->next;
 	}
 	while(i != -1)
@@ -43,51 +43,136 @@ int	exec_loop(t_table *table)
 	return (0);
 }
 
-// int	create_prcs(t_table *table, int pid)
-// {
-// 	int	fd[2];
-// 	int	tmp_fd;
+int	create_prcs(t_table *table, int pid)
+{
+	int	fd[2];
+	int	tmp_fd;
 
-// 	tmp_fd = dup(STDIN_FILENO);
-// 	pipe(fd);
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		route_stdin(table, fd[READ], tmp_fd);
-// 		// route_stdout(table, fd[WRITE]);
-// 		if (check_builtin(table))
-// 			built_in_exec(table);
-// 		// else
-// 		// 	exec(tmp);
-// 	}
-// 	// sig(SIGQUIT);
-// 	// sig(SIINT);
-// 	close(tmp_fd);
-// 	close(fd[WRITE]);
-// 	dup2(fd[READ], tmp_fd);
-// 	close(fd[READ]);
-// 	return (0);
-// }
+	tmp_fd = dup(STDIN_FILENO);
+	pipe(fd);
+	pid = fork();
+	if (pid == 0)
+	{
+		if (table->prev == NULL && table->next == NULL && !table->redir)
+			exec(table);
+		route_stdin(table, fd[READ], tmp_fd);
+		route_stdout(table, fd[WRITE]);
+		if (check_builtin(table))
+			built_in_exec(table);
+		// else if (table->redir->type == LESSLESS)
+		// 	heredoc(table->redir->file, here_fd);
+		else
+		{
+			printf("JETZT GEHTS LOS !!11!\n");
+			exec(table);
+		}
+	}
+	// sig(SIGQUIT);
+	// sig(SIINT);
+	close(tmp_fd);
+	close(fd[WRITE]);
+	dup2(fd[READ], tmp_fd);
+	close(fd[READ]);
+	return (0);
+}
 
-// void	route_stdin(t_table *table, int fd_read, int tmp_fd)
-// {
-// 	printf("ROUTE STDIN\n");
-// 	int	file_fd;
+void	route_stdin(t_table *table, int fd_read, int tmp_fd)
+{
+	int		file_fd;
+	t_redir	*last_in;
+	
+	last_in = get_last_in_redir(table->redir);
+	if (last_in->type == LESS)
+	{
+		file_fd = open_file(last_in->file, O_RDONLY, 0); // last file?
+		close(fd_read);
+		dup2(file_fd, STDIN_FILENO);
+		close(file_fd);
+	}
+	else if ((table->log_op == PIPE) || (last_in->type == LESSLESS))
+	{
+		close(fd_read);
+		dup2(tmp_fd, STDIN_FILENO);
+		// close?
+		close(tmp_fd);
+		// get file fd from open?
+		file_fd = dup(tmp_fd);
+		if (last_in->type == LESSLESS)
+			heredoc(table, table->redir->file, file_fd);
+	}
+	printf("JETZT GEHTS LOS !!11!\n");
+}
 
-// 	if ((*(int *)table->redir->content) == LESS)
-// 	{
-// 		file_fd = open_file((*(char *)table->files->content), O_RDONLY, 0);
-// 		close(fd_read);
-// 		dup2(file_fd, STDIN_FILENO);
-// 		close(file_fd);
-// 	}
-// 	else if ((table->log_op == PIPE) || (*(int *)table->redir) == )
-// 	{
-		
-// 	}
-// }
+void	route_stdout(t_table *table, int fd_write)
+{
+	t_redir	*last_out;
+	int		file_fd;
 
+	last_out = get_last_out_redir(table->redir);
+	if ((last_out->type == GREAT) || last_out->type == GREATGREAT)
+	{
+		file_fd = open_file(last_out->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		dup2(file_fd, STDOUT_FILENO);
+		close(file_fd);
+		close(fd_write);
+	}
+	else if (table->next == NULL)
+		close(fd_write);
+	else
+	{
+		dup2(fd_write, STDOUT_FILENO);
+		file_fd = open_file(last_out->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		file_fd = dup(fd_write);
+		close(fd_write);
+	}
+}
 
+int	heredoc(t_table *table, char *delimiter, int fd)
+{
+	int		count_cmds;
+	char	*read;
+	char	*delimiter_nl;
+	t_table	*tmp;
+
+	count_cmds = 0;
+	delimiter_nl = ft_strjoin(delimiter, "\n");
+	tmp = table;
+	while (table)
+	{
+		count_cmds++;
+		tmp = tmp->next;
+	}
+	while (true)
+	{
+		while (count_cmds)
+		{
+			write(2, "> ", 2);
+			count_cmds--;
+		}
+		write(2, "> ", 2);
+		read = get_next_line(STDIN_FILENO);
+		if (!ft_strcmp(read, delimiter_nl))
+			break ;
+		write(fd, read, ft_strlen(read));
+		ft_free((void **)&read);
+	}
+	// close(here_fd[WRITE]);
+	ft_free((void **)&read);
+	ft_free((void **)&delimiter_nl);
+	return (EXIT_SUCCESS);
+}
+
+void	exec(t_table *table)
+{
+	char	**env_arr;
+
+	env_arr = get_env_arr();
+	if (!env_arr)
+		perror("Could not resolve environ array.\n");
+	execve(table->cmd_arr[0], table->cmd_arr, env_arr);
+	// free_list()
+	exit(EXIT_FAILURE);
+}
 
 
 

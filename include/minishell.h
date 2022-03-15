@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/15 01:36:45 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/15 02:43:46 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,5 +244,9 @@ int		built_in_exec(t_table *table);
 int		exec_loop(t_table *table);
 int		create_prcs(t_table *table, int pid);
 void	route_stdin(t_table *table, int fd_read, int tmp_fd);
+void	route_stdout(t_table *table, int fd_write);
+int		heredoc(t_table *table, char *delimiter, int fd);
+void	exec(t_table *table);
+
 
 #endif
