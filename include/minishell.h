@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/15 02:43:46 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/15 16:03:04 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ typedef struct s_table
 	char			**cmd_arr;
 	char			*exe;
 	char			*args;
-	t_type			log_op;
 	t_redir			*redir;
+	t_type			log_op;
 	int				opt;
 	struct s_table	*next;
 	struct s_table	*prev;
