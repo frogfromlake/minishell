@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
 /*   Updated: 2022/03/15 23:00:01 by fquist           ###   ########.fr       */
@@ -131,8 +131,8 @@ typedef struct s_table
 	char			**cmd_arr;
 	char			*exe;
 	char			*args;
-	t_type			log_op;
 	t_redir			*redir;
+	t_type			log_op;
 	int				opt;
 	struct s_table	*next;
 	struct s_table	*prev;
@@ -259,6 +259,8 @@ void	route_stdin(t_table *table, t_exec *fds);
 void	route_stdout(t_table *table, t_exec *fds);
 int		heredoc(t_table *table, char *delimiter, t_exec *fds);
 void	exec(t_table *table);
+int		command_parser(t_token *token, t_table **new);
+int	define_echo_args(t_token *token, t_table **new);
 t_exec	*new_exec(void);
 
 #endif

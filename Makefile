@@ -49,6 +49,7 @@ SRCS		=	main.c \
 				stringbuilder.c \
 				stringbuilder_utils.c \
 				redir_struct.c \
+				command_parser.c \
 				exec_struct.c
 
 ODIR		= obj

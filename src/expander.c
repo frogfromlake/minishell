@@ -12,6 +12,8 @@
 
 #include "../include/minishell.h"
 
+// TODO: adjust to new parser - don't trim the quotes anymore.
+
 char	*expand_get_word_ws(char **input)
 {
 	int		i;
@@ -33,6 +35,18 @@ char	*expand_get_word_ws(char **input)
 	}
 	(*input) += i;
 	return (res);
+}
+
+bool	check_quotes_closed(char *str)
+{
+	char quote;
+	int	last;
+
+	quote = *str;
+	last = ft_strlen(str) - 1;
+	if (str[last] == quote)
+		return (true);
+	return (false);
 }
 
 void	complex_expand(char **str)
@@ -64,18 +78,6 @@ void	complex_expand(char **str)
 	free(tmp);
 }
 
-bool	check_quotes_closed(char *str)
-{
-	char quote;
-	int	last;
-
-	quote = *str;
-	last = ft_strlen(str) - 1;
-	if (str[last] == quote)
-		return (true);
-	return (false);
-}
-
 int	expander(t_node **node)
 {
 	t_node	*curr;
@@ -87,24 +89,15 @@ int	expander(t_node **node)
 	curr = *node;
 	while (curr)
 	{
-		if (!check_log_op(curr->type))
+		if (!check_log_op(curr->type) && !check_redir(curr->type))
 		{
 			if (curr->tokens)
 			{
 				token = curr->tokens;
 				while (token)
 				{
-					// handle case with here_doc redir - TODO: maybe do this on the lexer
-					// if the delimiter has no quotes whatsoever, it should expand the env vars from the input/here_doc
-					if (token->type == LESSLESS && check_quotes(*token->name) && check_quotes_closed(token->name))
-					{
-						quote = *token->name;
-						tmp = token->name;
-						token->name = ft_strtrim(token->name, &quote);
-						free(tmp);
-					}
 					// trim single quotes and don't expand env var
-					else if (check_quotes(*token->name) && *token->name == '\'' && check_quotes_closed(token->name)) // trim single quotes.
+					if (check_quotes(*token->name) && *token->name == '\'' && check_quotes_closed(token->name)) // trim single quotes.
 					{
 						quote = *token->name;
 						tmp = token->name;
