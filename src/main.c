@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/15 23:32:52 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/15 23:37:01 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	built_in_exec(t_table *table)
 static void	bitchy_snake_shell(t_node **head, t_table **table)
 {
 	char	*read;
+	int		s_out = dup(STDOUT_FILENO);
+	int		s_in = dup(STDIN_FILENO);
 
 	print_header();
 	// system("(afplay welcome.mp3&)");
@@ -95,12 +97,15 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				print_cmd_table(*table);
 				// built_in_exec(*table);
 				// printf("REDIR IS: %d\n", *(int *)(*table)->redir_in->content);
-				// exec_loop(*table);
+				exec_loop(*table);
 				// print_cmd_table(*table);
 			}
 			free_table(table, false, false);
 			free_list(head, false, false);
 		}
+		free(read);
+		dup2(s_in, STDIN_FILENO);
+		dup2(s_out, STDOUT_FILENO);
 	}
 }
 
