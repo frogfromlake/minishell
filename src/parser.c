@@ -12,35 +12,6 @@
 
 #include "../include/minishell.h"
 
-int	get_cmd_arr_size(char **arr)
-{
-	int	res;
-
-	res = 0;
-	while (arr[res])
-		res++;
-	return (res);
-}
-
-int	insert_cmd_arr(char ***arr, char *str)
-{
-	int		i;
-	int		size;
-	char	**tmp;
-
-	tmp = *arr;
-	size = get_cmd_arr_size(tmp);
-	*arr = ft_calloc(size + 2, sizeof(char *));
-	i = 0;
-	while (tmp[i])
-	{
-		(*arr)[i] = ft_strdup(tmp[i]);
-		i++;
-	}
-	(*arr)[i] = ft_strdup(str);
-	return (1);
-}
-
 int	parser(t_node **node, t_table **table)
 {
 	create_cmd_table(node, table);

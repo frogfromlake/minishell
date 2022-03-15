@@ -12,7 +12,8 @@
 
 #include "../include/minishell.h"
 
-int	set_cmd_path(t_table **table, t_env **env)
+// TODO: shorten code, change double pointer table to one pointer and call get_env() inside func
+int	set_cmd_path(t_table **table, t_env **env) 
 {
 	int		i;
 	char	*tmp;
