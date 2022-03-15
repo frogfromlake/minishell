@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 00:59:26 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/15 01:12:05 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/15 01:40:05 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,36 @@ t_redir	*append_redir(t_redir **head, t_redir *new)
 		new->prev = last;
 	}
 	return (new);
+}
+
+t_redir	*get_last_in_redir(t_redir *head)
+{
+	t_redir	*in;
+
+	if (!head)
+		return (NULL);
+	in = NULL;
+	while (head)
+	{
+		if (head->type == LESS || head->type == LESSLESS)
+			in = head;
+		head = head->next;
+	}
+	return (in);
+}
+
+t_redir	*get_last_out_redir(t_redir *head)
+{
+	t_redir	*out;
+
+	if (!head)
+		return (NULL);
+	out = NULL;
+	while (head)
+	{
+		if (head->type == GREAT || head->type == GREATGREAT)
+			out = head;
+		head = head->next;
+	}
+	return (out);
 }

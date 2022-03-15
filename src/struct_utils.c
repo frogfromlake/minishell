@@ -65,6 +65,9 @@ void	print_cmd_table(t_table *table)
 			printf("[%d %s] ", tmp->type, tmp->file);
 			tmp = tmp->next;
 		}
+		tmp = table->redir;
+		printf("[LAST IN: %s ", get_last_in_redir(tmp)->file);
+		printf(", LAST OUT: %s] ", get_last_out_redir(tmp)->file);
 		printf("\n");
 		printf("----------\n");
 		table = table->next;

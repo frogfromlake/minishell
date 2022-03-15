@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/15 01:15:10 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/15 01:36:45 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,8 @@ int		lstsize(t_token *lst);
 t_redir	*new_redir(t_type type, char *file);
 t_redir	*get_last_redir(t_redir *head);
 t_redir	*append_redir(t_redir **head, t_redir *new);
+t_redir	*get_last_in_redir(t_redir *head);
+t_redir	*get_last_out_redir(t_redir *head);
 
 /* ************************************************************************** */
 /* 	SHELL																	  */
