@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/15 00:55:19 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/15 01:15:10 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,21 @@ typedef struct s_node
 	// int				out;
 }				t_node;
 
+typedef struct s_redir
+{
+	t_type			type;
+	char			*file;
+	struct s_redir	*next;
+	struct s_redir	*prev;
+}	t_redir;
+
 typedef struct s_table
 {
 	char			**cmd_arr;
 	char			*exe;
 	char			*args;
 	t_type			log_op;
-	t_list			*redir;
-	t_list			*files;
+	t_redir			*redir;
 	int				opt;
 	struct s_table	*next;
 	struct s_table	*prev;
@@ -169,6 +176,10 @@ char	*str_join(char const *s1, char const *s2, const char *s3);
 char	*ft_strjoin_ws(char const *s1, char const *s2);
 char	*lstlast(t_token *lst);
 int		lstsize(t_token *lst);
+
+t_redir	*new_redir(t_type type, char *file);
+t_redir	*get_last_redir(t_redir *head);
+t_redir	*append_redir(t_redir **head, t_redir *new);
 
 /* ************************************************************************** */
 /* 	SHELL																	  */

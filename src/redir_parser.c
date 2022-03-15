@@ -14,7 +14,6 @@
 
 int	redir_parser(t_token *curr_t, t_table **new)
 {
-	ft_lstadd_back(&(*new)->redir, ft_lstnew(&curr_t->type));
-	ft_lstadd_back(&(*new)->files, ft_lstnew(curr_t->name));
+	append_redir(&(*new)->redir, new_redir(curr_t->type, curr_t->name));
 	return (1);
 }

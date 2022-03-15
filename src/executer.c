@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/15 00:36:08 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/15 00:58:00 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	exec_loop(t_table *table)
 	{
 		if (tmp->next == NULL && built_in_exec(tmp) && !tmp->redir)
 			return (1);
-		else
-			pid = create_prcs(tmp, pid);
+		// else
+			// pid = create_prcs(tmp, pid);
 		tmp = tmp->next;
 	}
 	while(i != -1)
@@ -43,49 +43,49 @@ int	exec_loop(t_table *table)
 	return (0);
 }
 
-int	create_prcs(t_table *table, int pid)
-{
-	int	fd[2];
-	int	tmp_fd;
+// int	create_prcs(t_table *table, int pid)
+// {
+// 	int	fd[2];
+// 	int	tmp_fd;
 
-	tmp_fd = dup(STDIN_FILENO);
-	pipe(fd);
-	pid = fork();
-	if (pid == 0)
-	{
-		route_stdin(table, fd[READ], tmp_fd);
-		// route_stdout(table, fd[WRITE]);
-		if (check_builtin(table))
-			built_in_exec(table);
-		// else
-		// 	exec(tmp);
-	}
-	// sig(SIGQUIT);
-	// sig(SIINT);
-	close(tmp_fd);
-	close(fd[WRITE]);
-	dup2(fd[READ], tmp_fd);
-	close(fd[READ]);
-	return (0);
-}
+// 	tmp_fd = dup(STDIN_FILENO);
+// 	pipe(fd);
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		route_stdin(table, fd[READ], tmp_fd);
+// 		// route_stdout(table, fd[WRITE]);
+// 		if (check_builtin(table))
+// 			built_in_exec(table);
+// 		// else
+// 		// 	exec(tmp);
+// 	}
+// 	// sig(SIGQUIT);
+// 	// sig(SIINT);
+// 	close(tmp_fd);
+// 	close(fd[WRITE]);
+// 	dup2(fd[READ], tmp_fd);
+// 	close(fd[READ]);
+// 	return (0);
+// }
 
-void	route_stdin(t_table *table, int fd_read, int tmp_fd)
-{
-	printf("ROUTE STDIN\n");
-	int	file_fd;
+// void	route_stdin(t_table *table, int fd_read, int tmp_fd)
+// {
+// 	printf("ROUTE STDIN\n");
+// 	int	file_fd;
 
-	if ((*(int *)table->redir->content) == LESS)
-	{
-		file_fd = open_file((*(char *)table->files->content), O_RDONLY, 0);
-		close(fd_read);
-		dup2(file_fd, STDIN_FILENO);
-		close(file_fd);
-	}
-	else if ((table->log_op == PIPE) || (*(int *)table->redir) == )
-	{
+// 	if ((*(int *)table->redir->content) == LESS)
+// 	{
+// 		file_fd = open_file((*(char *)table->files->content), O_RDONLY, 0);
+// 		close(fd_read);
+// 		dup2(file_fd, STDIN_FILENO);
+// 		close(file_fd);
+// 	}
+// 	else if ((table->log_op == PIPE) || (*(int *)table->redir) == )
+// 	{
 		
-	}
-}
+// 	}
+// }
 
 
 

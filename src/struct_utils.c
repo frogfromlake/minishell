@@ -39,7 +39,7 @@ void	print_tokens(t_token *token)
 
 void	print_cmd_table(t_table *table)
 {
-	t_list	*tmp;
+	t_redir	*tmp;
 
 	if (!table)
 		printf("EMPTY!!!\n");
@@ -58,21 +58,11 @@ void	print_cmd_table(t_table *table)
 		printf("EXE: %s\n", table->exe);
 		printf("ARGS: %s\n", table->args);
 		printf("LOG_OP: %d\n", table->log_op);
-
-		tmp = table->redir;
 		printf("REDIR: ");
+		tmp = table->redir;
 		while (tmp)
 		{
-			printf("%d ", *(int *) tmp->content);
-			tmp = tmp->next;
-		}
-		printf("\n");
-
-		tmp = table->files;
-		printf("FILES: ");
-		while (tmp)
-		{
-			printf("%s ", (char *) tmp->content);
+			printf("[%d %s] ", tmp->type, tmp->file);
 			tmp = tmp->next;
 		}
 		printf("\n");

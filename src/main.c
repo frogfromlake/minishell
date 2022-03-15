@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/03/15 00:33:55 by fquist           ###   ########.fr       */
-=======
-/*   Updated: 2022/03/14 20:05:45 by dmontema         ###   ########.fr       */
->>>>>>> 47d600115760da6d4dbf8d3b62535ad9f76b58aa
+/*   Updated: 2022/03/15 00:58:13 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +92,10 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				expander(head);
 				parser(head, table);
 				// free_node(head);
-				// print_cmd_table(*table);
+				print_cmd_table(*table);
 				// built_in_exec(*table);
 				// printf("REDIR IS: %d\n", *(int *)(*table)->redir_in->content);
-				exec_loop(*table);
+				// exec_loop(*table);
 				// print_cmd_table(*table);
 			}
 			free_table(table, false, false);
