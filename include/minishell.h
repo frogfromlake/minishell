@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/15 02:43:46 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/15 23:00:01 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,18 @@ typedef struct s_env
 	struct s_env	*next;
 }			t_env;
 
+typedef struct s_exec
+{
+	int	fd[2];
+	int	here_fd[2];
+	int	tmp_fd;
+	int	stin;
+	int	stout;
+	int	file_fd;
+	int	cmd_count;
+	int	no_rights;
+}			t_exec;
+
 /* ************************************************************************** */
 /* 	STRUCT UTILS															  */
 /* ************************************************************************** */
@@ -238,15 +250,15 @@ int		get_env_size(t_env *env);
 
 int		expander(t_node **node);
 
-int		open_file(char *file, int mod, int rights);
+int		open_file(t_exec *permission, char *file, int mod, int rights);
 int		file_error(char *name_b, char *msg, char *name_a);
 int		built_in_exec(t_table *table);
 int		exec_loop(t_table *table);
-int		create_prcs(t_table *table, int pid);
-void	route_stdin(t_table *table, int fd_read, int tmp_fd);
-void	route_stdout(t_table *table, int fd_write);
-int		heredoc(t_table *table, char *delimiter, int fd);
+int		create_prcs(t_table *table, t_exec *fds, int pid);
+void	route_stdin(t_table *table, t_exec *fds);
+void	route_stdout(t_table *table, t_exec *fds);
+int		heredoc(t_table *table, char *delimiter, t_exec *fds);
 void	exec(t_table *table);
-
+t_exec	*new_exec(void);
 
 #endif

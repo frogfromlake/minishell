@@ -6,21 +6,25 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 18:25:35 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/15 00:07:56 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/15 23:34:07 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	open_file(char *file, int mod, int rights)
+int	open_file(t_exec *permission, char *file, int mod, int rights)
 {
 	int	fd;
 
-	// if (ft_strncmp(file, "here_doc", 8) == 0)
-	// 	return (STDIN_FILENO);
 	fd = open(file, mod, rights);
 	if (fd < 0)
 		file_error("minishell", strerror(errno), file);
+	if (access(file, W_OK) < 0)
+	{
+		file_error("minishell", strerror(errno), file);
+		permission->no_rights = -1;
+		return (permission->no_rights);
+	}
 	return (fd);
 }
 

@@ -48,7 +48,8 @@ SRCS		=	main.c \
 				utils.c \
 				stringbuilder.c \
 				stringbuilder_utils.c \
-				redir_struct.c
+				redir_struct.c \
+				exec_struct.c
 
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))
