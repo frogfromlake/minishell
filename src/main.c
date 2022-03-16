@@ -6,7 +6,7 @@
 /*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/16 06:23:02 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/16 07:24:45 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				// print_cmd_table(*table);
 				// built_in_exec(*table);
 				// printf("REDIR IS: %d\n", *(int *)(*table)->redir_in->content);
-				// exec_loop(*table);
-				execution(*table);
+				exec_loop(*table);
 				// print_cmd_table(*table);
 			}
 			free_table(table, false, false);

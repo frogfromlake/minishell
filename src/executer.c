@@ -6,19 +6,11 @@
 /*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/16 07:20:16 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/16 07:26:18 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-
-void	execution(t_table *table)
-{
-	// if (exec_loop(table) == -2)
-	// 	return(exec_loop(table));
-	exec_loop(table);
-}
 
 int	exec_loop(t_table *table)
 {
@@ -38,9 +30,7 @@ int	exec_loop(t_table *table)
 	{
 		if (tmp->log_op == AND)
 		{
-			// printf("tmp1: %s\n", tmp->prev->exe);
 			tmp = tmp->next;
-			// printf("tmp2: %s\n", tmp->exe);
 			close(fds->stin);
 			close(fds->stout);
 			close(fds->tmp_fd);
@@ -81,9 +71,7 @@ int	create_prcs(t_table *table, t_exec *fds, int pid)
 		{
 			route_stdin(table, fds);
 			route_stdout(table, fds);
-			// printf("tmp: %s\n", table->exe);
 			exec(table);
-			// exit(EXIT_FAILURE);
 		}
 	}
 	close(fds->tmp_fd);

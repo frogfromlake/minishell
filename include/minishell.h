@@ -6,7 +6,7 @@
 /*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/16 06:59:40 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/16 07:25:02 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,6 @@ int		expander(t_node **node);
 int		open_file(t_exec *permission, char *file, int mod, int rights);
 int		file_error(char *name_b, char *msg, char *name_a);
 int		built_in_exec(t_table *table);
-void	execution(t_table *table);
 int		exec_loop(t_table *table);
 int		create_prcs(t_table *table, t_exec *fds, int pid);
 void	route_stdin(t_table *table, t_exec *fds);
