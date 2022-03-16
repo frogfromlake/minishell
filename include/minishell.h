@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/15 23:00:01 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/16 05:54:57 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,14 +253,15 @@ int		expander(t_node **node);
 int		open_file(t_exec *permission, char *file, int mod, int rights);
 int		file_error(char *name_b, char *msg, char *name_a);
 int		built_in_exec(t_table *table);
+int		execution(t_table *table);
 int		exec_loop(t_table *table);
 int		create_prcs(t_table *table, t_exec *fds, int pid);
 void	route_stdin(t_table *table, t_exec *fds);
 void	route_stdout(t_table *table, t_exec *fds);
-int		heredoc(t_table *table, char *delimiter, t_exec *fds);
+int		heredoc(char *delimiter, t_exec *fds);
 void	exec(t_table *table);
 int		command_parser(t_token *token, t_table **new);
-int	define_echo_args(t_token *token, t_table **new);
+int		define_echo_args(t_token *token, t_table **new);
 t_exec	*new_exec(void);
 
 #endif

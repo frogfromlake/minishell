@@ -3,34 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/15 23:47:18 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/16 06:03:26 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+
+int	execution(t_table *table)
+{
+	if (exec_loop(table) == -2)
+		return(exec_loop(table));
+	return (0);
+}
+
 int	exec_loop(t_table *table)
 {
 	int		i;
-	int		save;
 	int		pid;
 	int		exit_status;
+	int		and_op;
 	t_table *tmp;
 	t_exec	*fds;
 
 	i = 0;
-	save = 0;
 	pid = 0;
+	and_op = 0;
 	exit_status = 0;
 	tmp = table;
 	fds = new_exec();
 	while (tmp)
 	{
-		if (tmp->log_op != COMMAND)
+		if (tmp->log_op != COMMAND && tmp->log_op != AND)
 			tmp = tmp->next;
+		if (tmp->log_op == AND)
+		{
+			and_op = -2;
+			return (and_op);	
+		}
 		if (tmp->prev == NULL && tmp->next == NULL && !tmp->redir && built_in_exec(tmp))
 			return (1);
 		else
@@ -48,7 +61,7 @@ int	exec_loop(t_table *table)
 			exit_status = WEXITSTATUS(pid);
 		i--;
 	}
-	return (0);
+	return (exit_status);
 }
 
 int	create_prcs(t_table *table, t_exec *fds, int pid)
@@ -64,8 +77,7 @@ int	create_prcs(t_table *table, t_exec *fds, int pid)
 		{
 			route_stdin(table, fds);
 			route_stdout(table, fds);
-			// built_ins
-				exec(table);
+			exec(table);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -79,7 +91,7 @@ int	create_prcs(t_table *table, t_exec *fds, int pid)
 void	route_stdin(t_table *table, t_exec *fds)
 {
 	t_redir	*last_in;
-	
+
 	last_in = get_last_in_redir(table->redir);
 	if (last_in)
 	{
@@ -92,7 +104,7 @@ void	route_stdin(t_table *table, t_exec *fds)
 		else if (last_in->type == LESSLESS)
 		{
 			pipe(fds->here_fd);
-			heredoc(table, last_in->file, fds);
+			heredoc(last_in->file, fds);
 			dup2(fds->here_fd[READ], STDIN_FILENO);
 		}
 	}
@@ -125,29 +137,34 @@ void	route_stdout(t_table *table, t_exec *fds)
 			close(fds->file_fd);
 		}
 	}
-	else 
+	else
+	{
+		if (table->next == NULL || table->log_op == AND)
 		{
-			if (table->next == NULL)
+			if (fds->here_fd[READ] > 0 || fds->here_fd[WRITE] > 0)
 			{
-				if (fds->here_fd[READ] > 0 || fds->here_fd[WRITE] > 0)
-				{
-					dup2(fds->stout, fds->here_fd[WRITE]);
-					close(fds->stout);
-				}
-				dup2(fds->stout, STDOUT_FILENO);
+				dup2(fds->stout, fds->here_fd[WRITE]);
 				close(fds->stout);
 			}
-			else
+			dup2(fds->stout, STDOUT_FILENO);
+			close(fds->stout);
+			if (table->log_op == AND)
 			{
-				if (fds->here_fd[READ] > 0 || fds->here_fd[WRITE] > 0)
-				{
-					dup2(fds->fd[READ], fds->here_fd[WRITE]);
-					close(fds->fd[READ]);
-				}
-				dup2(fds->fd[WRITE], STDOUT_FILENO);
-				close(fds->fd[WRITE]);
+				dup2(fds->fd[1], STDOUT_FILENO);
+				close(fds->fd[1]);
 			}
 		}
+		else
+		{
+			if (fds->here_fd[READ] > 0 || fds->here_fd[WRITE] > 0)
+			{
+				dup2(fds->fd[READ], fds->here_fd[WRITE]);
+				close(fds->fd[READ]);
+			}
+			dup2(fds->fd[WRITE], STDOUT_FILENO);
+			close(fds->fd[WRITE]);
+		}
+	}
 }
 
 void	exec(t_table *table)
@@ -158,22 +175,17 @@ void	exec(t_table *table)
 	if (!env_arr)
 		perror("Could not resolve environ array.\n");
 	if (!built_in_exec(table))
-	{
 		execve(table->cmd_arr[0], table->cmd_arr, env_arr);
-		perror("execve failed\n");
-	}
 	exit(EXIT_FAILURE);
 }
 
 
-int	heredoc(t_table *table, char *delimiter, t_exec *fds)
+int	heredoc(char *delimiter, t_exec *fds)
 {
 	char	*read;
 	char	*delimiter_nl;
-	t_table	*tmp;
 
 	delimiter_nl = ft_strjoin(delimiter, "\n");
-	tmp = table;
 	while (true)
 	{
 		while (fds->cmd_count)
