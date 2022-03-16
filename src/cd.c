@@ -12,6 +12,8 @@
 
 #include "../include/minishell.h"
 
+// TODO: change env_var PWD after changing directory
+
 void	ft_cd(t_table *table)
 {
 	t_env	*curr_env;

@@ -89,9 +89,11 @@ int	define_echo_args(t_token *token, t_table **new)
 	int				res;
 
 	res = 0;
-	sb = sb_create();
 	if (check_opt(&token))
 		res = 1;
+	if (!token)
+		return (res);
+	sb = sb_create();
 	while (token)
 	{
 		if (check_quotes(*token->name))

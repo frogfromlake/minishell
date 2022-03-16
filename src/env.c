@@ -12,6 +12,8 @@
 
 #include "../include/minishell.h"
 
+// TODO: more syntax control
+
 t_env	*new_env(char *str)
 {
 	t_env	*new;

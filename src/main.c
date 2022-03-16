@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/16 15:01:07 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/16 18:10:28 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	built_in_exec(t_table *table)
 		if (!ft_strcmp(table->exe, "cd"))
 			ft_cd(table);
 		if (!ft_strcmp(table->exe, "echo"))
-			ft_echo(table, -1);
+			ft_echo(table);
 		if (!ft_strcmp(table->exe, "export"))
 			ft_export(table);
 		if (!ft_strcmp(table->exe, "env"))
@@ -97,7 +97,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				print_cmd_table(*table);
 				// built_in_exec(*table);
 				// printf("REDIR IS: %d\n", *(int *)(*table)->redir_in->content);
-				// exec_loop(*table);
+				exec_loop(*table);
 				// print_cmd_table(*table);
 			}
 			free_table(table, false, false);

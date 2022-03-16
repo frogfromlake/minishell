@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/16 07:25:02 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/16 18:10:00 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ int		redir_parser(t_token *curr_t, t_table **new);
 /* 	BUILTIN FUNCS															  */
 /* ************************************************************************** */
 int		ft_pwd(void);
-void	ft_echo(t_table *table, int fd);
+void	ft_echo(t_table *table);
 void	ft_cd(t_table *table);
 void	ft_exit(t_table *table);
 void	ft_env(void);

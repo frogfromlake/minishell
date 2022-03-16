@@ -51,7 +51,7 @@ char	*get_env_var(char *str)
 	env = *get_env(NULL);
 	while (env)
 	{
-		if (!ft_strncmp(env->var, str, ft_strlen(str)))
+		if (!ft_strncmp(env->var, str, ft_strlen(env->var)))
 		{
 			return (ft_strchr(env->var, '=') + 1);
 		}

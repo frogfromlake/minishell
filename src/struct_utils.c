@@ -57,6 +57,7 @@ void	print_cmd_table(t_table *table)
 		printf("\n");
 		printf("EXE: %s\n", table->exe);
 		printf("ARGS: %s\n", table->args);
+		printf("OPT: %d\n", table->opt);
 		printf("LOG_OP: %d\n", table->log_op);
 		printf("REDIR: ");
 		if (table->redir)
