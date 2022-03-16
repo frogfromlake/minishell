@@ -6,18 +6,18 @@
 /*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/16 06:03:26 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/16 07:20:16 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 
-int	execution(t_table *table)
+void	execution(t_table *table)
 {
-	if (exec_loop(table) == -2)
-		return(exec_loop(table));
-	return (0);
+	// if (exec_loop(table) == -2)
+	// 	return(exec_loop(table));
+	exec_loop(table);
 }
 
 int	exec_loop(t_table *table)
@@ -25,25 +25,29 @@ int	exec_loop(t_table *table)
 	int		i;
 	int		pid;
 	int		exit_status;
-	int		and_op;
 	t_table *tmp;
 	t_exec	*fds;
 
 	i = 0;
 	pid = 0;
-	and_op = 0;
 	exit_status = 0;
 	tmp = table;
 	fds = new_exec();
+	printf("tmp: %s\n", tmp->exe);
 	while (tmp)
 	{
-		if (tmp->log_op != COMMAND && tmp->log_op != AND)
-			tmp = tmp->next;
 		if (tmp->log_op == AND)
 		{
-			and_op = -2;
-			return (and_op);	
+			// printf("tmp1: %s\n", tmp->prev->exe);
+			tmp = tmp->next;
+			// printf("tmp2: %s\n", tmp->exe);
+			close(fds->stin);
+			close(fds->stout);
+			close(fds->tmp_fd);
+			exec_loop(tmp);
 		}
+		if (tmp->log_op != COMMAND && tmp->log_op != AND)
+			tmp = tmp->next;
 		if (tmp->prev == NULL && tmp->next == NULL && !tmp->redir && built_in_exec(tmp))
 			return (1);
 		else
@@ -77,8 +81,9 @@ int	create_prcs(t_table *table, t_exec *fds, int pid)
 		{
 			route_stdin(table, fds);
 			route_stdout(table, fds);
+			// printf("tmp: %s\n", table->exe);
 			exec(table);
-			exit(EXIT_FAILURE);
+			// exit(EXIT_FAILURE);
 		}
 	}
 	close(fds->tmp_fd);
@@ -139,7 +144,7 @@ void	route_stdout(t_table *table, t_exec *fds)
 	}
 	else
 	{
-		if (table->next == NULL || table->log_op == AND)
+		if (table->next == NULL)
 		{
 			if (fds->here_fd[READ] > 0 || fds->here_fd[WRITE] > 0)
 			{
@@ -148,11 +153,11 @@ void	route_stdout(t_table *table, t_exec *fds)
 			}
 			dup2(fds->stout, STDOUT_FILENO);
 			close(fds->stout);
-			if (table->log_op == AND)
-			{
-				dup2(fds->fd[1], STDOUT_FILENO);
-				close(fds->fd[1]);
-			}
+		}
+		else if (table->next->log_op == AND)
+		{
+			dup2(fds->fd[WRITE], fds->stout);
+			close(fds->fd[WRITE]);
 		}
 		else
 		{
