@@ -6,12 +6,14 @@
 /*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/16 07:26:18 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/16 08:19:02 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+
+// &&: last part not working with pipes and some redirs print to outfile AND stdout.
 int	exec_loop(t_table *table)
 {
 	int		i;
@@ -25,18 +27,27 @@ int	exec_loop(t_table *table)
 	exit_status = 0;
 	tmp = table;
 	fds = new_exec();
-	printf("tmp: %s\n", tmp->exe);
+	// dprintf(2,"tmp: %s\n", tmp->exe);
 	while (tmp)
 	{
 		if (tmp->log_op == AND)
 		{
-			tmp = tmp->next;
 			close(fds->stin);
-			close(fds->stout);
 			close(fds->tmp_fd);
-			exec_loop(tmp);
+			close(fds->stout);
+			while (i > 0)
+			{
+				waitpid(0, &pid, 0);
+				if (WIFEXITED(pid))
+					exit_status = WEXITSTATUS(pid);
+				i--;
+			}
+			tmp = tmp->next;
+			if (!tmp->next)
+				return(exec_loop(tmp));
+			// exec_loop(tmp);
 		}
-		if (tmp->log_op != COMMAND && tmp->log_op != AND)
+		if (tmp->log_op != COMMAND)
 			tmp = tmp->next;
 		if (tmp->prev == NULL && tmp->next == NULL && !tmp->redir && built_in_exec(tmp))
 			return (1);
