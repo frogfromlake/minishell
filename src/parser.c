@@ -21,7 +21,6 @@ int	parser(t_node **node, t_table **table)
 void	create_cmd_table(t_node **node, t_table **table)
 {
 	t_node	*curr_n;
-	// t_token	*token;
 	t_table	*new;
 
 	curr_n = *node;
@@ -39,43 +38,7 @@ void	create_cmd_table(t_node **node, t_table **table)
 			if (check_redir(curr_n->type))
 				redir_parser(curr_n->tokens, &new);
 			if (curr_n->type == COMMAND)
-			{
 				command_parser(curr_n->tokens, &new);
-				// new->exe = ft_strdup(curr_n->tokens->name);
-				// if (!check_builtin(new))
-				// {
-				// 	if (set_cmd_path(&new, get_env(NULL)))
-				// 		printf("bitchy snake shell: command not found: %s\n", new->exe);
-				// 	else
-				// 	{
-				// 		if (curr_n->tokens->next)
-				// 		{
-				// 			token = curr_n->tokens->next;
-				// 			while (token)
-				// 			{
-				// 				if (!new->args)
-				// 					new->args = ft_strdup(token->name);
-				// 				else
-				// 					new->args = ft_strjoin_ws(new->args, token->name);
-				// 				insert_cmd_arr(&new->cmd_arr, token->name);
-				// 				token = token->next;
-				// 			}
-				// 		}
-				// 	}
-				// }
-				// else if (!ft_strcmp(new->exe, "echo"))
-				// {
-				// 	if (curr_n->tokens->next)
-				// 		echo_parser(curr_n->tokens->next, &new);
-				// }
-				// else 
-				// {
-				// 	if (curr_n->tokens->next)
-				// 	{
-				// 		new->args = ft_strdup(curr_n->tokens->next->name);
-				// 	}
-				// }
-			}
 			curr_n = curr_n->next;
 		}
 	}
