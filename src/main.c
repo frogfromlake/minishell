@@ -78,8 +78,8 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 	int		s_in = dup(STDIN_FILENO);
 
 	print_header();
-	// system("(afplay welcome.mp3&)");
-	// system("(afplay snake.mp3&)");
+	// system("(afplay mp3/welcome.mp3&)");
+	// system("(afplay mp3/snake.mp3&)");
 	while (true)
 	{
 		read = get_prompt();

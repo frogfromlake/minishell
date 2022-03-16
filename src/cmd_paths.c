@@ -40,7 +40,7 @@ int	set_cmd_path(t_table **table, t_env **env)
 		i++;
 	}
 	ft_free_split(cmd_paths);
-	system("afplay error2.mp3");
+	system("afplay mp3/error2.mp3");
 	return (127);
 }
 
