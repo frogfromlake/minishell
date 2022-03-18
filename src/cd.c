@@ -22,8 +22,7 @@ void	change_pwd_var(void)
 	sb_append_str(sb, get_env_var("PWD"));
 	tmp = sb_get_str(sb);
 	ft_export(tmp);
-	sb_destroy(sb);
-	sb = sb_create();
+	sb_clear(sb);
 	sb_append_str(sb, "PWD=");
 	sb_append_str(sb, getcwd(NULL, 0));
 	free(tmp);
