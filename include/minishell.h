@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/16 18:10:00 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/18 17:52:55 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ typedef struct s_token
 	int				type;
 	struct s_token	*next;
 	struct s_token	*prev;
-	// int				state;
 }				t_token;
 
 typedef struct s_node
@@ -112,10 +111,6 @@ typedef struct s_node
 	t_token			*tokens;
 	struct s_node	*next;
 	struct s_node	*prev;
-	// t_token			*here_doc;
-	// char			*cmdpath;
-	// int				in;
-	// int				out;
 }				t_node;
 
 typedef struct s_redir
@@ -236,7 +231,7 @@ void	ft_echo(t_table *table);
 void	ft_cd(t_table *table);
 void	ft_exit(t_table *table);
 void	ft_env(void);
-void	ft_export(t_table *table);
+void	ft_export(char *args);
 void	ft_unset(t_table *table);
 
 int		set_cmd_path(t_table **table, t_env **env);

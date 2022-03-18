@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// TODO: replace all libc funcs with libft funcs
+// TODO: add clear func
 
 #ifndef STRINGBUILDER_H
 # define STRINGBUILDER_H

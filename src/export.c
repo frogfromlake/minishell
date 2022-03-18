@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/14 14:43:19 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/18 17:53:51 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	equal_strlen(char *args)
 	return (0);
 }
 
-static	t_env *check_var_existence(t_env **env, char *args)
+static t_env	*check_var_existence(t_env **env, char *args)
 {
 	t_env	*tmp;
 
@@ -40,7 +40,26 @@ static	t_env *check_var_existence(t_env **env, char *args)
 	return (0);
 }
 
-void	ft_export(t_table *table)
+static void	print_env_vars(t_env *env)
+{
+	t_env	*tmp;
+	int		ascii;
+
+	ascii = 65;
+	while (ascii < 123)
+	{
+		tmp = env;
+		while (tmp)
+		{
+			if (tmp->var[0] == ascii)
+				printf("declare -x %s\n", tmp->var);
+			tmp = tmp->next;
+		}
+		ascii++;
+	}
+}
+
+void	ft_export(char *args)
 {
 	t_env	**env;
 	t_env	*tmp;
@@ -50,29 +69,17 @@ void	ft_export(t_table *table)
 	ascii = 65;
 	env = get_env(NULL);
 	tmp = *env;
-	if (!table->args)
-	{
-		while (ascii < 123)
-		{
-			tmp = *env;
-			while (tmp)
-			{
-				if (tmp->var[0] == ascii)
-					printf("%s\n", tmp->var);
-				tmp = tmp->next;
-			}
-			ascii++;
-		}
-	}
+	if (!args)
+		print_env_vars(*env);
 	else
 	{
-		if (ft_strchr(table->args, '=') && table->args[0] != '=')
+		if (ft_strchr(args, '=') && args[0] != '=')
 		{
-			existing = check_var_existence(env, table->args);
+			existing = check_var_existence(env, args);
 			if (!existing)
-				append_env(env, new_env(table->args));
+				append_env(env, new_env(args));
 			else
-				ft_strcpy(existing->var, table->args);
+				ft_strcpy(existing->var, args);
 		}
 	}
 }
