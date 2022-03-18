@@ -18,10 +18,12 @@ t_env	*new_env(char *str)
 {
 	t_env	*new;
 
+	if (!str)
+		return (NULL);
 	new = ft_calloc(1, sizeof(t_env));
 	if (!new)
 		return (NULL);
-	new->var = str;
+		new->var = ft_strdup(str);
 	new->val = 0;
 	new->next = NULL;
 	return (new);
@@ -55,8 +57,9 @@ t_env	**get_env(char **environ)
 	static t_env	*env;
 	int				i;
 
-	if (!env && environ)
+	if (!env)
 	{
+		// TODO:if environ is NULL -> Error: Couldn't create env variables.
 		i = 0;
 		while (environ[i])
 		{

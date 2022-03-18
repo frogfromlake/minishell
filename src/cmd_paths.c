@@ -21,7 +21,10 @@ int	set_cmd_path(t_table **table, t_env **env)
 
 	i = 0;
 	if (access((*table)->exe, F_OK) == 0)
+	{
+		(*table)->cmd_arr[0] = ft_strdup((*table)->exe);
 		return (0);
+	}
 	cmd_paths = get_env_path(env);
 	if (cmd_paths == NULL)
 		return (ENOMEM);

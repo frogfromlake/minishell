@@ -12,7 +12,17 @@
 
 #include "../include/minishell.h"
 
-int		get_env_size(t_env *env)
+static int	get_len_til_equals(char *str) //TODO: change ugly func name.
+{
+	int	res;
+
+	res = 0;
+	while (str[res] != '=')
+		res++;
+	return (res);
+}
+
+int	get_env_size(t_env *env)
 {
 	int		res;
 
@@ -51,7 +61,7 @@ char	*get_env_var(char *str)
 	env = *get_env(NULL);
 	while (env)
 	{
-		if (!ft_strncmp(env->var, str, ft_strlen(env->var)))
+		if (!ft_strncmp(env->var, str, get_len_til_equals(env->var)))
 		{
 			return (ft_strchr(env->var, '=') + 1);
 		}
