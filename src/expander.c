@@ -12,6 +12,8 @@
 
 #include "../include/minishell.h"
 
+// TODO: case [echo $USER2] -> expand $USER instead
+
 static void	delete_token(t_token **token)
 {
 	t_token	*tmp;

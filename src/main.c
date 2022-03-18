@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/18 21:08:45 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/18 22:29:23 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	built_in_exec(t_table *table)
 		if (!ft_strcmp(table->exe, "echo"))
 			ft_echo(table);
 		if (!ft_strcmp(table->exe, "export"))
-			ft_export(table);
+			ft_export(table->args);
 		if (!ft_strcmp(table->exe, "env"))
 			ft_env();
 		if (!ft_strcmp(table->exe, "exit"))

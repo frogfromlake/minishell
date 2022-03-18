@@ -12,19 +12,24 @@
 
 #include "../include/minishell.h"
 
-// TODO: change env_var PWD after changing directory
-
-void	change_pwd_var() //don't work
+void	change_pwd_var(void)
 {
-	char	*old_pwd;
-	char	*new_pwd;
+	t_stringbuilder	*sb;
+	char			*tmp;
 
-	old_pwd = get_env_var("OLDPWD");
-	new_pwd = get_env_var("PWD");
-	// free(old_pwd);
-	old_pwd = ft_strdup(new_pwd);
-	// free(new_pwd);
-	new_pwd = ft_strdup(getcwd(NULL, 0));
+	sb = sb_create();
+	sb_append_str(sb, "OLDPWD=");
+	sb_append_str(sb, get_env_var("PWD"));
+	tmp = sb_get_str(sb);
+	ft_export(tmp);
+	sb_clear(sb);
+	sb_append_str(sb, "PWD=");
+	sb_append_str(sb, getcwd(NULL, 0));
+	free(tmp);
+	tmp = sb_get_str(sb);
+	ft_export(tmp);
+	sb_destroy(sb);
+	free(tmp);
 }
 
 static char	*get_home_dir(void)
