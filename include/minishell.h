@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/16 18:10:00 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/18 21:28:28 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,7 @@ int		get_env_size(t_env *env);
 
 int		expander(t_node **node);
 
-int		open_file(t_exec *permission, char *file, int mod, int rights);
+int		open_file(char *file, int mod, int rights);
 int		file_error(char *name_b, char *msg, char *name_a);
 int		built_in_exec(t_table *table);
 int		exec_loop(t_table *table);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/16 18:10:28 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/18 21:08:45 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ char	*get_prompt(void)
 	return (readline(ft_strjoin(colorized, str)));
 }
 
+// cmds with quoted arguments not working (include whitespaces). 
+// implement return values for cmds.
+// implement signals
 int	built_in_exec(t_table *table)
 {
 	if (table->log_op == 0 && table->exe && check_builtin(table))
