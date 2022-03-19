@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// TODO: add clear func
-
 #ifndef STRINGBUILDER_H
 # define STRINGBUILDER_H
 

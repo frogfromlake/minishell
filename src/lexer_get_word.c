@@ -12,53 +12,41 @@
 
 #include "../include/minishell.h"
 
-char	*get_word_ws(char **input)
+static void	get_quoted_word(t_stringbuilder **sb, char **input)
 {
-	int		i;
-	int		size;
-	char	*res;
+	char	quote;
 
-	size = 0;
-	while ((*input)[size] && !check_whitespace((*input)[size])
-		&& !check_metachar((*input)[size]) && !check_quotes((*input)[size]))
-		size++;
-	res = ft_calloc(size + 1, sizeof(char));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (i < size)
+	quote = **input;
+	sb_append_char(*sb, **input);
+	(*input)++;
+	while (**input && **input != quote)
 	{
-		res[i] = (*input)[i];
-		i++;
+		sb_append_char(*sb, **input);
+		(*input)++;
 	}
-	(*input) += i;
+	sb_append_char(*sb, **input);
+}
+
+char	*get_word(char **input)
+{
+	t_stringbuilder	*sb;
+	char			*res;
+
+	sb = sb_create();
+	while (**input && !check_whitespace(**input) && !check_metachar(**input))
+	{
+		if (check_quotes(**input))
+			get_quoted_word(&sb, input);
+		else
+			sb_append_char(sb, **input);
+		(*input)++;
+	}
+	res = sb_get_str(sb);
+	sb_destroy(sb);
 	return (res);
 }
 
-char	*get_word_args(char **input)
-{
-	int		i;
-	int		size;
-	char	*res;
-
-	size = 0;
-	while ((*input)[size] && !check_metachar((*input)[size]))
-		size++;
-	res = ft_calloc(size + 1, sizeof(char));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while ((*input)[i] &&
-		!check_metachar((*input)[i]) && !check_quotes((*input)[i]))
-	{
-		res[i] = (*input)[i];
-		i++;
-	}
-	(*input) += i;
-	return (res);
-}
-
-char	*get_word_redir(char **input)
+char	*get_word_ws(char **input) // TODO: delete this func!! and change other references to new func
 {
 	int		i;
 	int		size;
@@ -69,30 +57,6 @@ char	*get_word_redir(char **input)
 		&& !check_metachar((*input)[size]))
 		size++;
 	res = ft_calloc(size + 1, sizeof(char));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (i < size)
-	{
-		res[i] = (*input)[i];
-		i++;
-	}
-	(*input) += i;
-	return (res);
-}
-
-char	*get_word_quoted(char **input)
-{
-	int		i;
-	int		size;
-	char	*res;
-	char	quote;
-
-	quote = **input;
-	size = 1;
-	while ((*input)[size] && (*input)[size] != quote)
-		size++;
-	res = ft_calloc(++size + 1, sizeof(char));
 	if (!res)
 		return (NULL);
 	i = 0;

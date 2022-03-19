@@ -12,8 +12,8 @@
 
 #include "../include/minishell.h"
 
-// FIXME: case [echo -n "$USERR" -n] should print last arg (-n)
 // FIXME: case [echo hello"world"] should print without whitespace (helloworld)
+// FIXME: case [echo -n "$USERR" -n] should print last arg (-n)
 // FIXME: case [echo $]
 // FIXME: case [echo $ $?]
 // FIXME: case [echo $ $?]

@@ -15,21 +15,18 @@
 int	create_redir_token(t_node **node, char **input)
 {
 	t_type	type;
-	t_token	*new;
 
 	type = (*node)->type;
 	while (check_redir(**input) || check_whitespace(**input))
 		(*input)++;
-	new = new_token(get_word_redir(input), type);
-	append_token(&(*node)->tokens, new);
-	new->type = type;
+	append_token(&(*node)->tokens, new_token(get_word(input), type));
 	return (1);
 }
 
 int	create_tokens(t_node **node, char **input)
 {
 	int		cmd_present;
-	t_token	*new;
+	t_type	type;
 
 	if (check_redir((*node)->type))
 		create_redir_token(node, input);
@@ -38,15 +35,13 @@ int	create_tokens(t_node **node, char **input)
 		cmd_present = 0;
 		while ((**input && !check_metachar(**input)))
 		{
-			if (check_quotes(**input))
-				new = new_token(get_word_quoted(input), ARG);
+			if (!(cmd_present++))
+				type = COMMAND;
 			else if (**input == '-')
-				new = new_token(get_word_ws(input), OPTION);
-			else if (!(cmd_present++))
-				new = new_token(get_word_ws(input), COMMAND);
+				type = OPTION;
 			else
-				new = new_token(get_word_ws(input), ARG);
-			append_token(&(*node)->tokens, new);
+				type = ARG;
+			append_token(&(*node)->tokens, new_token(get_word(input), type));
 			while (check_whitespace(**input))
 				(*input)++;
 		}

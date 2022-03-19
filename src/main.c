@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/18 17:53:07 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/19 00:19:00 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 			{
 				lexer(head, read);
 				print_nodes(*head);
-				expander(head);
-				print_nodes(*head);
-				parser(head, table);
+				// expander(head);
+				// print_nodes(*head);
+				// parser(head, table);
 				// free_node(head);
-				print_cmd_table(*table);
+				// print_cmd_table(*table);
 				// built_in_exec(*table);
 				// printf("REDIR IS: %d\n", *(int *)(*table)->redir_in->content);
-				exec_loop(*table);
+				// exec_loop(*table);
 				// print_cmd_table(*table);
 			}
 			free_table(table, false, false);

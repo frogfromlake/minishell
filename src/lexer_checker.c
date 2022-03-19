@@ -42,7 +42,7 @@ bool	check_redir(t_type type)
 	return (false);
 }
 
-bool	check_log_op(int c)
+bool	check_log_op(t_type c)
 {
 	if (c == PIPE || c == AMPERSAND || c == OR || c == AND)
 		return (true);

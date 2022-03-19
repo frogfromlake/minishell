@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/18 17:52:55 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/19 01:35:21 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,9 @@ t_redir	*append_redir(t_redir **head, t_redir *new);
 t_redir	*get_last_in_redir(t_redir *head);
 t_redir	*get_last_out_redir(t_redir *head);
 
+void	free_node(t_node **node);
+void	free_token(t_token **token);
+
 /* ************************************************************************** */
 /* 	SHELL																	  */
 /* ************************************************************************** */
@@ -203,17 +206,15 @@ int		lexer(t_node **head, char *input);
 int		define_type(char *input);
 int		create_tokens(t_node **node, char **input);
 int		create_redir_token(t_node **node, char **input);
-char	*get_word_ws(char **input);
-char	*get_word_args(char **input);
-char	*get_word_redir(char **input);
-char	*get_word_quoted(char **input);
+
+char	*get_word(char **input);
+char	*get_word_ws(char **input); // TODO: delete this declaration!!
+
 bool	check_whitespace(char c);
 bool	check_metachar(char c);
 bool	check_quotes(char c);
 bool	check_redir(t_type type);
-bool	check_log_op(int c);
-void	free_node(t_node **node);
-void	free_token(t_token **token);
+bool	check_log_op(t_type c);
 
 /* ************************************************************************** */
 /* 	PARSER																	  */
