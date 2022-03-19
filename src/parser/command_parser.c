@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/19 16:45:36 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/19 22:17:16 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	command_parser(t_token *token, t_table **new)
 	if (!check_builtin(*new))
 	{
 		if (set_cmd_path(new, get_env(NULL)))
-			printf("bitchy snake shell: command not found: %s\n", (*new)->exe); // TODO: create a error_exit func
+			printf("bitchy snake shell: command not found: %s\n", (*new)->exe); // TODO: create a error_exit func)
 		else
 			if (token->next)
 				add_args_to_arr(token->next, new);
@@ -81,5 +81,5 @@ int	command_parser(t_token *token, t_table **new)
 		if (token->next)
 			(*new)->args = ft_strdup(token->next->name);
 	}
-	return (1);
+	return (0);
 }

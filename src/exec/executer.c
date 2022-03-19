@@ -6,13 +6,12 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/19 16:44:36 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/19 22:15:00 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// &&: last part not working with pipes and some redirs print to outfile AND stdout.
 int	exec_loop(t_table *table)
 {
 	int		i;
@@ -26,26 +25,8 @@ int	exec_loop(t_table *table)
 	exit_status = 0;
 	tmp = table;
 	fds = new_exec();
-	// dprintf(2,"tmp: %s\n", tmp->exe);
 	while (tmp)
 	{
-		if (tmp->log_op == AND)
-		{
-			close(fds->stin);
-			close(fds->tmp_fd);
-			close(fds->stout);
-			while (i > 0)
-			{
-				waitpid(0, &pid, 0);
-				if (WIFEXITED(pid))
-					exit_status = WEXITSTATUS(pid);
-				i--;
-			}
-			tmp = tmp->next;
-			if (!tmp->next)
-				return(exec_loop(tmp));
-			// exec_loop(tmp);
-		}
 		if (tmp->log_op != COMMAND)
 			tmp = tmp->next;
 		if (tmp->prev == NULL && tmp->next == NULL && !tmp->redir && built_in_exec(tmp))
@@ -152,7 +133,7 @@ void	route_stdout(t_table *table, t_exec *fds)
 			dup2(fds->stout, STDOUT_FILENO);
 			close(fds->stout);
 		}
-		else if (table->next->log_op == AND)
+		else if (table->next->log_op == AND) // bonus
 		{
 			dup2(fds->fd[WRITE], fds->stout);
 			close(fds->fd[WRITE]);
@@ -181,7 +162,6 @@ void	exec(t_table *table)
 		execve(table->cmd_arr[0], table->cmd_arr, env_arr);
 	exit(EXIT_FAILURE);
 }
-
 
 int	heredoc(char *delimiter, t_exec *fds)
 {

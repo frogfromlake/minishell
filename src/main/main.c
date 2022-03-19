@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/19 17:57:36 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/19 22:19:39 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ char	*get_prompt(void)
 	char			*ret;
 
 	prompt = sb_create();
-	sb_append_str(prompt, GREEN);
+	sb_append_str(prompt, CYAN);
 	sb_append_str(prompt, ft_strrchr(getcwd(NULL, 0), '/'));
-	// sb_append_str(prompt, getenv("USER"));
-	// sb_append_str(prompt, getenv("HOSTNAME"));
-	sb_append_str(prompt, "\033[0;32m °º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐$ \e[0m");
-	// prompt->str = readline(prompt->str);
+	sb_append_str(prompt, "\033[0;32m °º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐ ");
+	sb_append_str(prompt, GREEN);
+	sb_append_str(prompt, "@");
+	sb_append_str(prompt, getenv("USER"));
+	sb_append_str(prompt, "$ \e[0m");
 	ret = sb_get_str(prompt);
 	sb_destroy(prompt);
+	ret = readline(ret);
 	return (ret);
-	// still not working ... on my machine at home it worked.
-	// also there is a new bug with cd - segfault but i couldnt recreate it. happened 1 time.
 }
 
 // cmds with quoted arguments not working (include whitespaces). 
@@ -86,19 +86,20 @@ int	built_in_exec(t_table *table)
 static void	bitchy_snake_shell(t_node **head, t_table **table)
 {
 	char	*read;
+	int		status;
 	int		s_out = dup(STDOUT_FILENO);
 	int		s_in = dup(STDIN_FILENO);
 
 	print_header();
 	// system("(afplay mp3/welcome.mp3&)");
 	// system("(afplay mp3/snake.mp3&)");
+	// system("afplay mp3/error2.mp3");
 	while (true)
 	{
 		read = get_prompt();
-		read = readline(read);
-		add_history(read);
 		if (read != NULL && ft_strcmp(read, ""))
 		{
+			add_history(read);
 			if (!check_empty_input(read))
 			{
 				lexer(head, read);
@@ -107,10 +108,11 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				// print_nodes(*head);
 				parser(head, table);
 				// free_node(head);
-				// print_cmd_table(*table);
+				print_cmd_table(*table);
 				// built_in_exec(*table);
 				// printf("REDIR IS: %d\n", *(int *)(*table)->redir_in->content);
-				exec_loop(*table);
+				status = exec_loop(*table);
+				// printf("Exitstatus: %d\n", status);
 				// print_cmd_table(*table);
 			}
 			free_table(table, false, false);

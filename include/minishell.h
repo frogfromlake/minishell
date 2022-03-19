@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/19 17:39:29 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/19 20:49:11 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define PURPLE	"\033[0;35m"
 # define CYAN	"\033[0;36m"
 # define WHITE	"\033[0;37m"
-# define RESET	"\033[0m"
+# define RESET	"\e[0m"
 
 # define SIGINT 2
 # define SIGHUP 1
