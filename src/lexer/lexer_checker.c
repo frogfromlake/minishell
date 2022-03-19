@@ -44,7 +44,8 @@ bool	check_redir(t_type type)
 
 bool	check_log_op(t_type c)
 {
-	if (c == PIPE || c == AMPERSAND || c == OR || c == AND)
+	if (c == PIPE || c == AMPERSAND || c == OR || c == AND
+		|| c == LPAREN || c == RPAREN)
 		return (true);
 	return (false);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/19 22:19:39 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/19 22:47:59 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,11 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				lexer(head, read);
 				// print_nodes(*head);
 				expander(head);
-				// print_nodes(*head);
+				print_nodes(*head);
 				parser(head, table);
-				// free_node(head);
 				print_cmd_table(*table);
-				// built_in_exec(*table);
-				// printf("REDIR IS: %d\n", *(int *)(*table)->redir_in->content);
-				status = exec_loop(*table);
+				// status = exec_loop(*table);
 				// printf("Exitstatus: %d\n", status);
-				// print_cmd_table(*table);
 			}
 			free_table(table, false, false);
 			free_list(head, false, false);
