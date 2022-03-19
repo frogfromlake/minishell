@@ -22,15 +22,13 @@ typedef struct s_stringbuilder
 	int		len;
 }	t_stringbuilder;
 
-t_stringbuilder	*sb_create();
-int		sb_destroy(t_stringbuilder *sb);
-int		sb_clear(t_stringbuilder *sb);
+t_stringbuilder	*sb_create(void);
+int				sb_destroy(t_stringbuilder *sb);
+int				sb_clear(t_stringbuilder *sb);
 
-int		sb_append_char(t_stringbuilder *sb, char c);
-int		sb_append_str(t_stringbuilder *sb, char *str);
-int		sb_append_strn(t_stringbuilder *sb, char *str, int len);
-int		sb_append_int(t_stringbuilder *sb, int nbr);
-char	*sb_get_str(t_stringbuilder *sb);
+int				sb_append_char(t_stringbuilder *sb, char c);
+int				sb_append_str(t_stringbuilder *sb, char *str);
+int				sb_append_int(t_stringbuilder *sb, int nbr);
+char			*sb_get_str(t_stringbuilder *sb);
 
-
-# endif
+#endif

@@ -23,7 +23,7 @@ t_env	*new_env(char *str)
 	new = ft_calloc(1, sizeof(t_env));
 	if (!new)
 		return (NULL);
-		new->var = ft_strdup(str);
+	new->var = ft_strdup(str);
 	new->val = 0;
 	new->next = NULL;
 	return (new);

@@ -12,7 +12,7 @@
 
 #include "../include/stringbuilder.h"
 
-t_stringbuilder	*sb_create()
+t_stringbuilder	*sb_create(void)
 {
 	t_stringbuilder	*sb;
 

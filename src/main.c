@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/19 01:41:10 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/19 03:43:33 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ static int	check_empty_input(char *input)
 
 char	*get_prompt(void)
 {
-	char	*str;
-	char	*colorized;
+	t_stringbuilder	*prompt;
 
-	str = "\033[0;32m °º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐$ \e[0m";
-	colorized = ft_strjoin(GREEN, ft_strrchr(getcwd(NULL, 0), '/'));
-	return (readline(ft_strjoin(colorized, str)));
+	prompt = sb_create();
+	sb_append_str(prompt, GREEN);
+	sb_append_str(prompt, ft_strrchr(getcwd(NULL, 0), '/'));
+	sb_append_str(prompt, "\033[0;32m °º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐$ \e[0m");
+	prompt->str = readline(prompt->str);
+	return (prompt->str);
 }
 
 // cmds with quoted arguments not working (include whitespaces). 
@@ -86,21 +88,21 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 	while (true)
 	{
 		read = get_prompt();
+		add_history(read);
 		if (read != NULL && ft_strcmp(read, ""))
 		{
-			add_history(read);
 			if (!check_empty_input(read))
 			{
 				lexer(head, read);
-				print_nodes(*head);
-				// expander(head);
 				// print_nodes(*head);
-				// parser(head, table);
+				expander(head);
+				// print_nodes(*head);
+				parser(head, table);
 				// free_node(head);
 				// print_cmd_table(*table);
 				// built_in_exec(*table);
 				// printf("REDIR IS: %d\n", *(int *)(*table)->redir_in->content);
-				// exec_loop(*table);
+				exec_loop(*table);
 				// print_cmd_table(*table);
 			}
 			free_table(table, false, false);

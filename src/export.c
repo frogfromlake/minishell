@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/18 17:53:51 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/19 02:59:21 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ static void	print_env_vars(t_env *env)
 void	ft_export(char *args)
 {
 	t_env	**env;
-	t_env	*tmp;
+	// t_env	*tmp;
 	t_env	*existing;
-	int		ascii;
+	// int		ascii;
 
-	ascii = 65;
+	// ascii = 65;
 	env = get_env(NULL);
-	tmp = *env;
+	// tmp = *env;
 	if (!args)
 		print_env_vars(*env);
 	else

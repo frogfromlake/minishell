@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/19 01:40:42 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/19 03:26:53 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 /* ************************************************************************** */
 /* STANDARD INCLUDES														  */
 /* ************************************************************************** */
+# include "../libs/libft/include/libft.h"
+# include "stringbuilder.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <limits.h>
@@ -25,13 +29,9 @@
 # include <fcntl.h>
 # include <string.h>
 # include <stdlib.h>
-# include "../libs/libft/include/libft.h"
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <sys/stat.h>
 # include <signal.h>
-# include "stringbuilder.h"
 
 /* ************************************************************************** */
 /* 	DEFINES																	  */
