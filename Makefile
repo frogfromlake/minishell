@@ -19,7 +19,7 @@ LIBFTDIR	= libs/libft
 INCLUDES	= -I./include-I./$(LIBFTDIR)/include
 LIBRARIES	= -L./$(LIBFTDIR)/ -lft -lreadline
 
-SDIR		= src
+SDIR		= src/*
 SRCS		=	main.c \
 				header.c \
 				lexer.c \
@@ -44,7 +44,6 @@ SRCS		=	main.c \
 				cmd_paths.c \
 				executer.c \
 				free_lexer.c \
-				pipes.c \
 				utils.c \
 				stringbuilder.c \
 				stringbuilder_utils.c \

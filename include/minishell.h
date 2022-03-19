@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/19 03:26:53 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/19 17:39:29 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,7 @@ void	ft_unset(t_table *table);
 
 int		set_cmd_path(t_table **table, t_env **env);
 char	**get_env_path(t_env **env);
+int		sb_append_strn(t_stringbuilder *sb, char *str, int len);
 void	append_slash(char **cmd_paths);
 
 bool	check_builtin(t_table *table);
