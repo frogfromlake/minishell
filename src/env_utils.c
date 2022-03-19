@@ -12,16 +12,6 @@
 
 #include "../include/minishell.h"
 
-static int	get_len_til_equals(char *str) //TODO: change ugly func name.
-{
-	int	res;
-
-	res = 0;
-	while (str[res] != '=')
-		res++;
-	return (res);
-}
-
 int	get_env_size(t_env *env)
 {
 	int		res;
@@ -36,7 +26,7 @@ int	get_env_size(t_env *env)
 	return (res);
 }
 
-char	**get_env_arr() // TODO: free from where it is called.
+char	**get_env_arr(void)
 {
 	int		i;
 	t_env	*tmp;
@@ -54,17 +44,36 @@ char	**get_env_arr() // TODO: free from where it is called.
 	return (env_arr);
 }
 
+static char	get_var_name(t_env *env)
+{
+	t_stringbuilder	*sb;
+	int				i;
+	char			*res;
+
+	sb = sb_create();
+	i = 0;
+	while (env->var[i] != '=')
+		i++;
+	sb_append_strn(sb, env->var, i);
+	res = sb_get_str(sb);
+	sb_destroy(sb);
+	return (res);
+}
+
 char	*get_env_var(char *str)
 {
 	t_env	*env;
+	char	*var_name;
 
 	env = *get_env(NULL);
 	while (env)
 	{
-		if (!ft_strncmp(env->var, str, get_len_til_equals(env->var)))
+		var_name = get_var_name(env);
+		if (!ft_strcmp(var_name, str))
 		{
 			return (ft_strchr(env->var, '=') + 1);
 		}
+		free(var_name);
 		env = env->next;
 	}
 	return (NULL);

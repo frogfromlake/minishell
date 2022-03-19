@@ -14,7 +14,7 @@
 
 int	sb_append_char(t_stringbuilder *sb, char c)
 {
-	char 	*tmp;
+	char	*tmp;
 	int		old_len;
 	int		i;
 	char	*newstr;
@@ -30,7 +30,7 @@ int	sb_append_char(t_stringbuilder *sb, char c)
 	{
 		newstr[i] = sb->str[i];
 		i++;
-	} 
+	}
 	newstr[i] = c;
 	sb->len = ++i;
 	newstr[++i] = 0;
@@ -55,13 +55,45 @@ int	sb_append_str(t_stringbuilder *sb, char *str) //FIXME: line too long!
 	if (!newstr)
 		return (2);
 	i = 0;
-	while (i < sb->len)
+	while (i < sb->len) //TODO: own func called copy_old;
 	{
 		newstr[i] = sb->str[i];
 		i++;
 	}
 	j = 0;
-	while (j < str_len)
+	while (str[j] && j < str_len)
+	{
+		newstr[i + j] = str[j];
+		j++;
+	}
+	newstr[i + j] = 0;
+	sb->len = i + j;
+	tmp = sb->str;
+	sb->str = newstr;
+	free(tmp);
+	return (0);
+}
+
+int	sb_append_strn(t_stringbuilder *sb, char *str, int len) //FIXME: line too long!
+{
+	char	*tmp;
+	int		i;
+	int		j;
+	char	*newstr;
+
+	if (!str)
+		return (1);
+	newstr = ft_calloc(sb->len + len + 1, sizeof(char));
+	if (!newstr)
+		return (2);
+	i = 0;
+	while (i < sb->len) //TODO: own func called copy_old;
+	{
+		newstr[i] = sb->str[i];
+		i++;
+	}
+	j = 0;
+	while (str[j] && j < len)
 	{
 		newstr[i + j] = str[j];
 		j++;

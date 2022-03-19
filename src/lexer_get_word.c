@@ -12,6 +12,7 @@
 
 #include "../include/minishell.h"
 
+// TODO: call append_strn instead! 
 static void	get_quoted_word(t_stringbuilder **sb, char **input)
 {
 	char	quote;
