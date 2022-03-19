@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/19 00:19:00 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/19 01:41:10 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ char	*get_prompt(void)
 	return (readline(ft_strjoin(colorized, str)));
 }
 
+// cmds with quoted arguments not working (include whitespaces). 
+// implement return values for cmds.
+// implement signals
 int	built_in_exec(t_table *table)
 {
 	if (table->log_op == 0 && table->exe && check_builtin(table))

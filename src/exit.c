@@ -17,7 +17,7 @@ void	ft_exit(t_table *table)
 	if (!ft_strcmp(table->exe, "exit"))
 	{
 		// free stuff
-		write(1, "logout\n", 8);
+		write(1, "exit\n", 5);
 		exit(EXIT_SUCCESS);
 	}
 }

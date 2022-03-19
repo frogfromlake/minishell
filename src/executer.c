@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/16 08:19:02 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/18 21:29:52 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	exec_loop(t_table *table)
 	int		i;
 	int		pid;
 	int		exit_status;
-	t_table *tmp;
+	t_table	*tmp;
 	t_exec	*fds;
 
 	i = 0;
@@ -101,7 +101,7 @@ void	route_stdin(t_table *table, t_exec *fds)
 	{
 		if (last_in->type == LESS)
 		{
-			fds->file_fd = open_file(fds, last_in->file, O_RDONLY, 0);
+			fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
 			dup2(fds->file_fd, STDIN_FILENO);
 			close(fds->file_fd);
 		}
@@ -128,7 +128,7 @@ void	route_stdout(t_table *table, t_exec *fds)
 	{
 		if (last_out->type == GREAT)
 		{
-			fds->file_fd = open_file(fds, last_out->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			fds->file_fd =  open_file(last_out->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 			if (fds->file_fd < 0)
 				return ;
 			dup2(fds->file_fd, STDOUT_FILENO);
@@ -136,7 +136,7 @@ void	route_stdout(t_table *table, t_exec *fds)
 		}
 		else if (last_out->type == GREATGREAT)
 		{
-			fds->file_fd = open_file(fds, last_out->file, O_RDWR | O_CREAT | O_APPEND, 0644);
+			fds->file_fd = open_file(last_out->file, O_RDWR | O_CREAT | O_APPEND, 0644);
 			dup2(fds->file_fd, STDOUT_FILENO);
 			close(fds->file_fd);
 		}

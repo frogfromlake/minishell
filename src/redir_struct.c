@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 00:59:26 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/15 01:40:05 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/18 21:29:06 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_redir	*get_last_in_redir(t_redir *head)
 t_redir	*get_last_out_redir(t_redir *head)
 {
 	t_redir	*out;
+	int		current_file;
 
 	if (!head)
 		return (NULL);
@@ -76,7 +77,26 @@ t_redir	*get_last_out_redir(t_redir *head)
 	while (head)
 	{
 		if (head->type == GREAT || head->type == GREATGREAT)
+		{
 			out = head;
+			if (head->type == GREAT)
+			{
+				current_file = open_file(out->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+				if (current_file == -1)
+					exit(1);
+			}
+			else if (head->type == GREATGREAT)
+			{
+				if(head->next)
+				{
+					head = head->next;
+					continue ;
+				}
+				current_file = open_file(out->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+				if (current_file == -1)
+					exit(1);
+			}
+		}
 		head = head->next;
 	}
 	return (out);
