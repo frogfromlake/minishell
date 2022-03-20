@@ -6,7 +6,7 @@
 /*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 05:55:09 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/20 06:31:44 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,23 @@ static void add_args_to_arr(t_token *token, t_table **new)
 {
 	t_stringbuilder	*sb;
 	char			*trimmed;
-	char			dquote;
-	char			squote;
 
-	dquote = '\"';
-	squote = '\'';
 	sb = sb_create();
 	while (token)
 	{
-		if ((token->name[0] == dquote && token->name[1] == squote)
-			|| (token->name[0] == squote && token->name[1] == dquote))
+		if ((token->name[0] == DQUOTE && token->name[1] == SQUOTE)
+			|| (token->name[0] == SQUOTE && token->name[1] == SQUOTE))
 		{
 			insert_cmd_arr(&(*new)->cmd_arr, token->name);
 			return ;
 		}
-		if ((token->name[0] == dquote) || (token->name[0] == squote))
+		if ((token->name[0] == DQUOTE) || (token->name[0] == SQUOTE))
 		{
-			if (token->name[0] == squote)
+			if (token->name[0] == SQUOTE)
 				trimmed = ft_strtrim(token->name, "\'");
-			if (token->name[0] == dquote)
+			if (token->name[0] == DQUOTE)
 				trimmed = ft_strtrim(token->name, "\"");
-			if ((trimmed[0] == dquote) || (trimmed[0] == squote))
+			if ((trimmed[0] == DQUOTE) || (trimmed[0] == SQUOTE))
 				continue ;
 			else
 			{
