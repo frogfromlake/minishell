@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/19 22:15:00 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/20 00:24:34 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,62 +14,57 @@
 
 int	exec_loop(t_table *table)
 {
-	int		i;
-	int		pid;
-	int		exit_status;
 	t_table	*tmp;
 	t_exec	*fds;
 
-	i = 0;
-	pid = 0;
-	exit_status = 0;
 	tmp = table;
 	fds = new_exec();
 	while (tmp)
 	{
+		// operation_logic(tmp, fds);
 		if (tmp->log_op != COMMAND)
 			tmp = tmp->next;
 		if (tmp->prev == NULL && tmp->next == NULL && !tmp->redir && built_in_exec(tmp))
 			return (1);
-		else
-			pid = create_prcs(tmp, fds, pid);
-		i++;
+		else if (!tmp->next)
+			fds->pid = create_prcs(tmp, fds);
+		fds->i++;
 		tmp = tmp->next;
 	}
 	close(fds->stin);
 	close(fds->stout);
 	close(fds->tmp_fd);
-	while (i > 0)
+	while (fds->i > 0)
 	{
-		waitpid(0, &pid, 0);
-		if (WIFEXITED(pid))
-			exit_status = WEXITSTATUS(pid);
-		i--;
+		waitpid(0, &fds->pid, 0);
+		if (WIFEXITED(fds->pid))
+			fds->exit_status = WEXITSTATUS(fds->pid);
+		fds->i--;
 	}
-	return (exit_status);
+	return (fds->exit_status);
 }
 
-int	create_prcs(t_table *table, t_exec *fds, int pid)
+int	create_prcs(t_table *table, t_exec *fds)
 {
 	pipe(fds->fd);
-	pid = fork();
-	if (pid == 0)
+	fds->pid = fork();
+	if (fds->pid == 0)
 	{
 		close(fds->fd[READ]);
 		if (!table->prev && !table->next && !table->redir && !check_builtin(table))
-			exec(table);
+			fds->exit_status = exec(table);
 		else
 		{
 			route_stdin(table, fds);
 			route_stdout(table, fds);
-			exec(table);
+			fds->exit_status = exec(table);
 		}
 	}
 	close(fds->tmp_fd);
 	close(fds->fd[WRITE]);
 	dup2(fds->fd[READ], fds->tmp_fd);
 	close(fds->fd[READ]);
-	return (pid);
+	return (fds->exit_status);
 }
 
 void	route_stdin(t_table *table, t_exec *fds)
@@ -151,7 +146,7 @@ void	route_stdout(t_table *table, t_exec *fds)
 	}
 }
 
-void	exec(t_table *table)
+int	exec(t_table *table)
 {
 	char	**env_arr;
 
@@ -159,8 +154,11 @@ void	exec(t_table *table)
 	if (!env_arr)
 		perror("Could not resolve environ array.\n");
 	if (!built_in_exec(table))
-		execve(table->cmd_arr[0], table->cmd_arr, env_arr);
-	exit(EXIT_FAILURE);
+	{
+		if (execve(table->cmd_arr[0], table->cmd_arr, env_arr) == -1)
+			return (-1);
+	}
+	return (-1);
 }
 
 int	heredoc(char *delimiter, t_exec *fds)

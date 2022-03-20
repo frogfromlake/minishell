@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/19 22:47:59 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/20 01:23:32 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	built_in_exec(t_table *table)
 static void	bitchy_snake_shell(t_node **head, t_table **table)
 {
 	char	*read;
-	int		status;
 	int		s_out = dup(STDOUT_FILENO);
 	int		s_in = dup(STDIN_FILENO);
 
@@ -105,14 +104,15 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				lexer(head, read);
 				// print_nodes(*head);
 				expander(head);
-				print_nodes(*head);
+				// print_nodes(*head);
 				parser(head, table);
-				print_cmd_table(*table);
-				// status = exec_loop(*table);
+				// print_cmd_table(*table);
+				exec_loop(*table);
 				// printf("Exitstatus: %d\n", status);
 			}
 			free_table(table, false, false);
 			free_list(head, false, false);
+			system("leaks minishell");
 		}
 		free(read);
 		dup2(s_in, STDIN_FILENO);

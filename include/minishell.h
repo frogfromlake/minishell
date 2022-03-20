@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/19 20:49:11 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/19 23:42:35 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,9 @@ typedef struct s_exec
 	int	file_fd;
 	int	cmd_count;
 	int	no_rights;
+	int	pid;
+	int i;
+	int	exit_status;
 }			t_exec;
 
 /* ************************************************************************** */
@@ -251,13 +254,13 @@ int		open_file(char *file, int mod, int rights);
 int		file_error(char *name_b, char *msg, char *name_a);
 int		built_in_exec(t_table *table);
 int		exec_loop(t_table *table);
-int		create_prcs(t_table *table, t_exec *fds, int pid);
+int		create_prcs(t_table *table, t_exec *fds);
 void	route_stdin(t_table *table, t_exec *fds);
 void	route_stdout(t_table *table, t_exec *fds);
 int		heredoc(char *delimiter, t_exec *fds);
-void	exec(t_table *table);
+int		exec(t_table *table);
 int		command_parser(t_token *token, t_table **new);
 int		define_echo_args(t_token *token, t_table **new);
 t_exec	*new_exec(void);
-
+int	operation_logic(t_table *table, t_exec *fds);
 #endif
