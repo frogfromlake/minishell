@@ -35,10 +35,17 @@ void	create_cmd_table(t_node **node, t_table **table)
 		}
 		while (curr_n && !check_log_op(curr_n->type))
 		{
-			if (check_redir(curr_n->type))
+			if (check_redir(curr_n->type)
+				&& valid_name(curr_n->tokens) == SUCCESS)
 				redir_parser(curr_n->tokens, &new);
-			if (curr_n->type == COMMAND)
+			else if (curr_n->type == COMMAND 
+				&& valid_name(curr_n->tokens) == SUCCESS)
+			{
+				trim_quotes(&curr_n->tokens);
 				command_parser(curr_n->tokens, &new);
+			}
+			else 
+				printf("FAIL\n"); //temporary!!!
 			curr_n = curr_n->next;
 		}
 	}

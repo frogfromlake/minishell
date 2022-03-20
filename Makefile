@@ -33,6 +33,8 @@ SRCS		=	main.c \
 				lexer_checker.c \
 				expander.c \
 				parser.c \
+				parser_utils.c \
+				trim_quotes.c \
 				redir_parser.c \
 				command_parser.c \
 				cmd_paths.c \

@@ -74,6 +74,8 @@
 # define NEW 1
 # define WRITE 1
 # define READ 0
+# define SUCCESS 0
+# define FAIL 1
 /* ************************************************************************** */
 /* 	DATA STRUCTURES															  */
 /* ************************************************************************** */
@@ -227,6 +229,8 @@ void	create_cmd_table(t_node **node, t_table **table);
 int		parser(t_node **node, t_table **table);
 int		echo_parser(t_token *help, t_table **new);
 int		redir_parser(t_token *curr_t, t_table **new);
+int	valid_name(t_token *token);
+void	trim_quotes(t_token **token);
 
 /* ************************************************************************** */
 /* 	BUILTIN FUNCS															  */
