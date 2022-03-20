@@ -6,7 +6,7 @@
 /*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 03:15:36 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/20 07:53:54 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				expander(head);
 				// print_nodes(*head);
 				parser(head, table);
-				print_cmd_table(*table);
+				// print_cmd_table(*table);
 				exec_loop(*table);
 			}
 			free_node(head);

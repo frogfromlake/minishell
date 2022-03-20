@@ -6,7 +6,7 @@
 /*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 06:31:44 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/20 07:52:59 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,37 +42,53 @@ int	insert_cmd_arr(char ***arr, char *str)
 	return (1);
 }
 
-static void add_args_to_arr(t_token *token, t_table **new)
+static void	trimm_arg_quotes(t_token *token, t_table **new)
 {
 	t_stringbuilder	*sb;
+	t_token			*tmp;
 	char			*trimmed;
 
+	tmp = token;
 	sb = sb_create();
-	while (token)
+	while (tmp)
 	{
-		if ((token->name[0] == DQUOTE && token->name[1] == SQUOTE)
-			|| (token->name[0] == SQUOTE && token->name[1] == SQUOTE))
+		printf("tmp: %s\n", tmp->name);
+		if ((tmp->name[0] == DQUOTE && tmp->name[1] == SQUOTE)
+			|| (tmp->name[0] == SQUOTE && tmp->name[1] == SQUOTE))
 		{
-			insert_cmd_arr(&(*new)->cmd_arr, token->name);
+			insert_cmd_arr(&(*new)->cmd_arr, tmp->name);
 			return ;
 		}
-		if ((token->name[0] == DQUOTE) || (token->name[0] == SQUOTE))
+		if ((tmp->name[0] == DQUOTE) || (tmp->name[0] == SQUOTE))
 		{
-			if (token->name[0] == SQUOTE)
-				trimmed = ft_strtrim(token->name, "\'");
-			if (token->name[0] == DQUOTE)
-				trimmed = ft_strtrim(token->name, "\"");
+			if (tmp->name[0] == SQUOTE)
+				trimmed = ft_strtrim(tmp->name, "\'");
+			if (tmp->name[0] == DQUOTE)
+				trimmed = ft_strtrim(tmp->name, "\"");
 			if ((trimmed[0] == DQUOTE) || (trimmed[0] == SQUOTE))
 				continue ;
 			else
 			{
 				sb_append_str(sb, trimmed);
-				if (token->next)
+				if (tmp->next)
 					sb_append_char(sb, ' ');
 				insert_cmd_arr(&(*new)->cmd_arr, trimmed);
 				free(trimmed);
 			}
 		}
+		tmp = tmp->next;
+	}
+}
+
+static void	add_args_to_arr(t_token *token, t_table **new)
+{
+	t_stringbuilder	*sb;
+
+	sb = sb_create();
+	while (token)
+	{
+		if ((token->name[0] == DQUOTE) || (token->name[0] == SQUOTE))
+			trimm_arg_quotes(token, new);
 		else
 		{
 			sb_append_str(sb, token->name);
@@ -86,9 +102,63 @@ static void add_args_to_arr(t_token *token, t_table **new)
 	sb_destroy(sb);
 }
 
+static void	trimm_cmd_quotes(t_token *token, t_table **new)
+{
+	t_stringbuilder	*sb;
+	t_token			*tmp;
+	char			*trimmed;
+
+	tmp = token;
+	sb = sb_create();
+	(void)new;
+	while (tmp)
+	{
+		if ((tmp->name[0] == DQUOTE && tmp->name[1] == SQUOTE)
+			|| (tmp->name[0] == SQUOTE && tmp->name[1] == SQUOTE))
+		{
+			// insert_cmd_arr(&(*new)->cmd_arr, tmp->name);
+			return ;
+		}
+		if ((tmp->name[0] == DQUOTE) || (tmp->name[0] == SQUOTE))
+		{
+			if (tmp->name[0] == SQUOTE)
+				trimmed = ft_strtrim(tmp->name, "\'");
+			if (tmp->name[0] == DQUOTE)
+				trimmed = ft_strtrim(tmp->name, "\"");
+			if ((trimmed[0] == DQUOTE) || (trimmed[0] == SQUOTE))
+				continue ;
+			else
+			{
+				sb_append_str(sb, trimmed);
+				if (tmp->next)
+					sb_append_char(sb, ' ');
+				// insert_cmd_arr(&(*new)->cmd_arr, trimmed);
+				free(trimmed);
+			}
+		}
+		tmp = tmp->next;
+	}
+}
+
 int	command_parser(t_token *token, t_table **new)
 {
-	(*new)->exe = ft_strdup(token->name);
+	t_token *tmp;
+	t_stringbuilder	*sb;
+
+	if ((token->name[0] == DQUOTE) || (token->name[0] == SQUOTE))
+	{
+		tmp = token;
+		while (tmp)
+		{		
+			sb = sb_create();
+			trimm_cmd_quotes(token, new);
+			(*new)->exe = sb_get_str(sb);
+			sb_destroy(sb);
+			tmp = tmp->next;
+		}
+	}
+	else
+		(*new)->exe = ft_strdup(token->name);
 	if (!check_builtin(*new))
 	{
 		if (set_cmd_path(new, get_env(NULL)))
