@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 01:29:09 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/20 03:15:36 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	check_empty_input(char *input)
 char	*get_prompt(void)
 {
 	t_stringbuilder	*prompt;
-	char 			*path;
+	char			*path;
 	char			*ret;
 
 	prompt = sb_create();
@@ -99,7 +99,6 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 	while (true)
 	{
 		read = get_prompt();
-		printf("%p\n", read);
 		if (read != NULL && ft_strcmp(read, ""))
 		{
 			add_history(read);
@@ -110,7 +109,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				expander(head);
 				// print_nodes(*head);
 				parser(head, table);
-				// print_cmd_table(*table);
+				print_cmd_table(*table);
 				exec_loop(*table);
 			}
 			free_node(head);

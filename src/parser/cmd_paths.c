@@ -59,7 +59,7 @@ char	**get_env_path(t_env **env)
 	{
 		if (ft_strncmp(tmp->var, "PATH=", 5) == 0)
 		{
-			cmd_paths = ft_split((tmp->var + 5), ':'); // ????? -> skips "PATH="
+			cmd_paths = ft_split((tmp->var + 5), ':');
 			if (cmd_paths == NULL)
 				return (NULL);
 			append_slash(cmd_paths);

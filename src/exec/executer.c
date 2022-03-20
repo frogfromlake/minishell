@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 00:24:34 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/20 03:10:43 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ int	exec_loop(t_table *table)
 	fds = new_exec();
 	while (tmp)
 	{
-		// operation_logic(tmp, fds);
 		if (tmp->log_op != COMMAND)
 			tmp = tmp->next;
-		if (tmp->prev == NULL && tmp->next == NULL && !tmp->redir && built_in_exec(tmp))
-			return (1);
-		else if (!tmp->next)
+		if (tmp->prev == NULL && tmp->next == NULL
+			&& !tmp->redir && check_builtin(tmp))
+		{
+			fds->exit_status = built_in_exec(tmp);
+			return (fds->exit_status);
+		}
+		else
 			fds->pid = create_prcs(tmp, fds);
 		fds->i++;
 		tmp = tmp->next;
@@ -51,7 +54,8 @@ int	create_prcs(t_table *table, t_exec *fds)
 	if (fds->pid == 0)
 	{
 		close(fds->fd[READ]);
-		if (!table->prev && !table->next && !table->redir && !check_builtin(table))
+		if (!table->prev && !table->next
+			&& !table->redir && !check_builtin(table))
 			fds->exit_status = exec(table);
 		else
 		{
@@ -64,7 +68,7 @@ int	create_prcs(t_table *table, t_exec *fds)
 	close(fds->fd[WRITE]);
 	dup2(fds->fd[READ], fds->tmp_fd);
 	close(fds->fd[READ]);
-	return (fds->exit_status);
+	return (fds->pid);
 }
 
 void	route_stdin(t_table *table, t_exec *fds)
