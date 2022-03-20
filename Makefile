@@ -22,34 +22,35 @@ LIBRARIES	= -L./$(LIBFTDIR)/ -lft -L$(HOME)/.brew/opt/readline/lib -lreadline
 SDIR		= src/*
 SRCS		=	main.c \
 				header.c \
+				node.c \
+				token.c \
+				table.c \
+				redir_struct.c \
+				struct_utils.c \
+				free_struct.c \
 				lexer.c \
 				lexer_get_word.c \
 				lexer_checker.c \
-				token.c \
-				node.c \
-				table.c \
-				struct_utils.c \
-				parser.c \
-				echo_parser.c \
-				redir_parser.c \
 				expander.c \
+				parser.c \
+				redir_parser.c \
+				command_parser.c \
+				cmd_paths.c \
+				echo_parser.c \
+				built_in.c \
 				pwd.c \
-				echo.c \
 				cd.c \
-				exit.c \
+				echo.c \
 				env.c \
 				env_utils.c \
 				export.c \
 				unset.c \
-				cmd_paths.c \
-				executer.c \
-				free_lexer.c \
-				utils.c \
+				exit.c \
 				stringbuilder.c \
 				stringbuilder_utils.c \
-				redir_struct.c \
-				command_parser.c \
+				executer.c \
 				exec_struct.c \
+				utils.c \
 				bonus.c
 
 ODIR		= obj
@@ -122,4 +123,5 @@ re: libft fclean all
 bonus: all
 
 norm:
+	@norminette -R CheckForbiddenSourceHeader include/*.h | grep --color=always 'Error!\|Error:' || echo "$(OK_COLOR)Everything is OK!$(NO_COLOR)" >&1
 	@norminette -R CheckForbiddenSourceHeader src/*.c | grep --color=always 'Error!\|Error:' || echo "$(OK_COLOR)Everything is OK!$(NO_COLOR)" >&1

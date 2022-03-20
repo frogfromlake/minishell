@@ -109,7 +109,7 @@ int	command_parser(t_token *token, t_table **new)
 	}
 	else
 	{
-		if (token->next)
+		if (token->next) // TODO: implement for more args (e.g. export can also set multiple args at once.)
 			(*new)->args = ft_strdup(token->next->name);
 	}
 	return (0);
