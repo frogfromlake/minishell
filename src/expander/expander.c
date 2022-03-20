@@ -12,34 +12,79 @@
 
 #include "../../include/minishell.h"
 
-// TODO: case [echo $USER2] -> expand $USER instead
+// TODO: expand $?
 
-static void	delete_token(t_token **token)
+static char *get_word_envname(char **tmp)
 {
-	t_token	*tmp;
+	t_stringbuilder	*sb;
+	char			*env_name;
+	int				i;
 
-	tmp = (*token)->next;
-	(*token)->prev->next = tmp;
-	if (tmp)
-		tmp->prev = (*token)->prev;
-	free((*token)->name);
-	(*token)->name = NULL;
-	free(*token);
-	*token = tmp;
+	i = 0;
+	sb = sb_create();
+	while (ft_is_alpha((*tmp)[i]) || (*tmp)[i] == '_')
+		i++;
+	sb_append_strn(sb, *tmp, i);
+	env_name = sb_get_str(sb);
+	sb_destroy(sb);
+	*tmp += i;
+	return (env_name);
 }
 
-void	add_env_var(t_stringbuilder **sb, char **tmp)
+void	dollar_expand(t_stringbuilder **sb, char **tmp)
 {
-	char	*env_var;
+	char	*env_name;
 
 	(*tmp)++;
-	env_var = get_word_ws(tmp);
-	sb_append_str((*sb), get_env_var(env_var));
-	free(env_var);
-	env_var = NULL;
+	if (ft_is_alpha(**tmp) || **tmp == '_')
+	{
+		env_name = get_word_envname(tmp);
+		sb_append_str(*sb, get_env_var(env_name));
+		free(env_name);
+	}
+	else
+	{
+		if (**tmp == '$')
+		{
+			sb_append_str(*sb, "$$");
+			(*tmp)++;
+		}
+		else //if (!(**tmp))
+			sb_append_char((*sb), '$');
+	}
 }
 
-void	complex_expand(t_token **token)
+void	dquote_expand(t_stringbuilder **sb, char **tmp)
+{
+	sb_append_char(*sb, **tmp);
+	(*tmp)++;
+	while (**tmp && **tmp != DQUOTE)
+	{
+		if (**tmp == '$')
+		{
+			dollar_expand(sb, tmp);
+			continue ;
+		}
+		else
+			sb_append_char(*sb, **tmp);
+		(*tmp)++;
+	}
+}
+
+void	squote_no_expand(t_stringbuilder **sb, char **tmp)
+{
+	int	i;
+
+	i = 1;
+	while ((*tmp)[i] && (*tmp)[i] != SQUOTE)
+		i++;
+	if ((*tmp)[i] == SQUOTE)
+		i++;
+	sb_append_strn(*sb, *tmp, i);
+	*tmp += i;
+}
+
+void	expand(t_token **token)
 {
 	t_stringbuilder	*sb;
 	char			*tmp;
@@ -49,36 +94,20 @@ void	complex_expand(t_token **token)
 	while (*tmp)
 	{
 		if (*tmp == '$')
+			dollar_expand(&sb, &tmp);
+		else if (*tmp == DQUOTE)
+			dquote_expand(&sb, &tmp);
+		else if (*tmp == SQUOTE)
+			squote_no_expand(&sb, &tmp);
+		else
 		{
-			add_env_var(&sb, &tmp);
-			continue ;
+			sb_append_char(sb, *tmp);
+			tmp++;
 		}
-		sb_append_char(sb, *tmp);
-		tmp++;
 	}
-	tmp = (*token)->name;
+	free((*token)->name);
 	(*token)->name = sb_get_str(sb);
 	sb_destroy(sb);
-	free(tmp);
-	if (!ft_strcmp((*token)->name, "\"\""))
-		delete_token(token);
-	else
-		(*token) = (*token)->next;
-}
-
-void	simple_expand(t_token **token)
-{
-	char	*env_var;
-
-	env_var = get_env_var((*token)->name + 1);
-	if (!env_var)
-		delete_token(token);
-	else
-	{
-		free((*token)->name);
-		(*token)->name = ft_strdup(env_var);
-		(*token) = (*token)->next;
-	}
 }
 
 int	expander(t_node **head)
@@ -89,20 +118,16 @@ int	expander(t_node **head)
 	node = *head;
 	while (node)
 	{
-		if (!check_log_op(node->type) && node->type != LESSLESS)
+		if (!check_log_op(node->type) && node->type != LESSLESS && node->tokens)
 		{
-			if (node->tokens)
+			token = node->tokens;
+			while (token)
 			{
-				token = node->tokens;
-				while (token)
-				{
-					if (*token->name == '$')
-						simple_expand(&token);
-					else if (*token->name == '\"')
-						complex_expand(&token);
-					else
-						token = token->next;
-				}
+				if (ft_strchr(token->name, '$')
+					|| ft_strchr(token->name, SQUOTE)
+					|| ft_strchr(token->name, DQUOTE))
+					expand(&token);
+				token = token->next;
 			}
 		}
 		node = node->next;
