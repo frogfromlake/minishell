@@ -104,8 +104,8 @@ int	define_echo_args(t_token *token, t_table **new)
 		}
 		else
 			sb_append_str(sb, token->name);
-		// if
-		// sb_append_char(sb, ' ');
+		if (*token->name && token->next)
+			sb_append_char(sb, ' ');
 		token = token->next;
 	}
 	(*new)->args = sb_get_str(sb);
