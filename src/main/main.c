@@ -12,18 +12,9 @@
 
 #include "../../include/minishell.h"
 
-bool	check_builtin(t_table *table)
-{
-	if (!ft_strcmp(table->exe, "pwd")
-		|| !ft_strcmp(table->exe, "cd")
-		|| !ft_strcmp(table->exe, "echo")
-		|| !ft_strcmp(table->exe, "export")
-		|| !ft_strcmp(table->exe, "env")
-		|| !ft_strcmp(table->exe, "exit")
-		|| !ft_strcmp(table->exe, "unset"))
-		return (true);
-	return (false);
-}
+// FIXME: cmds with quoted arguments not working (include whitespaces) -> parser.c
+// TODO: implement return values for cmds.
+// TODO: implement signals
 
 static int	check_empty_input(char *input)
 {
@@ -60,32 +51,6 @@ char	*get_prompt(void)
 	return (ret);
 }
 
-// cmds with quoted arguments not working (include whitespaces). 
-// implement return values for cmds.
-// implement signals
-int	built_in_exec(t_table *table)
-{
-	if (table->log_op == 0 && table->exe && check_builtin(table))
-	{
-		if (!ft_strcmp(table->exe, "pwd"))
-			ft_pwd();
-		if (!ft_strcmp(table->exe, "cd"))
-			ft_cd(table);
-		if (!ft_strcmp(table->exe, "echo"))
-			ft_echo(table);
-		if (!ft_strcmp(table->exe, "export"))
-			ft_export(table->args);
-		if (!ft_strcmp(table->exe, "env"))
-			ft_env();
-		if (!ft_strcmp(table->exe, "exit"))
-			ft_exit(table);
-		if (!ft_strcmp(table->exe, "unset"))
-			ft_unset(table);
-		return (1);
-	}
-	return (0);
-}
-
 static void	bitchy_snake_shell(t_node **head, t_table **table)
 {
 	char	*read;
@@ -99,7 +64,6 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 	while (true)
 	{
 		read = get_prompt();
-		printf("%p\n", read);
 		if (read != NULL && ft_strcmp(read, ""))
 		{
 			add_history(read);
