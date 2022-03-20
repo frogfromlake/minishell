@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 01:25:26 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/20 01:29:09 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	built_in_exec(t_table *table)
 static void	bitchy_snake_shell(t_node **head, t_table **table)
 {
 	char	*read;
-	// int		status;
 	int		s_out = dup(STDOUT_FILENO);
 	int		s_in = dup(STDIN_FILENO);
 
@@ -111,9 +110,8 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				expander(head);
 				// print_nodes(*head);
 				parser(head, table);
-				print_cmd_table(*table);
-				// status = exec_loop(*table);
-				// printf("Exitstatus: %d\n", status);
+				// print_cmd_table(*table);
+				exec_loop(*table);
 			}
 			free_node(head);
 			free_table(table);

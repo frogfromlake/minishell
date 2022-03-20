@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 20:02:17 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/19 16:44:29 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/19 23:26:34 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,8 @@ t_exec	*new_exec(void)
 	new->file_fd = 0;
 	new->cmd_count = 0;
 	new->no_rights = 0;
+	new->pid = 0;
+	new->i = 0;
+	new->exit_status = 0;
 	return (new);
 }
