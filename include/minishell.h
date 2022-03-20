@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/19 20:49:11 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/20 01:14:00 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,8 +176,8 @@ void	print_nodes(t_node *node);
 void	print_tokens(t_token *token);
 void	print_cmd_table(t_table *table);
 
-void	free_list(t_node **lst, bool exit, bool exit_status);
-void	free_table(t_table **lst, bool exit, bool exit_status);
+// void	free_list(t_node **lst, bool exit, bool exit_status);
+// void	free_table(t_table **lst, bool exit, bool exit_status);
 
 char	*str_join(char const *s1, char const *s2, const char *s3);
 char	*ft_strjoin_ws(char const *s1, char const *s2);
@@ -192,6 +192,7 @@ t_redir	*get_last_out_redir(t_redir *head);
 
 void	free_node(t_node **node);
 void	free_token(t_token **token);
+void	free_table(t_table **table);
 
 /* ************************************************************************** */
 /* 	SHELL																	  */

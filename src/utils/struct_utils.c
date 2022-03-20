@@ -82,46 +82,6 @@ void	print_cmd_table(t_table *table)
 	}
 }
 
-void	free_list(t_node **lst, bool exit, bool exit_status)
-{
-	t_node	*current;
-	t_node	*next;
-
-	current = *lst;
-	while (current)
-	{
-		next = current->next;
-		free(current);
-		current = next;
-	}
-	*lst = NULL;
-	lst = NULL;
-	if (exit == true && exit_status == false)
-		ft_exit_print(exit_status, "Error\n", 2);
-	else if (exit == true && exit_status == true)
-		ft_exit_print(exit_status, "Error\n", 2);
-}
-
-void	free_table(t_table **lst, bool exit, bool exit_status)
-{
-	t_table	*current;
-	t_table	*next;
-
-	current = *lst;
-	while (current)
-	{
-		next = current->next;
-		free(current);
-		current = next;
-	}
-	*lst = NULL;
-	lst = NULL;
-	if (exit == true && exit_status == false)
-		ft_exit_print(exit_status, "Error\n", 2);
-	else if (exit == true && exit_status == true)
-		ft_exit_print(exit_status, "Error\n", 2);
-}
-
 char	*str_join(char const *s1, char const *s2, char const *s3)
 {
 	char	*newstr;

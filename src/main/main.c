@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/19 22:47:59 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/20 01:25:26 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ static int	check_empty_input(char *input)
 char	*get_prompt(void)
 {
 	t_stringbuilder	*prompt;
+	char 			*path;
 	char			*ret;
 
 	prompt = sb_create();
+	path = getcwd(NULL, 0);
 	sb_append_str(prompt, CYAN);
-	sb_append_str(prompt, ft_strrchr(getcwd(NULL, 0), '/'));
+	sb_append_str(prompt, ft_strrchr(path, '/'));
 	sb_append_str(prompt, "\033[0;32m °º¤ø,¸,ø¤º°`°º¤ø(ಠ_ಠ)┌∩┐ ");
 	sb_append_str(prompt, GREEN);
 	sb_append_str(prompt, "@");
@@ -53,6 +55,7 @@ char	*get_prompt(void)
 	sb_append_str(prompt, "$ \e[0m");
 	ret = sb_get_str(prompt);
 	sb_destroy(prompt);
+	free(path);
 	ret = readline(ret);
 	return (ret);
 }
@@ -86,7 +89,7 @@ int	built_in_exec(t_table *table)
 static void	bitchy_snake_shell(t_node **head, t_table **table)
 {
 	char	*read;
-	int		status;
+	// int		status;
 	int		s_out = dup(STDOUT_FILENO);
 	int		s_in = dup(STDIN_FILENO);
 
@@ -97,6 +100,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 	while (true)
 	{
 		read = get_prompt();
+		printf("%p\n", read);
 		if (read != NULL && ft_strcmp(read, ""))
 		{
 			add_history(read);
@@ -105,14 +109,15 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				lexer(head, read);
 				// print_nodes(*head);
 				expander(head);
-				print_nodes(*head);
+				// print_nodes(*head);
 				parser(head, table);
 				print_cmd_table(*table);
 				// status = exec_loop(*table);
 				// printf("Exitstatus: %d\n", status);
 			}
-			free_table(table, false, false);
-			free_list(head, false, false);
+			free_node(head);
+			free_table(table);
+			// system("leaks minishell");
 		}
 		free(read);
 		dup2(s_in, STDIN_FILENO);

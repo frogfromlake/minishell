@@ -26,8 +26,8 @@ void	free_node(t_node **node)
 		free(curr);
 		curr = next;
 	}
-	*node = 0;
-	node = 0;
+	*node = NULL;
+	node = NULL;
 }
 
 void	free_token(t_token **token)
@@ -40,10 +40,32 @@ void	free_token(t_token **token)
 	{
 		next = curr->next;
 		free(curr->name);
-		curr->name = 0;
+		curr->name = NULL;
 		free(curr);
 		curr = next;
 	}
-	*token = 0;
-	token = 0;
+	*token = NULL;
+	token = NULL;
+}
+
+void	free_table(t_table **table)
+{
+	t_table	*curr;
+	t_table	*next;
+
+	curr = *table;
+	while (curr)
+	{
+		next = curr->next;
+		if (curr->cmd_arr)
+			ft_free_array(curr->cmd_arr, false, false);
+		if (curr->exe)
+			free(curr->exe);
+		if (curr->args)
+			free(curr->args);
+		free(curr);
+		curr = next;
+	}
+	*table = NULL;
+	table = NULL;
 }
