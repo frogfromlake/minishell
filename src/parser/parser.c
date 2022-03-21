@@ -12,6 +12,19 @@
 
 #include "../../include/minishell.h"
 
+static void define_node(t_node *node, t_table **new)
+{
+	if (valid_name(&node->tokens) == SUCCESS)
+	{
+		if (check_redir(node->type))
+			redir_parser(node->tokens, new);
+		else if (node->type == COMMAND)
+			command_parser(node->tokens, new);
+	}
+	else 
+		printf("FAIL\n"); //temporary!!!
+}
+
 int	parser(t_node **node, t_table **table)
 {
 	create_cmd_table(node, table);
@@ -35,17 +48,7 @@ void	create_cmd_table(t_node **node, t_table **table)
 		}
 		while (curr_n && !check_log_op(curr_n->type))
 		{
-			if (check_redir(curr_n->type)
-				&& valid_name(curr_n->tokens) == SUCCESS)
-				redir_parser(curr_n->tokens, &new);
-			else if (curr_n->type == COMMAND 
-				&& valid_name(curr_n->tokens) == SUCCESS)
-			{
-				trim_quotes(&curr_n->tokens);
-				command_parser(curr_n->tokens, &new);
-			}
-			else 
-				printf("FAIL\n"); //temporary!!!
+			define_node(curr_n, &new);
 			curr_n = curr_n->next;
 		}
 	}

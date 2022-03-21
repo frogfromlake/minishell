@@ -30,15 +30,17 @@ static bool	check_quotes_closed(char **str)
 	return (false);
 }
 
-int	valid_name(t_token *token)
+int	valid_name(t_token **token)
 {
+	t_token	*tmp;
 	char	*name;
 
-	while (token)
+	tmp = *token;
+	while (tmp)
 	{
-		if (ft_strchr(token->name, SQUOTE) || ft_strchr(token->name, DQUOTE))
+		if (ft_strchr(tmp->name, SQUOTE) || ft_strchr(tmp->name, DQUOTE))
 		{
-			name = token->name;
+			name = tmp->name;
 			while (*name)
 			{
 				if (*name == SQUOTE || *name == DQUOTE)
@@ -50,7 +52,8 @@ int	valid_name(t_token *token)
 				name++;
 			}
 		}
-		token = token->next;
+		tmp = tmp->next;
 	}
+	trim_quotes(token);
 	return (SUCCESS); // SUCCESS!
 }

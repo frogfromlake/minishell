@@ -59,7 +59,8 @@ t_redir	*get_last_in_redir(t_redir *head)
 	in = NULL;
 	while (head)
 	{
-		if (head->type == LESS || head->type == LESSLESS)
+		if (head->type == LESS || head->type == LESSLESS
+			|| head->type == LESSLESS + 1)
 			in = head;
 		head = head->next;
 	}

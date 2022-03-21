@@ -56,7 +56,11 @@ void trim_quotes(t_token **token)
 	while (tmp)
 	{
 		if (ft_strchr(tmp->name, SQUOTE) || ft_strchr(tmp->name, DQUOTE))
+		{
 			get_quoted_word(&tmp);
+			if (tmp->type == LESSLESS)
+				tmp->type++;
+		}
 		tmp = tmp->next;
 	}
 }

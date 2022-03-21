@@ -37,7 +37,8 @@ bool	check_quotes(char c)
 
 bool	check_redir(t_type type)
 {
-	if (type == LESS || type == GREAT || type == LESSLESS || type == GREATGREAT)
+	if (type == LESS || type == GREAT || type == LESSLESS || type == GREATGREAT
+		|| type == LESSLESS + 1)
 		return (true);
 	return (false);
 }

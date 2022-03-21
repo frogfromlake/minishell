@@ -229,7 +229,7 @@ void	create_cmd_table(t_node **node, t_table **table);
 int		parser(t_node **node, t_table **table);
 int		echo_parser(t_token *help, t_table **new);
 int		redir_parser(t_token *curr_t, t_table **new);
-int	valid_name(t_token *token);
+int		valid_name(t_token **token);
 void	trim_quotes(t_token **token);
 
 /* ************************************************************************** */
