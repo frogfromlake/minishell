@@ -38,6 +38,7 @@ SRCS		=	main.c \
 				redir_parser.c \
 				command_parser.c \
 				cmd_paths.c \
+				cmd_arr.c \
 				echo_parser.c \
 				built_in.c \
 				pwd.c \
