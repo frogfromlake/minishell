@@ -181,9 +181,6 @@ void	print_nodes(t_node *node);
 void	print_tokens(t_token *token);
 void	print_cmd_table(t_table *table);
 
-// void	free_list(t_node **lst, bool exit, bool exit_status);
-// void	free_table(t_table **lst, bool exit, bool exit_status);
-
 char	*str_join(char const *s1, char const *s2, const char *s3);
 char	*ft_strjoin_ws(char const *s1, char const *s2);
 char	*lstlast(t_token *lst);
@@ -198,6 +195,8 @@ t_redir	*get_last_out_redir(t_redir *head);
 void	free_node(t_node **node);
 void	free_token(t_token **token);
 void	free_table(t_table **table);
+void	free_redir(t_redir **redir);
+void	free_cmd_arr(char **cmd_arr);
 
 /* ************************************************************************** */
 /* 	SHELL																	  */

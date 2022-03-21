@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// TODO: check again, if freeing correctly
+
 #include "../../include/minishell.h"
 
 void	free_node(t_node **node)
@@ -48,7 +50,7 @@ void	free_token(t_token **token)
 	token = NULL;
 }
 
-void	free_table(t_table **table) // TODO: free redirs
+void	free_table(t_table **table)
 {
 	t_table	*curr;
 	t_table	*next;
@@ -58,14 +60,46 @@ void	free_table(t_table **table) // TODO: free redirs
 	{
 		next = curr->next;
 		if (curr->cmd_arr)
-			ft_free_array(curr->cmd_arr, false, false); // FIXME: doesn't work properly
+			free_cmd_arr(curr->cmd_arr);
 		if (curr->exe)
 			free(curr->exe);
 		if (curr->args)
 			free(curr->args);
+		if (curr->redir)
+			free_redir(&curr->redir);
 		free(curr);
 		curr = next;
 	}
 	*table = NULL;
 	table = NULL;
+}
+
+void	free_redir(t_redir **redir)
+{
+	t_redir	*curr;
+	t_redir	*next;
+
+	curr = *redir;
+	while (curr)
+	{
+		next = curr->next;
+		free(curr->file);
+		free(curr);
+		curr = next;
+	}
+	*redir = NULL;
+	redir = NULL;
+}
+
+void	free_cmd_arr(char **cmd_arr)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_arr[i])
+	{
+		free(cmd_arr[i]);
+		i++;
+	}
+	free(cmd_arr);
 }
