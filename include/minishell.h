@@ -230,6 +230,7 @@ int		echo_parser(t_token *help, t_table **new);
 int		redir_parser(t_token *curr_t, t_table **new);
 int		valid_name(t_token **token);
 void	trim_quotes(t_token **token);
+void	add_args_to_arr(t_token *token, t_table **new);
 
 /* ************************************************************************** */
 /* 	BUILTIN FUNCS															  */
