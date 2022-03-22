@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/22 13:47:32 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/22 14:26:12 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ void	route_stdin(t_table *table, t_exec *fds)
 			dup2(fds->file_fd, STDIN_FILENO);
 			close(fds->file_fd);
 		}
-		else if (last_in->type == LESSLESS)
+		else if (last_in->type == LESSLESS || last_in->type == LESSLESS + 1)
 		{
 			pipe(fds->here_fd);
-			heredoc(last_in->file, fds);
+			heredoc(last_in->file, fds, last_in->type);
 			dup2(fds->here_fd[READ], STDIN_FILENO);
 		}
 	}
@@ -165,7 +165,7 @@ int	exec(t_table *table)
 	return (g_exit_status);
 }
 
-int	heredoc(char *delimiter, t_exec *fds)
+int	heredoc(char *delimiter, t_exec *fds, int type)
 {
 	char	*read;
 	char	*delimiter_nl;
@@ -180,11 +180,14 @@ int	heredoc(char *delimiter, t_exec *fds)
 		}
 		write(2, "> ", 2);
 		read = get_next_line(STDIN_FILENO);
+		if (type == 240)
+			expand(&read);
 		if (!ft_strcmp(read, delimiter_nl))
 			break ;
 		write(fds->here_fd[WRITE], read, ft_strlen(read));
 		ft_free((void **)&read);
 	}
+	close(fds->here_fd[WRITE]);
 	ft_free((void **)&read);
 	ft_free((void **)&delimiter_nl);
 	return (EXIT_SUCCESS);

@@ -89,13 +89,13 @@ void	squote_no_expand(t_stringbuilder **sb, char **tmp)
 	*tmp += i;
 }
 
-void	expand(t_token **token)
+void	expand(char **str)
 {
 	t_stringbuilder	*sb;
 	char			*tmp;
 
 	sb = sb_create();
-	tmp = (*token)->name;
+	tmp = *str;
 	while (*tmp)
 	{
 		if (*tmp == '$')
@@ -110,8 +110,8 @@ void	expand(t_token **token)
 			tmp++;
 		}
 	}
-	free((*token)->name);
-	(*token)->name = sb_get_str(sb);
+	free(*str);
+	*str = sb_get_str(sb);
 	sb_destroy(sb);
 }
 
@@ -131,7 +131,7 @@ int	expander(t_node **head)
 				if (ft_strchr(token->name, '$')
 					|| ft_strchr(token->name, SQUOTE)
 					|| ft_strchr(token->name, DQUOTE))
-					expand(&token);
+					expand(&token->name);
 				token = token->next;
 			}
 		}

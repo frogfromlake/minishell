@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/21 13:27:17 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/22 14:23:27 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,7 @@ char	*get_env_var(char *str);
 int		get_env_size(t_env *env);
 
 int		expander(t_node **node);
+void	expand(char **str);
 
 int		open_file(char *file, int mod, int rights);
 int		file_error(char *name_b, char *msg, char *name_a);
@@ -263,10 +264,10 @@ int		exec_loop(t_table *table);
 int		create_prcs(t_table *table, t_exec *fds);
 void	route_stdin(t_table *table, t_exec *fds);
 void	route_stdout(t_table *table, t_exec *fds);
-int		heredoc(char *delimiter, t_exec *fds);
+int		heredoc(char *delimiter, t_exec *fds, int type);
 int		exec(t_table *table);
 int		command_parser(t_token *token, t_table **new);
 int		define_echo_args(t_token *token, t_table **new);
 t_exec	*new_exec(void);
-int	operation_logic(t_table *table, t_exec *fds);
+int		operation_logic(t_table *table, t_exec *fds);
 #endif
