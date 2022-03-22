@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/22 14:26:12 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/22 15:41:21 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 	char	*delimiter_nl;
 
 	delimiter_nl = ft_strjoin(delimiter, "\n");
+	signal(SIGQUIT, SIG_IGN);
 	while (true)
 	{
 		while (fds->cmd_count)

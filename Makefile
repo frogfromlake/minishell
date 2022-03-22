@@ -54,7 +54,8 @@ SRCS		=	main.c \
 				executer.c \
 				exec_struct.c \
 				utils.c \
-				bonus.c
+				bonus.c \
+				signal.c
 
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))

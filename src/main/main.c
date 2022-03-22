@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/22 14:12:28 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/22 16:41:34 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 // FIXME: cmds with quoted arguments not working (include whitespaces) -> parser.c
 // TODO: implement return values for cmds.
 // TODO: implement signals
+
+// void	handle_sigint(int sig)
+// {
+// 	char	*read;
+
+// 	if (sig == SIGINT)
+// 		read = get_prompt();
+// }
+
 int	g_exit_status;
 
 static int	check_empty_input(char *input)
@@ -48,7 +57,6 @@ char	*get_prompt(void)
 	ret = sb_get_str(prompt);
 	sb_destroy(prompt);
 	free(path);
-	ret = readline(ret);
 	return (ret);
 }
 
@@ -62,9 +70,13 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 	// system("(afplay mp3/welcome.mp3&)");
 	// system("(afplay mp3/snake.mp3&)");
 	// system("afplay mp3/error2.mp3");
+	// signal(SIGQUIT, SIG_IGN);
+	set_attr();
 	while (true)
-	{
+	{	
+		// signal(SIGINT, &handle_sigint);
 		read = get_prompt();
+		read = readline(read);
 		if (read != NULL && ft_strcmp(read, ""))
 		{
 			add_history(read);
@@ -75,7 +87,8 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				expander(head);
 				// print_nodes(*head);
 				parser(head, table);
-				print_cmd_table(*table);
+				unset_attr();
+				// print_cmd_table(*table);
 				if (g_exit_status == SUCCESS)
 					exec_loop(*table);
 			}

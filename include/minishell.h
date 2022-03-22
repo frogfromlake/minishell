@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/22 14:23:27 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/22 16:32:58 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 /* ************************************************************************** */
 /* STANDARD INCLUDES														  */
 /* ************************************************************************** */
-# include "../libs/libft/include/libft.h"
-# include "stringbuilder.h"
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "../libs/libft/include/libft.h"
+# include "stringbuilder.h"
 # include <stdbool.h>
-# include <stdio.h>
 # include <limits.h>
 # include <unistd.h>
 # include <sys/wait.h>
@@ -29,9 +29,9 @@
 # include <fcntl.h>
 # include <string.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <sys/stat.h>
 # include <signal.h>
+# include <termios.h>
 
 /* ************************************************************************** */
 /* 	DEFINES																	  */
@@ -270,4 +270,9 @@ int		command_parser(t_token *token, t_table **new);
 int		define_echo_args(t_token *token, t_table **new);
 t_exec	*new_exec(void);
 int		operation_logic(t_table *table, t_exec *fds);
+
+void	set_attr(void);
+void	unset_attr(void);
+void	sigint_handler(int sig);
+
 #endif
