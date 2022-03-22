@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/22 15:41:21 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/22 19:35:52 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ int	exec(t_table *table)
 		perror("Could not resolve environ array.\n");
 	if (built_in_exec(table))
 	{
+		signal(SIGINT, SIG_DFL);
 		if (execve(table->cmd_arr[0], table->cmd_arr, env_arr) == -1)
 			g_exit_status = -1;
 	}
@@ -171,7 +172,7 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 	char	*delimiter_nl;
 
 	delimiter_nl = ft_strjoin(delimiter, "\n");
-	signal(SIGQUIT, SIG_IGN);
+	set_attr();
 	while (true)
 	{
 		while (fds->cmd_count)
@@ -188,6 +189,7 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 		write(fds->here_fd[WRITE], read, ft_strlen(read));
 		ft_free((void **)&read);
 	}
+	unset_attr();
 	close(fds->here_fd[WRITE]);
 	ft_free((void **)&read);
 	ft_free((void **)&delimiter_nl);

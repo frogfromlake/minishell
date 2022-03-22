@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/22 16:32:58 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/22 18:30:39 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,7 @@ t_exec	*new_exec(void);
 int		operation_logic(t_table *table, t_exec *fds);
 
 void	set_attr(void);
+void	set_attr_exec(void);
 void	unset_attr(void);
 void	sigint_handler(int sig);
 
