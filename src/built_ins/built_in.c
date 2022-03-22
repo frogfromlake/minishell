@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 04:10:34 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 04:10:34 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/21 13:25:42 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	built_in_exec(t_table *table)
 			ft_exit(table);
 		if (!ft_strcmp(table->exe, "unset"))
 			ft_unset(table);
-		return (1);
+		return (SUCCESS);
 	}
-	return (0);
+	return (FAIL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 03:10:43 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/22 13:47:32 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	exec_loop(t_table *table)
 		if (tmp->prev == NULL && tmp->next == NULL
 			&& !tmp->redir && check_builtin(tmp))
 		{
-			fds->exit_status = built_in_exec(tmp);
-			return (fds->exit_status);
+			g_exit_status = built_in_exec(tmp);
+			return (g_exit_status);
 		}
 		else
 			fds->pid = create_prcs(tmp, fds);
@@ -41,10 +41,10 @@ int	exec_loop(t_table *table)
 	{
 		waitpid(0, &fds->pid, 0);
 		if (WIFEXITED(fds->pid))
-			fds->exit_status = WEXITSTATUS(fds->pid);
+			g_exit_status = WEXITSTATUS(fds->pid);
 		fds->i--;
 	}
-	return (fds->exit_status);
+	return (g_exit_status);
 }
 
 int	create_prcs(t_table *table, t_exec *fds)
@@ -56,12 +56,12 @@ int	create_prcs(t_table *table, t_exec *fds)
 		close(fds->fd[READ]);
 		if (!table->prev && !table->next
 			&& !table->redir && !check_builtin(table))
-			fds->exit_status = exec(table);
+			g_exit_status = exec(table);
 		else
 		{
 			route_stdin(table, fds);
 			route_stdout(table, fds);
-			fds->exit_status = exec(table);
+			g_exit_status = exec(table);
 		}
 	}
 	close(fds->tmp_fd);
@@ -157,12 +157,12 @@ int	exec(t_table *table)
 	env_arr = get_env_arr();
 	if (!env_arr)
 		perror("Could not resolve environ array.\n");
-	if (!built_in_exec(table))
+	if (built_in_exec(table))
 	{
 		if (execve(table->cmd_arr[0], table->cmd_arr, env_arr) == -1)
-			return (-1);
+			g_exit_status = -1;
 	}
-	return (-1);
+	return (g_exit_status);
 }
 
 int	heredoc(char *delimiter, t_exec *fds)

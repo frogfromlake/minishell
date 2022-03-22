@@ -49,6 +49,11 @@ void	dollar_expand(t_stringbuilder **sb, char **tmp)
 			sb_append_str(*sb, "$$");
 			(*tmp)++;
 		}
+		else if (**tmp == '?')
+		{
+			sb_append_int(*sb, g_exit_status);
+			(*tmp)++;
+		}
 		else //if (!(**tmp))
 			sb_append_char((*sb), '$');
 	}

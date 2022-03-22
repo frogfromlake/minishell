@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 07:52:59 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/22 13:55:53 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	command_parser(t_token *token, t_table **new)
 	(*new)->exe = ft_strdup(token->name);
 	if (!check_builtin(*new))
 	{
-		if (set_cmd_path(new, get_env(NULL)))
+		g_exit_status = set_cmd_path(new, get_env(NULL));
+		if (g_exit_status)
 			printf("bitchy snake shell: command not found: %s\n", (*new)->exe); // TODO: create a error_exit func)
 		else
 			if (token->next)

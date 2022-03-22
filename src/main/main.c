@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 07:53:54 by nelix            ###   ########.fr       */
+/*   Updated: 2022/03/22 13:50:56 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 // FIXME: cmds with quoted arguments not working (include whitespaces) -> parser.c
 // TODO: implement return values for cmds.
 // TODO: implement signals
+int	g_exit_status;
 
 static int	check_empty_input(char *input)
 {
@@ -75,7 +76,8 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				// print_nodes(*head);
 				parser(head, table);
 				// print_cmd_table(*table);
-				exec_loop(*table);
+				if (g_exit_status == SUCCESS)
+					exec_loop(*table);
 			}
 			free_node(head);
 			free_table(table);
@@ -94,6 +96,7 @@ int	main(int argc, char *argv[], char **environ)
 
 	(void) argc;
 	(void) argv;
+	g_exit_status = 0;
 	head = NULL;
 	table = NULL;
 	get_env(environ);

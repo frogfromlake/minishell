@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_struct.c                                      :+:      :+:    :+:   */
+/*   bonus.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/15 20:02:17 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/21 13:34:06 by fquist           ###   ########.fr       */
+/*   Created: 2022/03/19 22:18:38 by fquist            #+#    #+#             */
+/*   Updated: 2022/03/20 00:23:52 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_exec	*new_exec(void)
+int	operation_logic(t_table *table, t_exec *fds)
 {
-	t_exec	*new;
-
-	new = ft_calloc(1, sizeof(t_exec));
-	if (!new)
-		return (NULL);
-	new->fd[READ] = 0;
-	new->fd[WRITE] = 0;
-	new->here_fd[READ] = 0;
-	new->here_fd[WRITE] = 0;
-	new->stin = dup(STDIN_FILENO);
-	new->stout = dup(STDOUT_FILENO);
-	new->tmp_fd = dup(STDIN_FILENO);
-	new->file_fd = 0;
-	new->cmd_count = 0;
-	new->no_rights = 0;
-	new->pid = 0;
-	new->i = 0;
-	return (new);
+	if (table->log_op == AND)
+	{
+		table = table->next;
+		close(fds->stin);
+		close(fds->stout);
+		close(fds->tmp_fd);
+		while (fds->i > 0)
+		{
+			waitpid(0, &fds->pid, 0);
+			if (WIFEXITED(fds->pid))
+				fds->exit_status = WEXITSTATUS(fds->pid);
+			fds->i--;
+		}
+		if (access(table->exe, F_OK))
+			exec_loop(table);
+		else
+			return (fds->exit_status);
+	}
+	return (fds->exit_status);
 }
