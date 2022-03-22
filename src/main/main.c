@@ -6,11 +6,13 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/22 14:12:28 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/22 17:01:38 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+//TEST
 
 // FIXME: cmds with quoted arguments not working (include whitespaces) -> parser.c
 // TODO: implement return values for cmds.
