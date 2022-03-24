@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:44:58 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/24 18:18:43 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/24 19:15:49 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void set_attr_heredoc(void)
 
 void unset_attr(void)
 {
-	struct termios termios_p;
+	struct termios	termios_p;
 
 	if (tcgetattr(1, &termios_p) == -1)
 		return ;

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/03/24 17:34:17 by dmontema         ###   ########.fr       */
+=======
+/*   Updated: 2022/03/24 17:47:32 by fquist           ###   ########.fr       */
+>>>>>>> 64f6273ddd1b02393de62d8227f506e0a6ead132
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +91,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				parser(head, table);
 				unset_attr();
 				print_cmd_table(*table);
-				if (g_exit_status == SUCCESS) // FIXME: after cancelling here_doc mode, the built_in func doesn't work anymore: g_exit_statsus stays at FAIL
+				if (g_exit_status == SUCCESS)
 					exec_loop(*table);
 			}
 			free_node(head);
