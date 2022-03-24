@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/22 19:35:52 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/24 19:03:52 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,27 +74,44 @@ int	create_prcs(t_table *table, t_exec *fds)
 void	route_stdin(t_table *table, t_exec *fds)
 {
 	t_redir	*last_in;
+	t_redir	*tmp;
 
+	tmp = table->redir;
 	last_in = get_last_in_redir(table->redir);
-	if (last_in)
+	while (tmp)
 	{
-		if (last_in->type == LESS)
+		if (tmp->next && (tmp->type == LESS || tmp->type == LESSLESS || tmp->type == LESSLESS + 1))
 		{
-			fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
-			dup2(fds->file_fd, STDIN_FILENO);
-			close(fds->file_fd);
+			if (tmp->type == LESS)
+				fds->file_fd = open_file(tmp->file, O_RDONLY, 0);
+			if (tmp->type == LESSLESS)
+			{
+				pipe(fds->here_fd);
+				heredoc(tmp->file, fds, tmp->type);
+				dup2(fds->here_fd[WRITE], STDOUT_FILENO);
+			}
 		}
-		else if (last_in->type == LESSLESS || last_in->type == LESSLESS + 1)
+		if (!tmp->next)
 		{
-			pipe(fds->here_fd);
-			heredoc(last_in->file, fds, last_in->type);
-			dup2(fds->here_fd[READ], STDIN_FILENO);
+			if (last_in->type == LESS)
+			{
+				fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
+				dup2(fds->file_fd, STDIN_FILENO);
+				close(fds->file_fd);
+			}
+			else if (last_in->type == LESSLESS || last_in->type == LESSLESS + 1)
+			{
+				pipe(fds->here_fd);
+				heredoc(last_in->file, fds, last_in->type);
+				dup2(fds->here_fd[READ], STDIN_FILENO);
+			}
 		}
-	}
-	else
-	{
-		dup2(fds->tmp_fd, STDIN_FILENO);
-		close(fds->tmp_fd);
+		else
+		{
+			dup2(fds->tmp_fd, STDIN_FILENO);
+			close(fds->tmp_fd);
+		}
+		tmp = tmp->next;
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:44:58 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/22 19:39:35 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/24 17:16:29 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void set_attr(void)
 
 void unset_attr(void)
 {
-	struct termios termios_p;
+	struct termios	termios_p;
 
 	if (tcgetattr(1, &termios_p) == -1)
 		return ;
