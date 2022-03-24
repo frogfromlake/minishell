@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/22 13:55:53 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/24 17:22:52 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ int	command_parser(t_token *token, t_table **new)
 		if (token->next) // TODO: implement for more args (e.g. export can also set multiple args at once.)
 			(*new)->args = ft_strdup(token->next->name);
 	}
-	return (0);
+	g_exit_status = SUCCESS;
+	return (g_exit_status);
 }

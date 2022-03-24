@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/22 19:35:52 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/24 18:30:16 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ int	exec(t_table *table)
 	if (built_in_exec(table))
 	{
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (execve(table->cmd_arr[0], table->cmd_arr, env_arr) == -1)
 			g_exit_status = -1;
 	}
@@ -172,7 +173,7 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 	char	*delimiter_nl;
 
 	delimiter_nl = ft_strjoin(delimiter, "\n");
-	set_attr();
+	set_attr_heredoc();
 	while (true)
 	{
 		while (fds->cmd_count)
@@ -182,6 +183,8 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 		}
 		write(2, "> ", 2);
 		read = get_next_line(STDIN_FILENO);
+		// if (read == NULL)
+		// 	break ;
 		if (type == 240)
 			expand(&read);
 		if (!ft_strcmp(read, delimiter_nl))

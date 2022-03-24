@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/22 18:58:59 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/24 17:34:17 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				lexer(head, read);
 				// print_nodes(*head);
 				expander(head);
-				// print_nodes(*head);
+				print_nodes(*head);
 				parser(head, table);
 				unset_attr();
-				// print_cmd_table(*table);
-				if (g_exit_status == SUCCESS)
+				print_cmd_table(*table);
+				if (g_exit_status == SUCCESS) // FIXME: after cancelling here_doc mode, the built_in func doesn't work anymore: g_exit_statsus stays at FAIL
 					exec_loop(*table);
 			}
 			free_node(head);
