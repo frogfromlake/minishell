@@ -16,7 +16,7 @@ CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror -g
 
 LIBFTDIR	= libs/libft
-INCLUDES	= -I./include-I./$(LIBFTDIR)/include-I$(HOME)/.brew/opt/readline/include
+INCLUDES	= -I./include -I./$(LIBFTDIR)/include -I$(HOME)/.brew/opt/readline/include
 LIBRARIES	= -L./$(LIBFTDIR)/ -lft -L$(HOME)/.brew/opt/readline/lib -lreadline
 
 SDIR		= src/*
@@ -54,7 +54,8 @@ SRCS		=	main.c \
 				executer.c \
 				exec_struct.c \
 				utils.c \
-				bonus.c
+				bonus.c \
+				signal.c
 
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))
