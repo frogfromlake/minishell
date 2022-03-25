@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/25 13:21:42 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/25 19:32:47 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 		free(read);
 		dup2(s_in, STDIN_FILENO);
 		dup2(s_out, STDOUT_FILENO);
+		if (!read)
+			break ;
 	}
 }
 

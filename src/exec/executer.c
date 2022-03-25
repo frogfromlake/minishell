@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/25 17:11:49 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/25 19:33:01 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	exec_loop(t_table *table)
 			g_exit_status = WEXITSTATUS(fds->pid);
 		fds->i--;
 	}
+	
 	return (g_exit_status);
 }
 
@@ -102,7 +103,9 @@ void	route_stdin(t_table *table, t_exec *fds)
 			else if (last_in->type == LESSLESS || last_in->type == LESSLESS + 1)
 			{
 				pipe(fds->here_fd);
+				set_attr_heredoc();
 				heredoc(last_in->file, fds, last_in->type);
+				unset_attr();
 				dup2(fds->here_fd[READ], STDIN_FILENO);
 			}
 		}
@@ -190,7 +193,6 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 	char	*delimiter_nl;
 
 	delimiter_nl = ft_strjoin(delimiter, "\n");
-	set_attr_heredoc();
 	while (true)
 	{
 		while (fds->cmd_count)
@@ -200,16 +202,19 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 		}
 		write(2, "> ", 2);
 		read = get_next_line(STDIN_FILENO);
-		// if (read == NULL)
-		// 	break ;
+		if (!read || !ft_strcmp(read, delimiter_nl))
+		{
+			if (!read)
+				write(2, "\n", 1);
+			break ;
+		}
 		if (type == 240)
 			expand(&read);
-		if (!ft_strcmp(read, delimiter_nl))
-			break ;
 		write(fds->here_fd[WRITE], read, ft_strlen(read));
 		ft_free((void **)&read);
 	}
-	unset_attr();
+	// unset_attr();
+	// if (fds->here_fd[WRITE] > 0)
 	close(fds->here_fd[WRITE]);
 	ft_free((void **)&read);
 	ft_free((void **)&delimiter_nl);
