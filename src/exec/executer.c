@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/25 19:33:01 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/25 21:12:59 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	exec_loop(t_table *table)
 			&& !tmp->redir && check_builtin(tmp))
 		{
 			g_exit_status = built_in_exec(tmp);
-			return (g_exit_status);
+			fds->i++;
+			break ;
 		}
 		else
 			fds->pid = create_prcs(tmp, fds);
@@ -44,7 +45,6 @@ int	exec_loop(t_table *table)
 			g_exit_status = WEXITSTATUS(fds->pid);
 		fds->i--;
 	}
-	
 	return (g_exit_status);
 }
 
@@ -79,42 +79,42 @@ void	route_stdin(t_table *table, t_exec *fds)
 
 	tmp = table->redir;
 	last_in = get_last_in_redir(table->redir);
-	while (tmp)
+	if (table->redir && table->redir->next)
+		while (tmp)
+		{
+			if (tmp->next && (tmp->type == LESS || tmp->type == LESSLESS || tmp->type == LESSLESS + 1))
+			{
+				if (tmp->type == LESS)
+					fds->file_fd = open_file(tmp->file, O_RDONLY, 0);
+				if (tmp->type == LESSLESS)
+				{
+					pipe(fds->here_fd);
+					heredoc(tmp->file, fds, tmp->type);
+					dup2(fds->here_fd[WRITE], STDOUT_FILENO);
+					close(fds->here_fd[WRITE]);
+				}
+			}
+			tmp = tmp->next;
+		}
+	if (last_in)
 	{
-		if (tmp->next && (tmp->type == LESS || tmp->type == LESSLESS || tmp->type == LESSLESS + 1))
+		if (last_in->type == LESS)
 		{
-			if (tmp->type == LESS)
-				fds->file_fd = open_file(tmp->file, O_RDONLY, 0);
-			if (tmp->type == LESSLESS)
-			{
-				pipe(fds->here_fd);
-				heredoc(tmp->file, fds, tmp->type);
-				dup2(fds->here_fd[WRITE], STDOUT_FILENO);
-			}
+			fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
+			dup2(fds->file_fd, STDIN_FILENO);
+			close(fds->file_fd);
 		}
-		if (!tmp->next)
+		else if (last_in->type == LESSLESS || last_in->type == LESSLESS + 1)
 		{
-			if (last_in->type == LESS)
-			{
-				fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
-				dup2(fds->file_fd, STDIN_FILENO);
-				close(fds->file_fd);
-			}
-			else if (last_in->type == LESSLESS || last_in->type == LESSLESS + 1)
-			{
-				pipe(fds->here_fd);
-				set_attr_heredoc();
-				heredoc(last_in->file, fds, last_in->type);
-				unset_attr();
-				dup2(fds->here_fd[READ], STDIN_FILENO);
-			}
+			pipe(fds->here_fd);
+			heredoc(last_in->file, fds, last_in->type);
+			dup2(fds->here_fd[READ], STDIN_FILENO);
 		}
-		else
-		{
-			dup2(fds->tmp_fd, STDIN_FILENO);
-			close(fds->tmp_fd);
-		}
-		tmp = tmp->next;
+	}
+	else
+	{
+		dup2(fds->tmp_fd, STDIN_FILENO);
+		close(fds->tmp_fd);
 	}
 }
 
@@ -127,7 +127,7 @@ void	route_stdout(t_table *table, t_exec *fds)
 	{
 		if (last_out->type == GREAT)
 		{
-			fds->file_fd =  open_file(last_out->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			fds->file_fd = open_file(last_out->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 			if (fds->file_fd < 0)
 				return ;
 			dup2(fds->file_fd, STDOUT_FILENO);
@@ -193,6 +193,7 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 	char	*delimiter_nl;
 
 	delimiter_nl = ft_strjoin(delimiter, "\n");
+	set_attr_heredoc();
 	while (true)
 	{
 		while (fds->cmd_count)
@@ -213,7 +214,7 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 		write(fds->here_fd[WRITE], read, ft_strlen(read));
 		ft_free((void **)&read);
 	}
-	// unset_attr();
+	unset_attr();
 	// if (fds->here_fd[WRITE] > 0)
 	close(fds->here_fd[WRITE]);
 	ft_free((void **)&read);
