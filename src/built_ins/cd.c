@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void	change_pwd_var(void)
+static void	change_pwd_var(void)
 {
 	t_stringbuilder	*sb;
 	char			*tmp;

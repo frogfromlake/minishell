@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:44:58 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/24 19:15:49 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/25 16:59:28 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,3 @@ void unset_attr(void)
 	signal(SIGINT, ft_sigchild);
 	signal(SIGQUIT, ft_sigchild1);
 }
-

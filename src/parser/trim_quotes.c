@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:02:19 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 19:02:19 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/25 16:54:19 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	get_quoted_word(t_token **token)
 	sb_destroy(sb);
 }
 
-void trim_quotes(t_token **token)
+void	trim_quotes(t_token **token)
 {
 	t_token	*tmp;
 

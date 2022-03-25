@@ -14,7 +14,7 @@
 
 // TODO: expand $?
 
-static char *get_word_envname(char **tmp)
+static char	*get_word_envname(char **tmp)
 {
 	t_stringbuilder	*sb;
 	char			*env_name;

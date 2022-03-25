@@ -54,7 +54,7 @@ SRCS		=	main.c \
 				executer.c \
 				exec_struct.c \
 				utils.c \
-				bonus.c \
+				logic_ops.c \
 				signal.c
 
 ODIR		= obj

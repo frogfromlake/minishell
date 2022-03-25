@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int	create_redir_token(t_node **node, char **input)
+static int	create_redir_token(t_node **node, char **input)
 {
 	t_type	type;
 
@@ -23,7 +23,7 @@ int	create_redir_token(t_node **node, char **input)
 	return (1);
 }
 
-int	create_tokens(t_node **node, char **input)
+static int	create_tokens(t_node **node, char **input)
 {
 	int		cmd_present;
 	t_type	type;
@@ -49,7 +49,7 @@ int	create_tokens(t_node **node, char **input)
 	return (1);
 }
 
-int	define_type(char *input)
+static int	define_type(char *input)
 {
 	if (input[0] == LPAREN || input[0] == RPAREN)
 		return (input[0]);

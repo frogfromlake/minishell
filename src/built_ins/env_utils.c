@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int	get_env_size(t_env *env)
+static int	get_env_size(t_env *env)
 {
 	int		res;
 
