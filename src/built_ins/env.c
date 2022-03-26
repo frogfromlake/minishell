@@ -59,7 +59,6 @@ t_env	**get_env(char **environ)
 
 	if (!env)
 	{
-		// TODO:if environ is NULL -> Error: Couldn't create env variables.
 		i = 0;
 		while (environ[i])
 		{

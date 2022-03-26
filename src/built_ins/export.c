@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/19 16:44:16 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/26 21:05:22 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,14 @@ static void	print_env_vars(t_env *env)
 void	ft_export(char *args)
 {
 	t_env	**env;
-	// t_env	*tmp;
 	t_env	*existing;
-	// int		ascii;
 
-	// ascii = 65;
 	env = get_env(NULL);
-	// tmp = *env;
 	if (!args)
 		print_env_vars(*env);
 	else
 	{
-		if (ft_strchr(args, '=') && args[0] != '=')
+		if (check_valid_var(&args))
 		{
 			existing = check_var_existence(env, args);
 			if (!existing)

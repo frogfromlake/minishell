@@ -47,6 +47,7 @@ SRCS		=	main.c \
 				env.c \
 				env_utils.c \
 				export.c \
+				export_utils.c \
 				unset.c \
 				exit.c \
 				stringbuilder.c \

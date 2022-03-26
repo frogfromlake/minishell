@@ -14,7 +14,7 @@
 
 static int	get_env_size(t_env *env)
 {
-	int		res;
+	int	res;
 
 	res = 0;
 	env = *(get_env(NULL));
