@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/26 14:29:18 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/26 19:43:41 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ void	exec_loop(t_table *table)
 	while (tmp)
 	{
 		if (tmp->log_op != COMMAND)
+		{
 			tmp = tmp->next;
+		}
 		if (tmp->prev == NULL && tmp->next == NULL
 			&& !tmp->redir && check_builtin(tmp))
 		{
@@ -87,10 +89,13 @@ int	exec(t_table *table)
 	env_arr = get_env_arr();
 	if (!env_arr)
 		perror("Could not resolve environ array.\n");
-	if (built_in_exec(table))
+	if (check_builtin(table))
+		built_in_exec(table);
+	else
 	{
-		if (execve(table->cmd_arr[0], table->cmd_arr, env_arr) == -1)
-			g_exit_status = -1;
+		execve(table->cmd_arr[0], table->cmd_arr, env_arr);
+		g_exit_status = -1;
+		exit(EXIT_FAILURE);
 	}
-	return (g_exit_status);
+	exit(EXIT_SUCCESS);
 }

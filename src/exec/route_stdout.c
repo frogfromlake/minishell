@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:26:17 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/26 14:33:04 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/26 19:24:49 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	handle_redir_out(t_table *table, t_exec *fds)
 				dup2(fds->stout, fds->here_fd[WRITE]);
 				close(fds->stout);
 			}
+			// printf("TEST\n");
 			dup2(fds->stout, STDOUT_FILENO);
 			close(fds->stout);
 		}
@@ -65,6 +66,7 @@ void	handle_redir_out(t_table *table, t_exec *fds)
 				dup2(fds->fd[READ], fds->here_fd[WRITE]);
 				close(fds->fd[READ]);
 			}
+			// printf("TEST2\n");
 			dup2(fds->fd[WRITE], STDOUT_FILENO);
 			close(fds->fd[WRITE]);
 		}
