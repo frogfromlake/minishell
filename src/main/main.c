@@ -6,15 +6,15 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/26 02:56:46 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/26 03:19:58 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// FIXME: cmds with quoted arguments not working (include whitespaces) -> parser.c
 // TODO: implement return values for cmds.
-// TODO: implement signals
+// TODO: syntax control on env and if just name (w/o '='), then it should not print on "env' just on "export"
+// TODO: set correct exit_status on parser!!
 
 // void	handle_sigint(int sig)
 // {
