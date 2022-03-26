@@ -22,5 +22,6 @@ int	redir_parser(t_token *curr_t, t_table **new)
 	type = curr_t->type;
 	filename = ft_strdup(curr_t->name);
 	append_redir(&(*new)->redir, new_redir(type, filename));
-	return (1);
+	g_exit_status = SUCCESS;
+	return (g_exit_status);
 }

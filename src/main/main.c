@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/25 19:32:47 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/26 02:56:46 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 	// system("afplay mp3/error2.mp3");
 	while (true)
 	{	
-		set_attr();
+		change_termios(true);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, sigint_handler);
 		read = get_prompt();
 		read = readline(read);
 		if (read != NULL && ft_strcmp(read, ""))
@@ -85,10 +87,12 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 				expander(head);
 				// print_nodes(*head);
 				parser(head, table);
-				unset_attr();
 				// print_cmd_table(*table);
 				if (g_exit_status == SUCCESS)
+				{
+					change_termios(false);
 					exec_loop(*table);
+				}
 			}
 			free_node(head);
 			free_table(table);

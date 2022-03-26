@@ -6,11 +6,13 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/24 17:22:52 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/26 00:51:43 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+// FIXME: set g_exit_status right, if it fails or if it succeeded
 
 int	command_parser(t_token *token, t_table **new)
 {
@@ -35,6 +37,6 @@ int	command_parser(t_token *token, t_table **new)
 		if (token->next) // TODO: implement for more args (e.g. export can also set multiple args at once.)
 			(*new)->args = ft_strdup(token->next->name);
 	}
-	g_exit_status = SUCCESS;
+	// g_exit_status = SUCCESS;
 	return (g_exit_status);
 }

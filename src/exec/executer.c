@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/25 19:33:01 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/26 03:13:38 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ int	exec_loop(t_table *table)
 			g_exit_status = WEXITSTATUS(fds->pid);
 		fds->i--;
 	}
-	
 	return (g_exit_status);
 }
 
 int	create_prcs(t_table *table, t_exec *fds)
 {
 	pipe(fds->fd);
+	define_sig_prc(table);
 	fds->pid = fork();
 	if (fds->pid == 0)
 	{
@@ -103,9 +103,7 @@ void	route_stdin(t_table *table, t_exec *fds)
 			else if (last_in->type == LESSLESS || last_in->type == LESSLESS + 1)
 			{
 				pipe(fds->here_fd);
-				set_attr_heredoc();
 				heredoc(last_in->file, fds, last_in->type);
-				unset_attr();
 				dup2(fds->here_fd[READ], STDIN_FILENO);
 			}
 		}
@@ -179,8 +177,6 @@ int	exec(t_table *table)
 		perror("Could not resolve environ array.\n");
 	if (built_in_exec(table))
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
 		if (execve(table->cmd_arr[0], table->cmd_arr, env_arr) == -1)
 			g_exit_status = -1;
 	}
@@ -193,6 +189,7 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 	char	*delimiter_nl;
 
 	delimiter_nl = ft_strjoin(delimiter, "\n");
+	signal(SIGINT, sigint_handler_heredoc);
 	while (true)
 	{
 		while (fds->cmd_count)
@@ -213,8 +210,7 @@ int	heredoc(char *delimiter, t_exec *fds, int type)
 		write(fds->here_fd[WRITE], read, ft_strlen(read));
 		ft_free((void **)&read);
 	}
-	// unset_attr();
-	// if (fds->here_fd[WRITE] > 0)
+	change_termios(false);
 	close(fds->here_fd[WRITE]);
 	ft_free((void **)&read);
 	ft_free((void **)&delimiter_nl);
