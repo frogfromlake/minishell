@@ -3,16 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/26 03:17:32 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/26 13:40:29 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	exec_loop(t_table *table)
+static void	end_prcs(t_exec *fds)
+{
+	close(fds->stin);
+	close(fds->stout);
+	close(fds->tmp_fd);
+	while (fds->i > 0)
+	{
+		waitpid(0, &fds->pid, 0);
+		if (WIFEXITED(fds->pid))
+			g_exit_status = WEXITSTATUS(fds->pid);
+		fds->i--;
+	}
+}
+
+void	exec_loop(t_table *table)
 {
 	t_table	*tmp;
 	t_exec	*fds;
@@ -35,18 +49,9 @@ int	exec_loop(t_table *table)
 		fds->i++;
 		tmp = tmp->next;
 	}
-	close(fds->stin);
-	close(fds->stout);
-	close(fds->tmp_fd);
-	while (fds->i > 0)
-	{
-		waitpid(0, &fds->pid, 0);
-		if (WIFEXITED(fds->pid))
-			g_exit_status = WEXITSTATUS(fds->pid);
-		fds->i--;
-	}
-	return (g_exit_status);
+	end_prcs(fds);
 }
+
 
 int	create_prcs(t_table *table, t_exec *fds)
 {
@@ -81,9 +86,11 @@ void	route_stdin(t_table *table, t_exec *fds)
 	tmp = table->redir;
 	last_in = get_last_in_redir(table->redir);
 	if (table->redir && table->redir->next)
+	{
 		while (tmp)
 		{
-			if (tmp->next && (tmp->type == LESS || tmp->type == LESSLESS || tmp->type == LESSLESS + 1))
+			if (tmp->next && (tmp->type == LESS || tmp->type == LESSLESS
+					|| tmp->type == LESSLESS + 1))
 			{
 				if (tmp->type == LESS)
 					fds->file_fd = open_file(tmp->file, O_RDONLY, 0);
@@ -97,6 +104,7 @@ void	route_stdin(t_table *table, t_exec *fds)
 			}
 			tmp = tmp->next;
 		}
+	}
 	if (last_in)
 	{
 		if (last_in->type == LESS)
@@ -134,9 +142,11 @@ void	route_stdout(t_table *table, t_exec *fds)
 			dup2(fds->file_fd, STDOUT_FILENO);
 			close(fds->file_fd);
 		}
-		else if (last_out->type == GREATGREAT)
+		if (last_out->type == GREATGREAT)
 		{
 			fds->file_fd = open_file(last_out->file, O_RDWR | O_CREAT | O_APPEND, 0644);
+			if (fds->file_fd < 0)
+				return ;
 			dup2(fds->file_fd, STDOUT_FILENO);
 			close(fds->file_fd);
 		}
@@ -152,11 +162,6 @@ void	route_stdout(t_table *table, t_exec *fds)
 			}
 			dup2(fds->stout, STDOUT_FILENO);
 			close(fds->stout);
-		}
-		else if (table->next->log_op == AND) // bonus
-		{
-			dup2(fds->fd[WRITE], fds->stout);
-			close(fds->fd[WRITE]);
 		}
 		else
 		{

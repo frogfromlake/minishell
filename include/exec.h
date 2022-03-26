@@ -6,14 +6,14 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 17:00:44 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/25 17:12:02 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/26 13:39:12 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-int		exec_loop(t_table *table);
+void	exec_loop(t_table *table);
 int		create_prcs(t_table *table, t_exec *fds);
 void	route_stdin(t_table *table, t_exec *fds);
 void	route_stdout(t_table *table, t_exec *fds);
