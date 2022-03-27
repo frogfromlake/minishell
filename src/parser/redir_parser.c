@@ -12,8 +12,6 @@
 
 #include "../../include/minishell.h"
 
-// TODO: error handling, change name of check_redir_quotes
-
 int	redir_parser(t_token *curr_t, t_table **new)
 {
 	t_type	type;

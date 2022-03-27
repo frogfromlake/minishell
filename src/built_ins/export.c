@@ -6,11 +6,27 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/27 16:59:40 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/27 21:23:38 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	export_error(char *str, int r_value)
+{
+	t_stringbuilder	*sb;
+	char			*err_msg;
+
+	sb = sb_create();
+	sb_append_str(sb, "export: '");
+	sb_append_str(sb, str);
+	sb_append_str(sb, "': not a valid identifier");
+	err_msg = sb_get_str(sb);
+	sb_destroy(sb);
+	error_msg(err_msg, r_value);
+	free(err_msg);
+	return (r_value);
+}
 
 static int	equal_strlen(char *args)
 {
@@ -80,5 +96,7 @@ void	ft_export(char *args)
 				existing->var = ft_strdup(args);
 			}
 		}
+		else
+			export_error(args, FAIL);
 	}
 }

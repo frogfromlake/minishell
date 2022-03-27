@@ -21,5 +21,6 @@ int	ft_pwd(void)
 		return (1);
 	printf("%s\n", pwd);
 	free(pwd);
-	return (0);
+	g_exit_status = SUCCESS;
+	return (g_exit_status);
 }
