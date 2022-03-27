@@ -20,7 +20,7 @@ static char	*get_word_envname(char **tmp)
 
 	i = 0;
 	sb = sb_create();
-	while (ft_is_alpha((*tmp)[i]) || (*tmp)[i] == '_')
+	while (ft_is_all_num((*tmp)[i]) || (*tmp)[i] == '_')
 		i++;
 	sb_append_strn(sb, *tmp, i);
 	env_name = sb_get_str(sb);
@@ -52,8 +52,13 @@ void	dollar_expand(t_stringbuilder **sb, char **tmp)
 			sb_append_int(*sb, g_exit_status);
 			(*tmp)++;
 		}
-		else
+		else if (**tmp == ' ')
+		{
 			sb_append_char((*sb), '$');
+			(*tmp)++;
+		}
+		else if (ft_is_digit(**tmp))
+			(*tmp)++;
 	}
 }
 
