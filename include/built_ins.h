@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:25:51 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/27 17:36:06 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/27 21:23:27 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int		built_in_exec(t_table *table);
 bool	check_builtin(t_table *table);
 
 /***	Environment variables	***/
+void	ft_env(void);
 char	*get_var_name(t_env *env);
 char	*get_env_var(char *str);
 char	**get_env_arr(void);
-void	ft_env(void);
 
 /***	CD	  ***/
 void	ft_cd(t_table *table);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:02:19 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/25 16:54:19 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/27 20:08:31 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	get_word_trim(t_stringbuilder **sb, char **str)
 {
 	char	quote;
 	int		i;
-	
+
 	quote = (**str);
 	(*str)++;
 	i = 0;

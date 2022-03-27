@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 18:52:05 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 00:00:57 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/27 20:26:06 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	valid_name(t_token **token)
 				if (*name == SQUOTE || *name == DQUOTE)
 				{
 					if (!check_quotes_closed(&name))
-						return (FAIL); //FAIL!
+						return (FAIL);
 					continue ;
 				}
 				name++;
@@ -55,11 +55,13 @@ int	valid_name(t_token **token)
 		tmp = tmp->next;
 	}
 	trim_quotes(token);
-	return (SUCCESS); // SUCCESS!
+	return (SUCCESS);
 }
 
 int	error_msg(char *error_msg, int r_value)
 {
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(error_msg, 2);
+	ft_putchar_fd('\n', 2);
 	return (r_value);
 }

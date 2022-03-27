@@ -12,6 +12,22 @@
 
 #include "../../include/minishell.h"
 
+static int	unset_error(char *str, int r_value)
+{
+	t_stringbuilder	*sb;
+	char			*err_msg;
+
+	sb = sb_create();
+	sb_append_str(sb, "unset: '");
+	sb_append_str(sb, str);
+	sb_append_str(sb, "': not a valid identifier");
+	err_msg = sb_get_str(sb);
+	sb_destroy(sb);
+	error_msg(err_msg, r_value);
+	free(err_msg);
+	return (r_value);
+}
+
 static bool	check_valid_arg(char *str)
 {
 	if (!ft_is_alpha(*str) && *str != '_')
@@ -34,6 +50,7 @@ void	ft_unset(t_table *table)
 
 	curr_env = *(get_env(NULL));
 	prev = curr_env;
+	g_exit_status = 0;
 	if (check_valid_arg(table->args))
 	{
 		while (curr_env)
@@ -55,6 +72,5 @@ void	ft_unset(t_table *table)
 		}
 	}
 	else
-		g_exit_status = error_msg("minishell: unset: 'arg': "
-				"not a valid identifier\n", FAIL);
+		g_exit_status = unset_error(table->args, FAIL);
 }

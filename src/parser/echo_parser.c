@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 03:09:51 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/11 00:41:43 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/27 21:15:00 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,6 @@ static int	get_quoted_word(char *str, t_stringbuilder **sb)
 	return (++i);
 }
 
-static bool	check_quotes_closed(char *str, t_stringbuilder **sb)
-{
-	char	quote;
-
-	quote = *str;
-	while (*str)
-	{
-		if (*str == quote)
-			return (true);
-		str++;
-	}
-	sb_destroy(*sb);
-	return (false);
-}
-
-
 static bool	check_valid_opt(char *opt)
 {
 	int	i;
@@ -60,11 +44,6 @@ static bool	check_valid_opt(char *opt)
 	return (true);
 }
 
-/*
-Checks if the first token is a valid option. 
-If it is true, it will also skip the tokens,
-from which the options are valid.
-*/
 static bool	check_opt(t_token **token)
 {
 	if (!check_valid_opt((*token)->name))
@@ -78,30 +57,21 @@ static bool	check_opt(t_token **token)
 	return (true);
 }
 
-/*
-RET VAL -1 = error detected
-RET VAL 0 = no errors detected and option is not activated
-RET VAL 1 = no errors detected and option is activated
-*/
 int	define_echo_args(t_token *token, t_table **new)
 {
 	t_stringbuilder	*sb;
-	int				res;
+	int				opt;
 
-	res = 0;
+	opt = 0;
 	if (check_opt(&token))
-		res = 1;
+		opt = 1;
 	if (!token)
-		return (res);
+		return (opt);
 	sb = sb_create();
 	while (token)
 	{
 		if (check_quotes(*token->name))
-		{
-			if (!check_quotes_closed(token->name, &sb))
-				return (-1);
 			get_quoted_word(token->name, &sb);
-		}
 		else
 			sb_append_str(sb, token->name);
 		if (*token->name && token->next)
@@ -110,5 +80,6 @@ int	define_echo_args(t_token *token, t_table **new)
 	}
 	(*new)->args = sb_get_str(sb);
 	sb_destroy(sb);
-	return (res);
+	g_exit_status = SUCCESS;
+	return (opt);
 }

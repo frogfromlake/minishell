@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static void define_node(t_node *node, t_table **new)
+static void	define_node(t_node *node, t_table **new)
 {
 	if (valid_name(&node->tokens) == SUCCESS)
 	{
@@ -21,27 +21,51 @@ static void define_node(t_node *node, t_table **new)
 		else if (node->type == COMMAND)
 			command_parser(node->tokens, new);
 	}
-	else 
-		printf("FAIL\n"); //temporary!!!
+	else
+		g_exit_status = error_msg("syntax error: unclosed quotes", FAIL);
+}
+
+static int	parser_error(int type, int r_value)
+{
+	t_stringbuilder	*sb;
+	char			*err_msg;
+
+	sb = sb_create();
+	sb_append_str(sb, "syntax error: near unexpected token '");
+	if (type == PIPE || type == AMPERSAND)
+		sb_append_char(sb, type);
+	else
+	{
+		if (type == OR)
+			sb_append_str(sb, "||");
+		else
+			sb_append_str(sb, "&&");
+	}
+	sb_append_str(sb, "'");
+	err_msg = sb_get_str(sb);
+	sb_destroy(sb);
+	error_msg(err_msg, r_value);
+	free(err_msg);
+	return (r_value);
+}
+
+static bool	check_valid_first_token(t_type type)
+{
+	if (type == PIPE || type == AMPERSAND || type == OR || type == AND)
+		return (false);
+	return (true);
 }
 
 int	parser(t_node **node, t_table **table)
-{
-	create_cmd_table(node, table);
-	return (0);
-}
-
-void	create_cmd_table(t_node **node, t_table **table)
 {
 	t_node	*curr_n;
 	t_table	*new;
 
 	curr_n = *node;
-	if ((*node)->type == PIPE)
+	if (!check_valid_first_token((*node)->type))
 	{
-		g_exit_status = error_msg("minishell: syntax error"
-				"near unexpected token '|'\n", 258);
-		return ;
+		g_exit_status = parser_error((*node)->type, 258);
+		return (g_exit_status);
 	}
 	while (curr_n)
 	{
@@ -58,4 +82,6 @@ void	create_cmd_table(t_node **node, t_table **table)
 			curr_n = curr_n->next;
 		}
 	}
+	return (g_exit_status);
 }
+

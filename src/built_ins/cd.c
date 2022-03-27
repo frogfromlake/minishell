@@ -12,6 +12,22 @@
 
 #include "../../include/minishell.h"
 
+static int	cd_error(char *str, int r_value)
+{
+	t_stringbuilder	*sb;
+	char			*err_msg;
+
+	sb = sb_create();
+	sb_append_str(sb, "cd: ");
+	sb_append_str(sb, str);
+	sb_append_str(sb, ": No such file or directory");
+	err_msg = sb_get_str(sb);
+	sb_destroy(sb);
+	error_msg(err_msg, r_value);
+	free(err_msg);
+	return (r_value);
+}
+
 static void	change_pwd_var(void)
 {
 	t_stringbuilder	*sb;
@@ -62,10 +78,11 @@ void	ft_cd(t_table *table)
 	{
 		free(table->args);
 		table->args = ft_strdup(get_env_var("OLDPWD"));
+		printf("%s\n", table->args);
 	}
 	if (chdir(table->args) == -1)
 	{
-		printf("minishell: cd : %s: No such file or directory\n", table->args);
+		g_exit_status = cd_error(table->args, FAIL);
 		return ;
 	}
 	change_pwd_var();

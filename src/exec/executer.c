@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 16:57:41 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/27 21:25:50 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,6 @@ static void	end_prcs(t_exec *fds)
 		waitpid(0, &fds->pid, 0);
 		if (WIFEXITED(fds->pid))
 			g_exit_status = WEXITSTATUS(fds->pid);
-		if (g_exit_status)
-		{
-			if (g_exit_status == 3)
-				ft_putendl_fd("Quit: 3", 2);
-			if (g_exit_status == 2)
-				ft_putstr_fd("\n", 2);
-		}
 		fds->i--;
 	}
 	free(fds);
