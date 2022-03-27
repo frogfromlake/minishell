@@ -16,6 +16,7 @@ static void	change_pwd_var(void)
 {
 	t_stringbuilder	*sb;
 	char			*tmp;
+	char			*tmp_pwd;
 
 	sb = sb_create();
 	sb_append_str(sb, "OLDPWD=");
@@ -24,8 +25,10 @@ static void	change_pwd_var(void)
 	ft_export(tmp);
 	sb_clear(sb);
 	sb_append_str(sb, "PWD=");
-	sb_append_str(sb, getcwd(NULL, 0));
+	tmp_pwd = getcwd(NULL, 0);
+	sb_append_str(sb, tmp_pwd);
 	free(tmp);
+	free(tmp_pwd);
 	tmp = sb_get_str(sb);
 	ft_export(tmp);
 	sb_destroy(sb);
@@ -62,7 +65,7 @@ void	ft_cd(t_table *table)
 	}
 	if (chdir(table->args) == -1)
 	{
-		printf("bitchy snake shell: cd : %s: No such file or directory\n", table->args);
+		printf("minishell: cd : %s: No such file or directory\n", table->args);
 		return ;
 	}
 	change_pwd_var();

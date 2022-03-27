@@ -44,7 +44,7 @@ char	**get_env_arr(void)
 	return (env_arr);
 }
 
-static char	*get_var_name(t_env *env)
+char	*get_var_name(t_env *env)
 {
 	t_stringbuilder	*sb;
 	int				i;
