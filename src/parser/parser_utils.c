@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 18:52:05 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/20 18:52:05 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/27 00:00:57 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,10 @@ int	valid_name(t_token **token)
 	}
 	trim_quotes(token);
 	return (SUCCESS); // SUCCESS!
+}
+
+int	error_msg(char *error_msg, int r_value)
+{
+	ft_putstr_fd(error_msg, 2);
+	return (r_value);
 }

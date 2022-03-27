@@ -37,6 +37,12 @@ void	create_cmd_table(t_node **node, t_table **table)
 	t_table	*new;
 
 	curr_n = *node;
+	if ((*node)->type == PIPE)
+	{
+		g_exit_status = error_msg("minishell: syntax error"
+				"near unexpected token '|'\n", 258);
+		return ;
+	}
 	while (curr_n)
 	{
 		new = append_table(table, new_table());

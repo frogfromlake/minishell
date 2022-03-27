@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 15:30:12 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/27 16:57:41 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	exec_loop(t_table *table)
 		if (tmp->log_op != COMMAND)
 		{
 			tmp = tmp->next;
+			continue ;
 		}
 		if (tmp->prev == NULL && tmp->next == NULL
 			&& !tmp->redir && check_builtin(tmp))
@@ -87,6 +88,7 @@ static void	end_prcs(t_exec *fds)
 		}
 		fds->i--;
 	}
+	free(fds);
 }
 
 int	exec(t_table *table)
@@ -97,12 +99,16 @@ int	exec(t_table *table)
 	if (!env_arr)
 		perror("Could not resolve environ array.\n");
 	if (check_builtin(table))
+	{
 		built_in_exec(table);
-	else
+		ft_free_split(env_arr);
+	}
+	else if (table->exe)
 	{
 		execve(table->cmd_arr[0], table->cmd_arr, env_arr);
 		g_exit_status = -1;
 		exit(EXIT_FAILURE);
+		ft_free_split(env_arr);
 	}
 	exit(EXIT_SUCCESS);
 }

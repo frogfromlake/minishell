@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:58 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/07 22:49:59 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/26 23:05:42 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,52 +82,52 @@ void	print_cmd_table(t_table *table)
 	}
 }
 
-char	*str_join(char const *s1, char const *s2, char const *s3)
-{
-	char	*newstr;
-	size_t	len1;
-	size_t	len2;
-	size_t	len3;
+// char	*str_join(char const *s1, char const *s2, char const *s3)
+// {
+// 	char	*newstr;
+// 	size_t	len1;
+// 	size_t	len2;
+// 	size_t	len3;
 
-	if (!s1 || !s2 || !s3)
-		return (NULL);
-	len1 = ft_strlen((char *)s1);
-	len2 = ft_strlen((char *)s2);
-	len3 = ft_strlen((char *)s3);
-	newstr = malloc(len1 + len2 + len3 + 1);
-	if (!newstr)
-		return (NULL);
-	if (newstr != NULL)
-	{
-		ft_memcpy(newstr, s1, len1);
-		ft_memcpy(&newstr[len1], s2, len2);
-		ft_memcpy(&newstr[len2 + len1], s3, len3);
-		newstr[len1 + len2 + len3] = '\0';
-	}
-	return (newstr);
-}
+// 	if (!s1 || !s2 || !s3)
+// 		return (NULL);
+// 	len1 = ft_strlen((char *)s1);
+// 	len2 = ft_strlen((char *)s2);
+// 	len3 = ft_strlen((char *)s3);
+// 	newstr = malloc(len1 + len2 + len3 + 1);
+// 	if (!newstr)
+// 		return (NULL);
+// 	if (newstr != NULL)
+// 	{
+// 		ft_memcpy(newstr, s1, len1);
+// 		ft_memcpy(&newstr[len1], s2, len2);
+// 		ft_memcpy(&newstr[len2 + len1], s3, len3);
+// 		newstr[len1 + len2 + len3] = '\0';
+// 	}
+// 	return (newstr);
+// }
 
-char	*ft_strjoin_ws(char const *s1, char const *s2)
-{
-	char	*newstr;
-	int		i;
-	int		j;
+// char	*ft_strjoin_ws(char const *s1, char const *s2)
+// {
+// 	char	*newstr;
+// 	int		i;
+// 	int		j;
 
-	if (!s1 || !s2)
-		return (NULL);
-	newstr = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 2, sizeof(char));
-	i = 0;
-	while (s1[i])
-	{
-		newstr[i] = s1[i];
-		i++;
-	}
-	newstr[i++] = ' ';
-	j = 0;
-	while (s2[j])
-	{
-		newstr[i + j] = s2[j];
-		j++;
-	}
-	return (newstr);
-}
+// 	if (!s1 || !s2)
+// 		return (NULL);
+// 	newstr = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 2, sizeof(char));
+// 	i = 0;
+// 	while (s1[i])
+// 	{
+// 		newstr[i] = s1[i];
+// 		i++;
+// 	}
+// 	newstr[i++] = ' ';
+// 	j = 0;
+// 	while (s2[j])
+// 	{
+// 		newstr[i + j] = s2[j];
+// 		j++;
+// 	}
+// 	return (newstr);
+// }

@@ -18,6 +18,7 @@ void	ft_exit(t_table *table)
 	{
 		// free stuff
 		write(1, "exit\n", 5);
-		exit(EXIT_SUCCESS);
+		free_table(&table);
+		exit(g_exit_status);
 	}
 }

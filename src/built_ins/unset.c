@@ -24,6 +24,8 @@ void	ft_unset(t_table *table) // TODO: error handling!
 		if (!ft_strncmp(curr_env->var, table->args, ft_strlen(table->args)))
 		{
 			prev->next = curr_env->next;
+			free(curr_env->var);
+			curr_env->var = NULL;
 			free(curr_env);
 			curr_env = NULL;
 			break ;

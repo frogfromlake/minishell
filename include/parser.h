@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 16:27:18 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/25 16:56:28 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/27 00:01:11 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int		valid_name(t_token **token);
 void	create_cmd_table(t_node **node, t_table **table);
 int		redir_parser(t_token *curr_t, t_table **new);
 void	trim_quotes(t_token **token);
+int		error_msg(char *error_msg, int r_value);
 
 #endif

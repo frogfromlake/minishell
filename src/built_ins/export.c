@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/26 21:05:22 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/27 01:32:48 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,11 @@ void	ft_export(char *args)
 			if (!existing)
 				append_env(env, new_env(args));
 			else
-				ft_strcpy(existing->var, args);
+			{
+				free(existing->var);
+				existing->var = ft_strdup(args);
+				// ft_strcpy(existing->var, args);
+			}
 		}
 	}
 }

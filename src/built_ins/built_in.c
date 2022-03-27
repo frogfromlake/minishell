@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 04:10:34 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/26 19:36:25 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/27 00:31:26 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 bool	check_builtin(t_table *table)
 {
+	if (!table->exe)
+		return (false);
 	if (!ft_strcmp(table->exe, "pwd")
 		|| !ft_strcmp(table->exe, "cd")
 		|| !ft_strcmp(table->exe, "echo")

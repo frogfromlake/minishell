@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/26 21:15:55 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/27 16:57:34 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*get_prompt(void)
 static void	bitchy_snake_shell(t_node **head, t_table **table)
 {
 	char	*read;
+	char	*tmp;
 	int		s_out = dup(STDOUT_FILENO);
 	int		s_in = dup(STDIN_FILENO);
 
@@ -67,8 +68,9 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 		change_termios(true);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, sigint_handler);
-		read = get_prompt();
-		read = readline(read);
+		tmp = get_prompt();
+		read = readline(tmp);
+		free(tmp);
 		if (read != NULL && ft_strcmp(read, ""))
 		{
 			add_history(read);
@@ -88,7 +90,6 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 			}
 			free_node(head);
 			free_table(table);
-			// system("leaks minishell");
 		}
 		free(read);
 		dup2(s_in, STDIN_FILENO);
