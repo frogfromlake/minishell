@@ -25,6 +25,7 @@ typedef struct s_stringbuilder
 t_stringbuilder	*sb_create(void);
 int				sb_destroy(t_stringbuilder *sb);
 int				sb_clear(t_stringbuilder *sb);
+void			sb_copy_oldstr(t_stringbuilder *sb, char **newstr);
 
 int				sb_append_char(t_stringbuilder *sb, char c);
 int				sb_append_str(t_stringbuilder *sb, char *str);
