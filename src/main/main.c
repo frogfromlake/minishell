@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/26 19:43:29 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/26 21:15:55 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 // TODO: implement return values for cmds.
 // TODO: syntax control on env and if just name (w/o '='), then it should not print on "env' just on "export"
 // TODO: set correct exit_status on parser!!
-
-// void	handle_sigint(int sig)
-// {
-// 	char	*read;
-
-// 	if (sig == SIGINT)
-// 		read = get_prompt();
-// }
 
 int	g_exit_status;
 
@@ -102,7 +94,10 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 		dup2(s_in, STDIN_FILENO);
 		dup2(s_out, STDOUT_FILENO);
 		if (!read)
+		{
+			printf("exit\n");
 			break ;
+		}
 	}
 }
 

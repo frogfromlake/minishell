@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:44:58 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/26 03:08:34 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/26 19:41:24 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	sigint_handler_heredoc(int sig)
 
 void	sigchild_handler(int sig)
 {
-	if (sig == SIGINT)
-		write(1, "\n", 1);
+	// if (sig == SIGINT)
+	// 	write(1, "\n");
 	if (sig == SIGQUIT)
 		write(1, "Quit: 3\n", 9);
 }
