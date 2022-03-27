@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/26 00:51:43 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/27 17:52:07 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	command_parser(t_token *token, t_table **new)
 	{
 		g_exit_status = set_cmd_path(new, get_env(NULL));
 		if (g_exit_status)
-			printf("bitchy snake shell: command not found: %s\n", (*new)->exe); // TODO: create a error_exit func)
+			printf("minishell: command not found: %s\n", (*new)->exe); // TODO: create a error_exit func)
 		else
 			if (token->next)
 				add_args_to_arr(token->next, new);
