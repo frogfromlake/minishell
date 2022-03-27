@@ -12,8 +12,6 @@
 
 #include "../../include/minishell.h"
 
-// TODO: expand $?
-
 static char	*get_word_envname(char **tmp)
 {
 	t_stringbuilder	*sb;
@@ -54,7 +52,7 @@ void	dollar_expand(t_stringbuilder **sb, char **tmp)
 			sb_append_int(*sb, g_exit_status);
 			(*tmp)++;
 		}
-		else //if (!(**tmp))
+		else
 			sb_append_char((*sb), '$');
 	}
 }
@@ -130,8 +128,12 @@ int	expander(t_node **head)
 			{
 				if (ft_strchr(token->name, '$')
 					|| ft_strchr(token->name, SQUOTE)
-					|| ft_strchr(token->name, DQUOTE))
+					|| (ft_strchr(token->name, DQUOTE) && ft_strcmp(token->name, "\"\"")))
+				{
 					expand(&token->name);
+					if (!ft_strcmp(token->name, "\"\"") || !(*token->name))
+						token->type = NONEXISTENV;
+				}
 				token = token->next;
 			}
 		}

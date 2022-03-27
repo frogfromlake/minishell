@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 16:05:21 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/25 17:07:46 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/27 23:00:47 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef enum e_type
 	COMMAND = 0,
 	OPTION = -2,
 	ARG,
+	NONEXISTENV = -3,
 	SQUOTE = '\'',
 	DQUOTE = '\"',
 	PIPE = '|',

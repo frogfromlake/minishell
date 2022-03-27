@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 03:09:51 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 21:15:00 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/27 23:08:57 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,15 @@ static bool	check_valid_opt(char *opt)
 
 static bool	check_opt(t_token **token)
 {
-	if (!check_valid_opt((*token)->name))
+	if (!check_valid_opt((*token)->name) || !(*(*token)->name))
 		return (false);
 	while (*token)
 	{
+		if ((*token)->type == NONEXISTENV)
+		{
+			(*token) = (*token)->next;
+			continue ;
+		}
 		if (!check_valid_opt((*token)->name))
 			break ;
 		(*token) = (*token)->next;
@@ -74,7 +79,7 @@ int	define_echo_args(t_token *token, t_table **new)
 			get_quoted_word(token->name, &sb);
 		else
 			sb_append_str(sb, token->name);
-		if (*token->name && token->next)
+		if (token->next)
 			sb_append_char(sb, ' ');
 		token = token->next;
 	}
