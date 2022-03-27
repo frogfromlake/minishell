@@ -6,11 +6,60 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 23:13:37 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/27 23:19:11 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+//bash tester.sh m 
+//bash tester.sh -f cmds/test.sh
+
+static char	*ft_append(char *line, char c)
+{
+	int		length;
+	int		i;
+	char	*longer;
+
+	if (line == NULL)
+		return (NULL);
+	length = ft_strlen(line);
+	longer = ft_calloc(length + 2, sizeof(char));
+	if (longer == NULL)
+		free(line);
+	i = 0;
+	while (line && line[i] != '\0')
+	{
+		longer[i] = line[i];
+		i++;
+	}
+	if (longer)
+		longer[i] = c;
+	if (line)
+		free(line);
+	return (longer);
+}
+
+
+static int	ex_get_next_line(char **line, int fd)
+{
+	char	buffer;
+	int		flag;
+
+	if (line == NULL)
+		return(-1);
+	*line = malloc(1);
+	if (*line == NULL)
+		return(-1);
+	*line[0] = '\0';
+	while ((flag = read(fd, &buffer, 1) > 0))
+	{
+		if (buffer == '\n')
+			break ;
+		*line = ft_append(*line, buffer);
+	}
+	return(flag);
+}
 
 // TODO: implement return values for cmds.
 // TODO: syntax control on env and if just name (w/o '='), then it should not print on "env' just on "export"
@@ -59,7 +108,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 	int		s_out = dup(STDOUT_FILENO);
 	int		s_in = dup(STDIN_FILENO);
 
-	print_header();
+	// print_header();
 	// system("(afplay mp3/welcome.mp3&)");
 	// system("(afplay mp3/snake.mp3&)");
 	// system("afplay mp3/error2.mp3");
@@ -68,9 +117,13 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 		change_termios(true);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, sigint_handler);
-		tmp = get_prompt();
-		read = readline(tmp);
-		free(tmp);
+		// tmp = get_prompt();
+		if (isatty(0))
+			read = readline(tmp);
+		else
+			if(ex_get_next_line(&read, 0) == 0)
+				read = NULL ;
+		// free(tmp);
 		if (read != NULL && ft_strcmp(read, ""))
 		{
 			add_history(read);
@@ -96,7 +149,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 		dup2(s_out, STDOUT_FILENO);
 		if (!read)
 		{
-			printf("exit\n");
+			// printf("exit\n");
 			break ;
 		}
 	}
