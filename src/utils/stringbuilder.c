@@ -16,15 +16,10 @@ t_stringbuilder	*sb_create(void)
 {
 	t_stringbuilder	*sb;
 
-	sb = ft_calloc(1, sizeof(t_stringbuilder));
+	sb = calloc(1, sizeof(t_stringbuilder));
 	if (!sb)
 		return (NULL);
 	sb->str = ft_calloc(1, sizeof(char));
-	if (!sb->str)
-	{
-		free(sb);
-		return (NULL);
-	}
 	sb->len = 0;
 	return (sb);
 }
@@ -42,12 +37,6 @@ int	sb_destroy(t_stringbuilder *sb)
 int	sb_clear(t_stringbuilder *sb)
 {
 	free(sb->str);
-	sb->str = NULL;
-	sb->len = 0;
-	free(sb);
-	sb = ft_calloc(1, sizeof(t_stringbuilder));
-	if (!sb)
-		return (1);
 	sb->str = ft_calloc(1, sizeof(char));
 	if (!sb->str)
 	{
@@ -58,15 +47,14 @@ int	sb_clear(t_stringbuilder *sb)
 	return (0);
 }
 
-// TODO: test on Mac and adjust changes to rest of the other funcs
 void	sb_copy_oldstr(t_stringbuilder *sb, char **newstr)
 {
 	int	i;
 
 	i = 0;
-	while (sb->str[i])
+	while (sb->str[i] && i < sb->len)
 	{
-		sb->str[i] = (*newstr)[i];
+		(*newstr)[i] = sb->str[i];
 		i++;
 	}
 }
