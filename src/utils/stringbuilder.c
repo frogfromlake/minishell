@@ -57,3 +57,16 @@ int	sb_clear(t_stringbuilder *sb)
 	sb->len = 0;
 	return (0);
 }
+
+// TODO: test on Mac and adjust changes to rest of the other funcs
+void	sb_copy_oldstr(t_stringbuilder *sb, char **newstr)
+{
+	int	i;
+
+	i = 0;
+	while (sb->str[i])
+	{
+		sb->str[i] = (*newstr)[i];
+		i++;
+	}
+}

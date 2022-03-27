@@ -15,8 +15,6 @@
 int	sb_append_char(t_stringbuilder *sb, char c)
 {
 	char	*tmp;
-	int		old_len;
-	int		i;
 	char	*newstr;
 
 	if (!c)
@@ -24,16 +22,9 @@ int	sb_append_char(t_stringbuilder *sb, char c)
 	newstr = ft_calloc(sb->len + 2, sizeof(char));
 	if (!newstr)
 		return (2);
-	i = 0;
-	old_len = sb->len;
-	while (i < old_len)
-	{
-		newstr[i] = sb->str[i];
-		i++;
-	}
-	newstr[i] = c;
-	sb->len = ++i;
-	newstr[++i] = 0;
+	sb_copy_oldstr(sb, &newstr);
+	newstr[++(sb->len)] = c;
+	sb->len++;
 	tmp = sb->str;
 	sb->str = newstr;
 	free(tmp);
@@ -66,7 +57,6 @@ int	sb_append_str(t_stringbuilder *sb, char *str) //FIXME: line too long!
 		newstr[i + j] = str[j];
 		j++;
 	}
-	newstr[i + j] = 0;
 	sb->len = i + j;
 	tmp = sb->str;
 	sb->str = newstr;
@@ -98,7 +88,6 @@ int	sb_append_strn(t_stringbuilder *sb, char *str, int len) //FIXME: line too lo
 		newstr[i + j] = str[j];
 		j++;
 	}
-	newstr[i + j] = 0;
 	sb->len = i + j;
 	tmp = sb->str;
 	sb->str = newstr;
@@ -140,6 +129,5 @@ char	*sb_get_str(t_stringbuilder *sb)
 		res[i] = sb->str[i];
 		i++;
 	}
-	res[i] = 0;
 	return (res);
 }
