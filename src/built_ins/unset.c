@@ -51,6 +51,8 @@ void	ft_unset(t_table *table)
 	curr_env = *(get_env(NULL));
 	prev = curr_env;
 	g_exit_status = 0;
+	if (!table->args)
+		return ;
 	if (check_valid_arg(table->args))
 	{
 		while (curr_env)

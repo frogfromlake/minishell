@@ -160,4 +160,4 @@ test_from_file() {
 main "$@"
 
 # Clean all tmp files
-#[[ $1 != "-f" ]] && rm -f tmp_*
+# [[ $1 != "-f" ]] && rm -f tmp_*

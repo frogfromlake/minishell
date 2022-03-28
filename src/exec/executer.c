@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 21:25:50 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/27 23:57:08 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	exec_loop(t_table *table)
 			&& !tmp->redir && check_builtin(tmp))
 		{
 			g_exit_status = built_in_exec(tmp);
-			fds->i++;
+			// fds->i++;
 			break ;
 		}
 		else
