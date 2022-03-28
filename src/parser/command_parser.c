@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   command_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 21:33:53 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/28 21:38:55 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void add_args(t_token *token, t_table **new)
+{
+	t_stringbuilder	*sb;
+
+	sb = sb_create();
+	if (!ft_strcmp((*new)->exe, "cd"))
+		sb_append_str(sb, token->name);
+	else
+	{
+		while (token)
+		{
+			sb_append_str(sb, token->name);
+			if (token->next)
+				sb_append_char(sb, ' ');
+			token = token->next;
+		}
+	}
+	(*new)->args = sb_get_str(sb);
+	sb_destroy(sb);
+}
 
 static int	cmd_parser_error(char *str, int r_value)
 {
@@ -50,8 +71,8 @@ int	command_parser(t_token *token, t_table **new)
 	}
 	else
 	{
-		if (token->next) // TODO: implement for more args (e.g. export can also set multiple args at once.)
-			(*new)->args = ft_strdup(token->next->name);
+		if (token->next)
+			add_args(token->next, new);
 		g_exit_status = SUCCESS;
 	}
 	return (g_exit_status);
