@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 04:10:34 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 00:31:26 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/27 23:47:39 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	check_builtin(t_table *table)
 
 int	built_in_exec(t_table *table)
 {
-	if (table->log_op == 0 && table->exe && check_builtin(table))
+	if (table->log_op == 0 && table->exe)
 	{
 		if (!ft_strcmp(table->exe, "pwd"))
 			ft_pwd();
@@ -45,7 +45,7 @@ int	built_in_exec(t_table *table)
 			ft_exit(table);
 		if (!ft_strcmp(table->exe, "unset"))
 			ft_unset(table);
-		return (SUCCESS);
+		return (g_exit_status);
 	}
 	return (FAIL);
 }

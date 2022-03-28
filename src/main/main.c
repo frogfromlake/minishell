@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 23:19:11 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/28 17:18:51 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, sigint_handler);
 		// tmp = get_prompt();
+		tmp = "";
 		if (isatty(0))
 			read = readline(tmp);
 		else
@@ -167,5 +168,5 @@ int	main(int argc, char *argv[], char **environ)
 	table = NULL;
 	get_env(environ);
 	bitchy_snake_shell(&head, &table);
-	return (0);
+	return (g_exit_status);
 }
