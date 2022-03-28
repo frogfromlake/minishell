@@ -42,24 +42,22 @@ void	ft_exit(t_table *table)
 
 	if (!ft_strcmp(table->exe, "exit"))
 	{
-		if (check_valid_arg(table->args))
+		if (ft_is_alpha(*table->args) || !ft_strrchr(table->args, ' '))
 		{
-			exit_status = ft_atoi(table->args);
-			write(1, "exit\n", 5);
-			g_exit_status = exit_status;
-			exit(g_exit_status);
-		}
-		else
-		{
-			if (ft_strrchr(table->args, ' '))
-				g_exit_status = error_msg("exit: too many arguments", FAIL);
+			if (check_valid_arg(table->args))
+			{
+				exit_status = ft_atoi(table->args);
+				write(1, "exit\n", 5);
+				g_exit_status = exit_status;
+			}
 			else
 			{
 				write(1, "exit\n", 5);
 				g_exit_status = exit_error(table->args, 255);
-				free_table(&table);
-				exit(g_exit_status);
 			}
+			free_table(&table);
+			exit(g_exit_status);
 		}
+		g_exit_status = error_msg("exit: too many arguments", FAIL);
 	}
 }
