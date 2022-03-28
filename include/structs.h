@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 16:05:21 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/27 23:00:47 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/28 18:39:46 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_table
 typedef struct s_env
 {
 	char			*var;
-	int				val;
+	bool			hidden;
 	struct s_env	*next;
 }			t_env;
 

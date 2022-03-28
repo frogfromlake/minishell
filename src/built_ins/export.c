@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/27 21:23:38 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/28 19:41:43 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,62 @@ static int	export_error(char *str, int r_value)
 	return (r_value);
 }
 
-static int	equal_strlen(char *args)
-{
-	int	i;
+// static int	equal_strlen(char *args)
+// {
+// 	int	i;
 
+// 	i = 0;
+// 	while (args[i])
+// 	{
+// 		if (args[i] == '=')
+// 			return (i);
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+static char	*get_args_var_name(char *args)
+{
+	t_stringbuilder	*sb;
+	int				i;
+	char			*res;
+
+	sb = sb_create();
 	i = 0;
 	while (args[i])
 	{
 		if (args[i] == '=')
-			return (i);
+			break ;
 		i++;
 	}
-	return (0);
+	sb_append_strn(sb, args, i);
+	res = sb_get_str(sb);
+	sb_destroy(sb);
+	return (res);
 }
 
 static t_env	*check_var_existence(t_env **env, char *args)
 {
 	t_env	*tmp;
+	char	*var_name;
+	char	*args_var_name;
 
 	tmp = *env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->var, args, equal_strlen(args)))
+		var_name = get_var_name(tmp);
+		args_var_name = get_args_var_name(args);
+		if (!ft_strcmp(var_name, args_var_name))
+		{
+			free(args_var_name);
+			free(var_name);
 			return (tmp);
+		}
+		free(args_var_name);
+		free(var_name);
 		tmp = tmp->next;
 	}
-	return (0);
+	return (NULL);
 }
 
 static void	print_env_vars(t_env *env)
@@ -79,6 +109,7 @@ void	ft_export(char *args)
 {
 	t_env	**env;
 	t_env	*existing;
+
 
 	env = get_env(NULL);
 	if (!args)

@@ -22,7 +22,10 @@ t_env	*new_env(char *str)
 	if (!new)
 		return (NULL);
 	new->var = ft_strdup(str);
-	new->val = 0;
+	if (ft_strchr(str, '='))
+		new->hidden = false;
+	else
+		new->hidden = true;
 	new->next = NULL;
 	return (new);
 }
@@ -74,7 +77,8 @@ void	ft_env(void)
 	tmp = *(get_env(NULL));
 	while (tmp)
 	{
-		printf("%s\n", tmp->var);
+		if (!tmp->hidden)
+			printf("%s\n", tmp->var);
 		tmp = tmp->next;
 	}
 }
