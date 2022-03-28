@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 16:15:14 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/25 16:19:17 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/28 22:57:46 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int		lexer(t_node **head, char *input);
 
 char	*get_word(char **input);
-char	*get_word_ws(char **input); // TODO: delete this declaration!!
 
 bool	check_whitespace(char c);
 bool	check_metachar(char c);
