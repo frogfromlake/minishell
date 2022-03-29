@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 18:15:06 by fquist            #+#    #+#             */
-/*   Updated: 2022/01/12 21:43:44 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/29 19:45:37 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	ft_exit_print(bool status, char *print, int fd);
+int		ft_strcmp_upper_lower(const char *s1, const char *s2);
 
 #endif

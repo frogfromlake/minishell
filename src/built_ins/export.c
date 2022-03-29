@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/29 18:57:12 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/29 21:22:19 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*get_args_var_name(char *args)
 	return (res);
 }
 
-static t_env	*check_var_existence(t_env **env, char *args)
+t_env	*check_var_existence(t_env **env, char *args)
 {
 	t_env	*tmp;
 	char	*var_name;
@@ -91,42 +91,39 @@ static void	print_env_vars(t_env *env)
 	}
 }
 
-void	ft_export(char *args)
+void	ft_export(t_table *table)
 {
 	t_env	**env;
 	t_env	*existing;
-	char	**split_args;
 	int		i;
 
 	env = get_env(NULL);
-	if (!args)
+	if (!table->args)
 		print_env_vars(*env);
-	else if (!*args)
+	else if (!*table->args)
 	{
 		g_exit_status = error_msg("line 2: unset: `': not a valid identifier", FAIL);
 		return ;
 	}
 	else
 	{
-		split_args = ft_split(args, ' ');
 		i = 0;
-		while (split_args[i])
+		while (table->cmd_arr[i])
 		{
-			if (check_valid_var(&split_args[i]))
+			if (check_valid_var(&table->cmd_arr[i]))
 			{
-				existing = check_var_existence(env, split_args[i]);
+				existing = check_var_existence(env, table->cmd_arr[i]);
 				if (!existing)
-					append_env(env, new_env(split_args[i]));
+					append_env(env, new_env(table->cmd_arr[i]));
 				else
 				{
 					free(existing->var);
-					existing->var = ft_strdup(split_args[i]);
+					existing->var = ft_strdup(table->cmd_arr[i]);
 				}
 			}
 			else
-				g_exit_status = export_error(split_args[i], FAIL);
+				g_exit_status = export_error(table->cmd_arr[i], FAIL);
 			i++;
 		}
-		ft_free_split(split_args);
 	}
 }

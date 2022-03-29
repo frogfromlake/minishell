@@ -47,7 +47,6 @@ void	ft_unset(t_table *table)
 	t_env	*curr_env;
 	t_env	*prev;
 	char	*tmp;
-	char	**split_args;
 	int		i;
 
 	g_exit_status = 0;
@@ -59,17 +58,16 @@ void	ft_unset(t_table *table)
 		return ;
 	}
 	i = 0;
-	split_args = ft_split(table->args, ' ');
-	while (split_args[i])
+	while (table->cmd_arr[i])
 	{
 		curr_env = *(get_env(NULL));
 		prev = curr_env;
-		if (check_valid_arg(split_args[i]))
+		if (check_valid_arg(table->cmd_arr[i]))
 		{
 			while (curr_env)
 			{
 				tmp = get_var_name(curr_env);
-				if (!ft_strcmp(tmp, split_args[i]))
+				if (!ft_strcmp(tmp, table->cmd_arr[i]))
 				{
 					prev->next = curr_env->next;
 					free(curr_env->var);
@@ -85,7 +83,7 @@ void	ft_unset(t_table *table)
 			}
 		}
 		else
-			g_exit_status = unset_error(split_args[i], FAIL);
+			g_exit_status = unset_error(table->cmd_arr[i], FAIL);
 		i++;
 	}
 }

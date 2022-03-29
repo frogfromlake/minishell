@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/29 18:13:08 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/29 21:04:14 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	add_args(t_token *token, t_table **new)
 		sb_append_str(sb, token->name);
 	else
 	{
+		add_args_to_arr(token, new);
 		while (token)
 		{
 			sb_append_str(sb, token->name);
@@ -63,7 +64,7 @@ int	command_parser(t_token *token, t_table **new)
 			g_exit_status = SUCCESS;
 		}
 	}
-	else if (!ft_strcmp((*new)->exe, "echo"))
+	else if (!ft_strcmp_upper_lower((*new)->exe, "echo"))
 	{
 		if (token->next)
 			if (define_echo_args(token->next, new))

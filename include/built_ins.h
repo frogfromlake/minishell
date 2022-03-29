@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:25:51 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/27 21:23:27 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/29 21:23:14 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ void	ft_echo(t_table *table);
 void	ft_exit(t_table *table);
 
 /***	EXPORT	***/
-void	ft_export(char *args);
+void	ft_export(t_table *table);
 bool	check_valid_var(char **str);
+t_env	*check_var_existence(t_env **env, char *args);
 
 /***	PWD		***/
 int		ft_pwd(void);

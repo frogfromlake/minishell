@@ -12,6 +12,23 @@
 
 #include "../../include/minishell.h"
 
+static void	export_cd(char *args)
+{
+	t_env	**env;
+	t_env	*existing;
+
+
+	env = get_env(NULL);
+	existing = check_var_existence(env, args);
+	if (!existing)
+		append_env(env, new_env(args));
+	else
+	{
+		free(existing->var);
+		existing->var = ft_strdup(args);
+	}
+}
+
 static int	cd_error(char *str, int r_value)
 {
 	t_stringbuilder	*sb;
@@ -38,7 +55,7 @@ static void	change_pwd_var(void)
 	sb_append_str(sb, "OLDPWD=");
 	sb_append_str(sb, get_env_var("PWD"));
 	tmp = sb_get_str(sb);
-	ft_export(tmp);
+	export_cd(tmp);
 	sb_clear(sb);
 	sb_append_str(sb, "PWD=");
 	tmp_pwd = getcwd(NULL, 0);
@@ -46,7 +63,7 @@ static void	change_pwd_var(void)
 	free(tmp);
 	free(tmp_pwd);
 	tmp = sb_get_str(sb);
-	ft_export(tmp);
+	export_cd(tmp);
 	sb_destroy(sb);
 	free(tmp);
 }

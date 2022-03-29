@@ -6,7 +6,7 @@
 #    By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 18:21:35 by fquist            #+#    #+#              #
-#    Updated: 2022/03/22 13:40:17 by fquist           ###   ########.fr        #
+#    Updated: 2022/03/29 19:47:58 by fquist           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRCS		+= ft_atoi.c ft_itoa.c ft_split.c ft_strchr.c ft_strrchr.c ft_strlen.c \
 			   ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strncmp.c \
 			   ft_strnstr.c ft_strtrim.c ft_substr.c ft_striteri.c ft_strjoin.c \
 			   ft_strmapi.c ft_is_space.c ft_is_sign.c ft_strcmp.c ft_strcpy.c \
-			   ft_strncpy.c ft_exit_print.c ft_count_c.c
+			   ft_strncpy.c ft_exit_print.c ft_count_c.c ft_strcmp_up_low.c
 
 # SRCS LST
 SRCS		+= ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c \

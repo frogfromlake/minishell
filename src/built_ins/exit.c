@@ -55,7 +55,7 @@ void	ft_exit(t_table *table)
 				if (check_valid_arg(table->args))
 				{
 					exit_status = ft_atoi(table->args);
-					write(2, "exit\n", 5);
+					// write(1, "exit\n", 5);
 					g_exit_status = exit_status;
 				}
 				else

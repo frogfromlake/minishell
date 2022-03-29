@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 18:52:05 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/28 21:09:13 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/29 20:48:35 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	valid_name(t_token **token)
 		}
 		tmp = tmp->next;
 	}
-	trim_quotes(token);
+	if (!ft_strchr((*token)->name, '='))
+		trim_quotes(token);
 	return (SUCCESS);
 }
 

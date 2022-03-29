@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/28 20:55:18 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/29 19:11:06 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	exec_loop(t_table *table)
 			&& !tmp->redir && check_builtin(tmp))
 		{
 			g_exit_status = built_in_exec(tmp);
-			// fds->i++;
 			break ;
 		}
 		else
