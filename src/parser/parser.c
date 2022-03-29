@@ -25,6 +25,29 @@ static void	define_node(t_node *node, t_table **new)
 		g_exit_status = error_msg("syntax error: unclosed quotes", FAIL);
 }
 
+static void	create_cmd_table(t_node **node, t_table **table)
+{
+	t_node	*curr_n;
+	t_table	*new;
+
+	curr_n = *node;
+	while (curr_n)
+	{
+		new = append_table(table, new_table());
+		if (check_log_op(curr_n->type))
+		{
+			new->log_op = curr_n->type;
+			curr_n = curr_n->next;
+			continue ;
+		}
+		while (curr_n && !check_log_op(curr_n->type))
+		{
+			define_node(curr_n, &new);
+			curr_n = curr_n->next;
+		}
+	}
+}
+
 static int	parser_error(int type, int r_value)
 {
 	t_stringbuilder	*sb;
@@ -62,10 +85,6 @@ static bool	check_valid_first_token(t_type type)
 
 int	parser(t_node **node, t_table **table)
 {
-	t_node	*curr_n;
-	t_table	*new;
-
-	curr_n = *node;
 	if (!check_valid_first_token((*node)->type))
 	{
 		g_exit_status = parser_error((*node)->type, 258);
@@ -80,20 +99,6 @@ int	parser(t_node **node, t_table **table)
 		g_exit_status = parser_error((*node)->type, 127);
 		return (g_exit_status);
 	}
-	while (curr_n)
-	{
-		new = append_table(table, new_table());
-		if (check_log_op(curr_n->type))
-		{
-			new->log_op = curr_n->type;
-			curr_n = curr_n->next;
-			continue ;
-		}
-		while (curr_n && !check_log_op(curr_n->type))
-		{
-			define_node(curr_n, &new);
-			curr_n = curr_n->next;
-		}
-	}
+	create_cmd_table(node, table);
 	return (g_exit_status);
 }

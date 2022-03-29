@@ -6,13 +6,11 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 01:46:59 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/21 01:46:59 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/29 19:45:41 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-// TODO: implement free func for cmd arr, if adding elements
 
 static int	get_arr_size(char **arr)
 {
@@ -40,7 +38,7 @@ static int	insert_cmd_arr(char ***arr, char *str)
 		i++;
 	}
 	(*arr)[i] = ft_strdup(str);
-	//free tmp!!!
+	ft_free_split(tmp);
 	return (1);
 }
 

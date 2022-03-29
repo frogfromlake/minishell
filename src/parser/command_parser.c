@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/29 21:04:14 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/29 23:50:23 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,24 @@ static int	cmd_parser_error(char *str, int r_value)
 	return (r_value);
 }
 
+static void	nonbuiltin_parser(t_token *token, t_table **new)
+{
+	g_exit_status = set_cmd_path(new);
+	if (g_exit_status)
+		cmd_parser_error((*new)->exe, g_exit_status);
+	else
+	{
+		if (token->next)
+			add_args_to_arr(token->next, new);
+		g_exit_status = SUCCESS;
+	}
+}
+
 int	command_parser(t_token *token, t_table **new)
 {
 	(*new)->exe = ft_strdup(token->name);
 	if (!check_builtin(*new))
-	{
-		g_exit_status = set_cmd_path(new, get_env(NULL));
-		if (g_exit_status)
-			cmd_parser_error((*new)->exe, g_exit_status);
-		else
-		{
-			if (token->next)
-				add_args_to_arr(token->next, new);
-			g_exit_status = SUCCESS;
-		}
-	}
+		nonbuiltin_parser(token, new);
 	else if (!ft_strcmp_upper_lower((*new)->exe, "echo"))
 	{
 		if (token->next)
