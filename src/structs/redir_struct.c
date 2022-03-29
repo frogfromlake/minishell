@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 00:59:26 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 00:20:30 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/29 23:37:03 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_redir	*get_last_out_redir(t_redir *head)
 					head = head->next;
 					continue ;
 				}
-				current_file = open_file(out->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+				current_file = open_file(out->file, O_RDWR | O_CREAT | O_APPEND, 0000);
 				if (current_file == -1)
 					exit(1);
 			}

@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:26:17 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/27 15:14:34 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/29 23:37:49 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	last_redir_out(t_exec *fds, t_redir *last_out)
 	if (last_out->type == GREATGREAT)
 	{
 		fds->file_fd = open_file(last_out->file,
-				O_RDWR | O_CREAT | O_APPEND, 0644);
+				O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fds->file_fd < 0)
 			return ;
 		dup2(fds->file_fd, STDOUT_FILENO);
