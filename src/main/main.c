@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/28 23:59:46 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/29 17:32:41 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	ex_get_next_line(char **line, int fd)
 			break ;
 		*line = ft_append(*line, buffer);
 	}
-	return(flag);
+	return (flag);
 }
 
 // TODO: implement return values for cmds.

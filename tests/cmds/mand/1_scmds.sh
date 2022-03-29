@@ -25,6 +25,8 @@ cat cmds.sh
 
 "."
 
+'.'
+
 .ls
 
 ./ls
