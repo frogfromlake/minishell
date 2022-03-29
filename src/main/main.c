@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:20:25 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/29 17:32:41 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/29 18:08:32 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 	int		s_out = dup(STDOUT_FILENO);
 	int		s_in = dup(STDIN_FILENO);
 
-	print_header();
+	// print_header();
 	// system("(afplay mp3/welcome.mp3&)");
 	// system("(afplay mp3/snake.mp3&)");
 	// system("afplay mp3/error2.mp3");
@@ -117,7 +117,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 		change_termios(true);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, sigint_handler);
-		tmp = get_prompt();
+		// tmp = get_prompt();
 		if (isatty(0))
 			read = readline(tmp);
 		else
@@ -149,7 +149,7 @@ static void	bitchy_snake_shell(t_node **head, t_table **table)
 		dup2(s_out, STDOUT_FILENO);
 		if (!read)
 		{
-			printf("exit\n");
+			// write(2, "exit\n", 5);
 			break ;
 		}
 	}

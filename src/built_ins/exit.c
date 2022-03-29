@@ -30,7 +30,7 @@ static int	exit_error(char *str, int r_value)
 
 static bool	check_valid_arg(char *arg)
 {
-	if ((*arg != '+' || *arg != '-') && !ft_is_digit(*arg))
+	if (!*arg || (*arg != '+' && *arg != '-' && !ft_is_digit(*arg)))
 		return (false);
 	arg++;
 	while (*arg)
@@ -55,18 +55,21 @@ void	ft_exit(t_table *table)
 				if (check_valid_arg(table->args))
 				{
 					exit_status = ft_atoi(table->args);
-					write(1, "exit\n", 5);
+					write(2, "exit\n", 5);
 					g_exit_status = exit_status;
 				}
 				else
 				{
-					write(1, "exit\n", 5);
+					write(2, "exit\n", 5);
 					g_exit_status = exit_error(table->args, 255);
 				}
 				free_table(&table);
 				exit(g_exit_status);
 			}
 			g_exit_status = error_msg("exit: too many arguments", FAIL);
+			return ;
 		}
+		g_exit_status = SUCCESS;
+		exit(g_exit_status);
 	}
 }

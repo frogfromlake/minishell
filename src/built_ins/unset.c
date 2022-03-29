@@ -30,7 +30,7 @@ static int	unset_error(char *str, int r_value)
 
 static bool	check_valid_arg(char *str)
 {
-	if (!ft_is_alpha(*str) && *str != '_')
+	if (!*str || (!ft_is_alpha(*str) && *str != '_'))
 		return (false);
 	str++;
 	while (*str)
@@ -49,10 +49,15 @@ void	ft_unset(t_table *table)
 	char	*tmp;
 	char	**split_args;
 	int		i;
-	
+
 	g_exit_status = 0;
 	if (!table->args)
 		return ;
+	if (!*table->args)
+	{
+		g_exit_status = error_msg("line 2: unset: `': not a valid identifier", FAIL);
+		return ;
+	}
 	i = 0;
 	split_args = ft_split(table->args, ' ');
 	while (split_args[i])

@@ -97,4 +97,3 @@ int	parser(t_node **node, t_table **table)
 	}
 	return (g_exit_status);
 }
-
