@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/29 00:09:55 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:57:12 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,11 @@ void	ft_export(char *args)
 	env = get_env(NULL);
 	if (!args)
 		print_env_vars(*env);
+	else if (!*args)
+	{
+		g_exit_status = error_msg("line 2: unset: `': not a valid identifier", FAIL);
+		return ;
+	}
 	else
 	{
 		split_args = ft_split(args, ' ');
