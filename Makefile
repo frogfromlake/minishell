@@ -58,6 +58,7 @@ SRCS		=	main.c \
 				utils.c \
 				logic_ops.c \
 				signal.c \
+				sighandler.c \
 				route_stdin.c \
 				route_stdout.c \
 				here_doc.c

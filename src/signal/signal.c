@@ -6,13 +6,13 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:44:58 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/28 22:47:26 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/29 23:58:47 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-bool	check_heredoc(t_redir *redir)
+static bool	check_heredoc(t_redir *redir)
 {
 	while (redir)
 	{
@@ -37,38 +37,6 @@ void	define_sig_prc(t_table *table)
 		signal(SIGQUIT, sigchild_handler);
 	}
 }
-
-void	sigint_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-		g_exit_status = 130;
-	}
-}
-
-void	sigint_handler_heredoc(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		change_termios(false);
-		g_exit_status = FAIL;
-		exit(g_exit_status);
-	}
-}
-
-void	sigchild_handler(int sig)
-{
-	if (sig == SIGINT)
-		write(1, "\n", 1);
-	if (sig == SIGQUIT)
-		write(1, "Quit: 3\n", 9);
-}
-
 
 int	change_termios(bool hide)
 {
