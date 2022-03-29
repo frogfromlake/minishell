@@ -12,29 +12,19 @@
 
 #include "../../include/minishell.h"
 
-// TODO: shorten code, change double pointer table to one pointer and call get_env() inside func
-int	set_cmd_path(t_table **table, t_env **env) 
+static int	join_cmd_path(t_table **new, char **cmd_paths)
 {
 	int		i;
 	char	*tmp;
-	char	**cmd_paths;
 
 	i = 0;
-	if (access((*table)->exe, F_OK) == 0)
-	{
-		(*table)->cmd_arr[0] = ft_strdup((*table)->exe);
-		return (0);
-	}
-	cmd_paths = get_env_path(env);
-	if (cmd_paths == NULL)
-		return (ENOMEM);
 	while (cmd_paths[i])
 	{
-		tmp = ft_strjoin(cmd_paths[i], (*table)->exe);
+		tmp = ft_strjoin(cmd_paths[i], (*new)->exe);
 		if (access(tmp, F_OK) == 0)
 		{
-			free((*table)->cmd_arr[0]);
-			(*table)->cmd_arr[0] = ft_strdup(tmp);
+			free((*new)->cmd_arr[0]);
+			(*new)->cmd_arr[0] = ft_strdup(tmp);
 			free(tmp);
 			ft_free_split(cmd_paths);
 			return (0);
@@ -46,31 +36,7 @@ int	set_cmd_path(t_table **table, t_env **env)
 	return (127);
 }
 
-char	**get_env_path(t_env **env)
-{
-	char		**cmd_paths;
-	t_env		*tmp;
-
-	tmp = *env;
-	if (env == NULL)
-		return (NULL);
-	cmd_paths = NULL;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->var, "PATH=", 5) == 0)
-		{
-			cmd_paths = ft_split((tmp->var + 5), ':');
-			if (cmd_paths == NULL)
-				return (NULL);
-			append_slash(cmd_paths);
-			break ;
-		}
-		tmp = tmp->next;
-	}
-	return (cmd_paths);
-}
-
-void	append_slash(char **cmd_paths)
+static void	append_slash(char **cmd_paths)
 {
 	int		i;
 	char	*tmp;
@@ -87,4 +53,45 @@ void	append_slash(char **cmd_paths)
 		}
 		i++;
 	}
+}
+
+static char	**get_env_path(t_env *env)
+{
+	char		**cmd_paths;
+
+	if (env == NULL)
+		return (NULL);
+	cmd_paths = NULL;
+	while (env)
+	{
+		if (ft_strncmp(env->var, "PATH=", 5) == 0)
+		{
+			cmd_paths = ft_split((env->var + 5), ':');
+			if (cmd_paths == NULL)
+				return (NULL);
+			append_slash(cmd_paths);
+			break ;
+		}
+		env = env->next;
+	}
+	return (cmd_paths);
+}
+
+int	set_cmd_path(t_table **new)
+{
+	int		exit;
+	char	**cmd_paths;
+	t_env	*env;
+
+	if (access((*new)->exe, F_OK) == 0)
+	{
+		(*new)->cmd_arr[0] = ft_strdup((*new)->exe);
+		return (0);
+	}
+	env = *get_env(NULL);
+	cmd_paths = get_env_path(env);
+	if (cmd_paths == NULL)
+		return (ENOMEM);
+	exit = join_cmd_path(new, cmd_paths);
+	return (exit);
 }

@@ -12,56 +12,6 @@
 
 #include "../../include/minishell.h"
 
-static char	*get_word_envname(char **tmp)
-{
-	t_stringbuilder	*sb;
-	char			*env_name;
-	int				i;
-
-	i = 0;
-	sb = sb_create();
-	while (ft_is_all_num((*tmp)[i]) || (*tmp)[i] == '_')
-		i++;
-	sb_append_strn(sb, *tmp, i);
-	env_name = sb_get_str(sb);
-	sb_destroy(sb);
-	*tmp += i;
-	return (env_name);
-}
-
-void	dollar_expand(t_stringbuilder **sb, char **tmp)
-{
-	char	*env_name;
-
-	(*tmp)++;
-	if (ft_is_alpha(**tmp) || **tmp == '_')
-	{
-		env_name = get_word_envname(tmp);
-		sb_append_str(*sb, get_env_var(env_name));
-		free(env_name);
-	}
-	else
-	{
-		if (**tmp == '$')
-		{
-			sb_append_str(*sb, "$$");
-			(*tmp)++;
-		}
-		else if (**tmp == '?')
-		{
-			sb_append_int(*sb, g_exit_status);
-			(*tmp)++;
-		}
-		else if (**tmp == ' ')
-		{
-			sb_append_char((*sb), '$');
-			(*tmp)++;
-		}
-		else if (ft_is_digit(**tmp))
-			(*tmp)++;
-	}
-}
-
 void	dquote_expand(t_stringbuilder **sb, char **tmp)
 {
 	sb_append_char(*sb, **tmp);
@@ -118,6 +68,16 @@ void	expand(char **str)
 	sb_destroy(sb);
 }
 
+static bool	check_valid_expand_arg(char *str)
+{
+	if (ft_strchr(str, '$')
+		|| ft_strchr(str, SQUOTE)
+		|| (ft_strchr(str, DQUOTE)
+			&& ft_strcmp(str, "\"\"")))
+		return (true);
+	return (false);
+}
+
 int	expander(t_node **head)
 {
 	t_node	*node;
@@ -131,9 +91,7 @@ int	expander(t_node **head)
 			token = node->tokens;
 			while (token)
 			{
-				if (ft_strchr(token->name, '$')
-					|| ft_strchr(token->name, SQUOTE)
-					|| (ft_strchr(token->name, DQUOTE) && ft_strcmp(token->name, "\"\"")))
+				if (check_valid_expand_arg(token->name))
 				{
 					expand(&token->name);
 					if (!ft_strcmp(token->name, "\"\"") || !(*token->name))

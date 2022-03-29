@@ -32,6 +32,7 @@ SRCS		=	main.c \
 				lexer_get_word.c \
 				lexer_checker.c \
 				expander.c \
+				expander_utils.c \
 				parser.c \
 				parser_utils.c \
 				trim_quotes.c \
@@ -57,6 +58,7 @@ SRCS		=	main.c \
 				utils.c \
 				logic_ops.c \
 				signal.c \
+				sighandler.c \
 				route_stdin.c \
 				route_stdout.c \
 				here_doc.c

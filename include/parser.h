@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 16:27:18 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/27 21:08:46 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/29 23:50:09 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 
 int		parser(t_node **node, t_table **table);
 void	add_args_to_arr(t_token *token, t_table **new);
-int		set_cmd_path(t_table **table, t_env **env);
-char	**get_env_path(t_env **env);
-void	append_slash(char **cmd_paths);
+int		set_cmd_path(t_table **new);
 int		command_parser(t_token *token, t_table **new);
 int		define_echo_args(t_token *token, t_table **new);
 int		valid_name(t_token **token);
