@@ -30,10 +30,16 @@ static int	exit_error(char *str, int r_value)
 
 static bool	check_valid_arg(char *arg)
 {
-	if ((arg[0] == '+' || arg[0] == '-') && ft_is_digit(arg[1]))
-		return (true);
-	else
+	if ((*arg != '+' || *arg != '-') && !ft_is_digit(*arg))
 		return (false);
+	arg++;
+	while (*arg)
+	{
+		if (!ft_is_digit(*arg))
+			return (false);
+		arg++;
+	}
+	return (true);
 }
 
 void	ft_exit(t_table *table)
@@ -62,7 +68,5 @@ void	ft_exit(t_table *table)
 			}
 			g_exit_status = error_msg("exit: too many arguments", FAIL);
 		}
-		g_exit_status = SUCCESS;
-		exit(g_exit_status);
 	}
 }
