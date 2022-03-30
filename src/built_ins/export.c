@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/29 21:22:19 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/30 02:57:32 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,48 +28,29 @@ static int	export_error(char *str, int r_value)
 	return (r_value);
 }
 
-static char	*get_args_var_name(char *args)
+static void	add_env_var(t_table *table, t_env **env)
 {
-	t_stringbuilder	*sb;
-	int				i;
-	char			*res;
+	t_env	*existing;
+	int		i;
 
-	sb = sb_create();
 	i = 0;
-	while (args[i])
+	while (table->cmd_arr[i])
 	{
-		if (args[i] == '=')
-			break ;
+		if (check_valid_var(&table->cmd_arr[i]))
+		{
+			existing = check_var_existence(env, table->cmd_arr[i]);
+			if (!existing)
+				append_env(env, new_env(table->cmd_arr[i]));
+			else
+			{
+				free(existing->var);
+				existing->var = ft_strdup(table->cmd_arr[i]);
+			}
+		}
+		else
+			g_exit_status = export_error(table->cmd_arr[i], FAIL);
 		i++;
 	}
-	sb_append_strn(sb, args, i);
-	res = sb_get_str(sb);
-	sb_destroy(sb);
-	return (res);
-}
-
-t_env	*check_var_existence(t_env **env, char *args)
-{
-	t_env	*tmp;
-	char	*var_name;
-	char	*args_var_name;
-
-	tmp = *env;
-	while (tmp)
-	{
-		var_name = get_var_name(tmp);
-		args_var_name = get_args_var_name(args);
-		if (!ft_strcmp(var_name, args_var_name))
-		{
-			free(args_var_name);
-			free(var_name);
-			return (tmp);
-		}
-		free(args_var_name);
-		free(var_name);
-		tmp = tmp->next;
-	}
-	return (NULL);
 }
 
 static void	print_env_vars(t_env *env)
@@ -94,36 +75,15 @@ static void	print_env_vars(t_env *env)
 void	ft_export(t_table *table)
 {
 	t_env	**env;
-	t_env	*existing;
-	int		i;
 
 	env = get_env(NULL);
 	if (!table->args)
 		print_env_vars(*env);
 	else if (!*table->args)
 	{
-		g_exit_status = error_msg("line 2: unset: `': not a valid identifier", FAIL);
+		g_exit_status = error_msg("export: not a valid identifier", FAIL);
 		return ;
 	}
 	else
-	{
-		i = 0;
-		while (table->cmd_arr[i])
-		{
-			if (check_valid_var(&table->cmd_arr[i]))
-			{
-				existing = check_var_existence(env, table->cmd_arr[i]);
-				if (!existing)
-					append_env(env, new_env(table->cmd_arr[i]));
-				else
-				{
-					free(existing->var);
-					existing->var = ft_strdup(table->cmd_arr[i]);
-				}
-			}
-			else
-				g_exit_status = export_error(table->cmd_arr[i], FAIL);
-			i++;
-		}
-	}
+		add_env_var(table, env);
 }

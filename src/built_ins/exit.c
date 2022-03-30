@@ -12,6 +12,12 @@
 
 #include "../../include/minishell.h"
 
+static void	valid_exit(void)
+{
+	write(2, "exit\n", 5);
+	exit(g_exit_status);
+}
+
 static int	exit_error(char *str, int r_value)
 {
 	t_stringbuilder	*sb;
@@ -44,8 +50,6 @@ static bool	check_valid_arg(char *arg)
 
 void	ft_exit(t_table *table)
 {
-	unsigned char	exit_status;
-
 	if (!ft_strcmp(table->exe, "exit"))
 	{
 		if (table->args)
@@ -53,23 +57,16 @@ void	ft_exit(t_table *table)
 			if (ft_is_alpha(*table->args) || !ft_strrchr(table->args, ' '))
 			{
 				if (check_valid_arg(table->args))
-				{
-					exit_status = ft_atoi(table->args);
-					// write(1, "exit\n", 5);
-					g_exit_status = exit_status;
-				}
+					g_exit_status = ft_atoi(table->args);
 				else
-				{
-					write(2, "exit\n", 5);
 					g_exit_status = exit_error(table->args, 255);
-				}
 				free_table(&table);
-				exit(g_exit_status);
+				valid_exit();
 			}
 			g_exit_status = error_msg("exit: too many arguments", FAIL);
 			return ;
 		}
 		g_exit_status = SUCCESS;
-		exit(g_exit_status);
+		valid_exit();
 	}
 }

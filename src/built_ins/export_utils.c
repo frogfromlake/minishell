@@ -3,14 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:04:56 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 01:15:00 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/30 02:54:52 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static char	*get_args_var_name(char *args)
+{
+	t_stringbuilder	*sb;
+	int				i;
+	char			*res;
+
+	sb = sb_create();
+	i = 0;
+	while (args[i])
+	{
+		if (args[i] == '=')
+			break ;
+		i++;
+	}
+	sb_append_strn(sb, args, i);
+	res = sb_get_str(sb);
+	sb_destroy(sb);
+	return (res);
+}
+
+t_env	*check_var_existence(t_env **env, char *args)
+{
+	t_env	*tmp;
+	char	*var_name;
+	char	*args_var_name;
+
+	tmp = *env;
+	while (tmp)
+	{
+		var_name = get_var_name(tmp);
+		args_var_name = get_args_var_name(args);
+		if (!ft_strcmp(var_name, args_var_name))
+		{
+			free(args_var_name);
+			free(var_name);
+			return (tmp);
+		}
+		free(args_var_name);
+		free(var_name);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
 
 static void	rm_pluschar(char **str)
 {

@@ -17,7 +17,6 @@ static void	export_cd(char *args)
 	t_env	**env;
 	t_env	*existing;
 
-
 	env = get_env(NULL);
 	existing = check_var_existence(env, args);
 	if (!existing)

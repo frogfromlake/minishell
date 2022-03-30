@@ -42,11 +42,37 @@ static bool	check_valid_arg(char *str)
 	return (true);
 }
 
+static void	rm_env_var(char *str, t_env	*curr_env, t_env *prev)
+{
+	char	*tmp;
+
+	if (check_valid_arg(str))
+	{
+		while (curr_env)
+		{
+			tmp = get_var_name(curr_env);
+			if (!ft_strcmp(tmp, str))
+			{
+				prev->next = curr_env->next;
+				free(curr_env->var);
+				curr_env->var = NULL;
+				free(curr_env);
+				curr_env = NULL;
+				break ;
+			}
+			if (tmp)
+				free(tmp);
+			prev = curr_env;
+			curr_env = curr_env->next;
+		}
+	}
+	else
+		g_exit_status = unset_error(str, FAIL);
+}
+
 void	ft_unset(t_table *table)
 {
 	t_env	*curr_env;
-	t_env	*prev;
-	char	*tmp;
 	int		i;
 
 	g_exit_status = 0;
@@ -54,36 +80,14 @@ void	ft_unset(t_table *table)
 		return ;
 	if (!*table->args)
 	{
-		g_exit_status = error_msg("line 2: unset: `': not a valid identifier", FAIL);
+		g_exit_status = error_msg("unset: not a valid identifier", FAIL);
 		return ;
 	}
 	i = 0;
+	curr_env = *(get_env(NULL));
 	while (table->cmd_arr[i])
 	{
-		curr_env = *(get_env(NULL));
-		prev = curr_env;
-		if (check_valid_arg(table->cmd_arr[i]))
-		{
-			while (curr_env)
-			{
-				tmp = get_var_name(curr_env);
-				if (!ft_strcmp(tmp, table->cmd_arr[i]))
-				{
-					prev->next = curr_env->next;
-					free(curr_env->var);
-					curr_env->var = NULL;
-					free(curr_env);
-					curr_env = NULL;
-					break ;
-				}
-				if (tmp)
-					free(tmp);
-				prev = curr_env;
-				curr_env = curr_env->next;
-			}
-		}
-		else
-			g_exit_status = unset_error(table->cmd_arr[i], FAIL);
+		rm_env_var(table->cmd_arr[i], curr_env, curr_env);
 		i++;
 	}
 }
