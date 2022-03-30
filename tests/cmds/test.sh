@@ -1,2 +1,8 @@
-export X="  A  B  "
-/bin/echo "1"$X'2'
+cat << lim
+ "lim"
+HELLO
+42
+ lim
+testing your minishell
+limm
+lim

@@ -35,8 +35,6 @@ cat cmds.sh
 
 "./""ls"
 
-"./"''"ls"
-
 lsa
 
 /ls
