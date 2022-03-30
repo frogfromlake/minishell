@@ -17,9 +17,14 @@ int	redir_parser(t_token *curr_t, t_table **new)
 	t_type	type;
 	char	*filename;
 
-	type = curr_t->type;
-	filename = ft_strdup(curr_t->name);
-	append_redir(&(*new)->redir, new_redir(type, filename));
-	g_exit_status = SUCCESS;
+	if (*curr_t->name != 0)
+	{
+		type = curr_t->type;
+		filename = ft_strdup(curr_t->name);
+		append_redir(&(*new)->redir, new_redir(type, filename));
+		g_exit_status = SUCCESS;
+	}
+	else
+		g_exit_status = error_msg("syntax error near unexpected token", 2);
 	return (g_exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/29 23:21:41 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/30 03:51:23 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	exec_loop(t_table *table)
 			break ;
 		}
 		else
-			fds->pid = create_prcs(tmp, fds);
+		{
+			if (create_prcs(tmp, fds) < 0)
+				end_prcs(fds);
+		}
 		fds->i++;
 		tmp = tmp->next;
 	}
@@ -56,7 +59,8 @@ static int	create_prcs(t_table *table, t_exec *fds)
 			g_exit_status = exec(table);
 		else
 		{
-			route_stdin(table, fds);
+			if (route_stdin(table, fds) < 0)
+				return (-1);
 			route_stdout(table, fds);
 			g_exit_status = exec(table);
 		}
@@ -80,7 +84,7 @@ static void	end_prcs(t_exec *fds)
 			g_exit_status = WEXITSTATUS(fds->pid);
 		fds->i--;
 	}
-	free(fds);
+	// free(fds);
 }
 
 int	exec(t_table *table)
@@ -99,8 +103,8 @@ int	exec(t_table *table)
 	{
 		execve(table->cmd_arr[0], table->cmd_arr, env_arr);
 		g_exit_status = -1;
-		exit(EXIT_FAILURE);
 		ft_free_split(env_arr);
+		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
 }

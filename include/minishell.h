@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/29 21:52:34 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/30 01:28:20 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <sys/stat.h>
 # include <signal.h>
 # include <termios.h>
+# include <dirent.h>
 
 # include "../libs/libft/include/libft.h"
 # include "stringbuilder.h"

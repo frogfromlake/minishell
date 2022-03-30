@@ -80,14 +80,21 @@ static char	**get_env_path(t_env *env)
 int	set_cmd_path(t_table **new)
 {
 	int		exit;
+	int		len;
 	char	**cmd_paths;
 	t_env	*env;
 
-	if (access((*new)->exe, F_OK) == 0)
+	len = ft_strlen((*new)->exe) - 1;
+	if (*(*new)->exe == '/' && (*new)->exe[len] == '/')
+		return (126);
+	if (access((*new)->exe, X_OK) == 0)
 	{
 		(*new)->cmd_arr[0] = ft_strdup((*new)->exe);
 		return (0);
 	}
+	if (!ft_strncmp((*new)->exe, "./", 2) || *(*new)->exe == '/'
+		|| *(*new)->exe == '.')
+		return (127);
 	env = *get_env(NULL);
 	cmd_paths = get_env_path(env);
 	if (cmd_paths == NULL)

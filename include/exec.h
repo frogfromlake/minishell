@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 17:00:44 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/27 23:56:28 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/30 03:20:23 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	exec_loop(t_table *table);
 
-void	route_stdin(t_table *table, t_exec *fds);
-void	multiple_redir_in(t_table *table, t_exec *fds);
+int		route_stdin(t_table *table, t_exec *fds);
+int		multiple_redir_in(t_table *table, t_exec *fds);
 
 void	route_stdout(t_table *table, t_exec *fds);
 void	last_redir_out(t_exec *fds, t_redir *last_out);

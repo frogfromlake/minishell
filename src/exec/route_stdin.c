@@ -6,23 +6,26 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:24:55 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/26 18:32:20 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/30 03:43:34 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	route_stdin(t_table *table, t_exec *fds)
+int	route_stdin(t_table *table, t_exec *fds)
 {
 	t_redir	*last_in;
 
 	last_in = get_last_in_redir(table->redir);
-	multiple_redir_in(table, fds);
+	if (multiple_redir_in(table, fds) < 0)
+		return (-1);
 	if (last_in)
 	{
 		if (last_in->type == LESS)
 		{
 			fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
+			if (fds->file_fd < 0)
+				return (-1);
 			dup2(fds->file_fd, STDIN_FILENO);
 			close(fds->file_fd);
 		}
@@ -38,9 +41,10 @@ void	route_stdin(t_table *table, t_exec *fds)
 		dup2(fds->tmp_fd, STDIN_FILENO);
 		close(fds->tmp_fd);
 	}
+	return (0);
 }
 
-void	multiple_redir_in(t_table *table, t_exec *fds)
+int	multiple_redir_in(t_table *table, t_exec *fds)
 {
 	t_redir	*tmp;
 
@@ -53,7 +57,11 @@ void	multiple_redir_in(t_table *table, t_exec *fds)
 					|| tmp->type == LESSLESS + 1))
 			{
 				if (tmp->type == LESS)
+				{
 					fds->file_fd = open_file(tmp->file, O_RDONLY, 0);
+					if (fds->file_fd < 0)
+						return (-1);
+				}
 				if (tmp->type == LESSLESS)
 				{
 					pipe(fds->here_fd);
@@ -65,4 +73,5 @@ void	multiple_redir_in(t_table *table, t_exec *fds)
 			tmp = tmp->next;
 		}
 	}
+	return (0);
 }
