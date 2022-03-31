@@ -79,3 +79,20 @@ char	*get_env_var(char *str)
 	}
 	return (NULL);
 }
+
+void	free_env(void)
+{
+	t_env	**env;
+	t_env	*curr;
+	t_env	*next;
+
+	env = get_env(NULL);
+	curr = *env;
+	while (curr)
+	{
+		next = curr->next;
+		free(curr->var);
+		free(curr);
+		curr = next;
+	}
+}

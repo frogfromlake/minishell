@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/31 18:55:10 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/31 20:08:22 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ static void	end_prcs(t_exec *fds)
 			g_exit_status = WEXITSTATUS(fds->pid);
 		fds->i--;
 	}
-	free(fds);
+	if (fds)
+		free(fds);
 }
 
 int	exec(t_table *table)

@@ -35,7 +35,7 @@ static bool	check_valid_arg(char *str)
 	str++;
 	while (*str)
 	{
-		if (!ft_is_all_num(*str) && *str == '_')
+		if (!ft_is_all_num(*str) && *str != '_')
 			return (false);
 		str++;
 	}

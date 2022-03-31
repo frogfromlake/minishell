@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:25:51 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/29 21:23:14 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/31 20:39:58 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_env(void);
 char	*get_var_name(t_env *env);
 char	*get_env_var(char *str);
 char	**get_env_arr(void);
+void	free_env(void);
 
 /***	CD	  ***/
 void	ft_cd(t_table *table);

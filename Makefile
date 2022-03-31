@@ -55,7 +55,6 @@ SRCS		=	main.c \
 				executer.c \
 				exec_struct.c \
 				utils.c \
-				logic_ops.c \
 				signal.c \
 				sighandler.c \
 				route_stdin.c \

@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 23:48:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/31 19:18:47 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/31 22:20:10 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static void	snake_shell(t_node **head, t_table **table, char *read)
 		lexer(head, read);
 		expander(head);
 		parser(head, table);
-		print_nodes(*head);
-		print_cmd_table(*table);
 		if (g_exit_status == SUCCESS)
 		{
 			change_termios(false);
@@ -98,6 +96,7 @@ void	init_snake_shell(t_node **head, t_table **table)
 		if (!read)
 		{
 			write(2, "exit\n", 5);
+			free_env();
 			break ;
 		}
 	}

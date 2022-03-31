@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:26:17 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/31 18:42:46 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/31 19:53:57 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	last_redir_out(t_exec *fds, t_redir *last_out)
 	{
 		fds->file_fd = open_file(last_out->file,
 				O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (g_exit_status == 1)
+		if (fds->file_fd < 0)
 			return (-1);
 		dup2(fds->file_fd, STDOUT_FILENO);
 		close(fds->file_fd);

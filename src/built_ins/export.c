@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/30 02:57:32 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/31 20:23:53 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static void	add_env_var(t_table *table, t_env **env)
 			{
 				free(existing->var);
 				existing->var = ft_strdup(table->cmd_arr[i]);
+				if (strchr(existing->var, '='))
+					existing->hidden = false;
 			}
 		}
 		else

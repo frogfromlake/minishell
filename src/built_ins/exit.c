@@ -15,6 +15,7 @@
 static void	valid_exit(void)
 {
 	write(2, "exit\n", 5);
+	free_env();
 	exit(g_exit_status);
 }
 
