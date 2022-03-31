@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/30 03:51:23 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/31 01:22:27 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 
 static int	create_prcs(t_table *table, t_exec *fds);
 static void	end_prcs(t_exec *fds);
+
+static bool	check_single_built_in(t_table *tmp)
+{
+	if (tmp->prev == NULL && tmp->next == NULL
+		&& !tmp->redir && check_builtin(tmp))
+	{
+		g_exit_status = built_in_exec(tmp);
+		return (true);
+	}
+	return (false);
+}
 
 void	exec_loop(t_table *table)
 {
@@ -29,12 +40,8 @@ void	exec_loop(t_table *table)
 			tmp = tmp->next;
 			continue ;
 		}
-		if (tmp->prev == NULL && tmp->next == NULL
-			&& !tmp->redir && check_builtin(tmp))
-		{
-			g_exit_status = built_in_exec(tmp);
+		if (check_single_built_in(tmp))
 			break ;
-		}
 		else
 		{
 			if (create_prcs(tmp, fds) < 0)
@@ -66,9 +73,9 @@ static int	create_prcs(t_table *table, t_exec *fds)
 		}
 	}
 	close(fds->tmp_fd);
-	close(fds->fd[WRITE]);
 	dup2(fds->fd[READ], fds->tmp_fd);
 	close(fds->fd[READ]);
+	close(fds->fd[WRITE]);
 	return (fds->pid);
 }
 
@@ -84,7 +91,7 @@ static void	end_prcs(t_exec *fds)
 			g_exit_status = WEXITSTATUS(fds->pid);
 		fds->i--;
 	}
-	// free(fds);
+	free(fds);
 }
 
 int	exec(t_table *table)

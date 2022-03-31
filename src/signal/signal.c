@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:44:58 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/29 23:58:47 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/30 23:53:08 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,11 @@ int	change_termios(bool hide)
 	if (tcsetattr(STDOUT_FILENO, TCSANOW, &term) == -1)
 		return (1);
 	return (0);
+}
+
+void	handle_interactive(void)
+{
+	change_termios(true);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sigint_handler);
 }

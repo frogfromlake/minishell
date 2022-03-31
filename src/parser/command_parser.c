@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/29 23:50:23 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/30 23:21:58 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,10 @@
 
 static void	add_args(t_token *token, t_table **new)
 {
-	t_stringbuilder	*sb;
-
-	sb = sb_create();
 	if (!ft_strcmp((*new)->exe, "cd"))
-		sb_append_str(sb, token->name);
+		(*new)->args = ft_strdup(token->name);
 	else
-	{
 		add_args_to_arr(token, new);
-		while (token)
-		{
-			sb_append_str(sb, token->name);
-			if (token->next)
-				sb_append_char(sb, ' ');
-			token = token->next;
-		}
-	}
-	(*new)->args = sb_get_str(sb);
-	sb_destroy(sb);
 }
 
 static int	cmd_parser_error(char *str, int r_value)

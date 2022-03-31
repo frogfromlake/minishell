@@ -6,11 +6,30 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:24:55 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/30 03:43:34 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/31 02:08:11 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	last_route(t_redir *last_in, t_exec *fds)
+{
+	if (last_in->type == LESS)
+	{
+		fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
+		if (fds->file_fd < 0)
+			return (-1);
+		dup2(fds->file_fd, STDIN_FILENO);
+		close(fds->file_fd);
+	}
+	else if (last_in->type == LESSLESS || last_in->type == LESSLESS + 1)
+	{
+		pipe(fds->here_fd);
+		heredoc(last_in->file, fds, last_in->type);
+		dup2(fds->here_fd[READ], STDIN_FILENO);
+	}
+	return (0);
+}
 
 int	route_stdin(t_table *table, t_exec *fds)
 {
@@ -21,22 +40,10 @@ int	route_stdin(t_table *table, t_exec *fds)
 		return (-1);
 	if (last_in)
 	{
-		if (last_in->type == LESS)
-		{
-			fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
-			if (fds->file_fd < 0)
-				return (-1);
-			dup2(fds->file_fd, STDIN_FILENO);
-			close(fds->file_fd);
-		}
-		else if (last_in->type == LESSLESS || last_in->type == LESSLESS + 1)
-		{
-			pipe(fds->here_fd);
-			heredoc(last_in->file, fds, last_in->type);
-			dup2(fds->here_fd[READ], STDIN_FILENO);
-		}
+		if (last_route(last_in, fds) < 0)
+			return (-1);
 	}
-	else
+	else if (!last_in)
 	{
 		dup2(fds->tmp_fd, STDIN_FILENO);
 		close(fds->tmp_fd);
@@ -44,12 +51,22 @@ int	route_stdin(t_table *table, t_exec *fds)
 	return (0);
 }
 
+static void	route_heredoc(t_exec *fds, t_redir *tmp)
+{
+	pipe(fds->here_fd);
+	heredoc(tmp->file, fds, tmp->type);
+	dup2(fds->here_fd[WRITE], STDOUT_FILENO);
+	close(fds->here_fd[WRITE]);
+}
+
 int	multiple_redir_in(t_table *table, t_exec *fds)
 {
 	t_redir	*tmp;
 
 	tmp = table->redir;
-	if (table->redir && table->redir->next)
+	if (table->redir && table->redir->next && (table->redir->next->type == LESS
+			|| table->redir->next->type == LESSLESS
+			|| table->redir->next->type == LESSLESS + 1))
 	{
 		while (tmp)
 		{
@@ -63,12 +80,7 @@ int	multiple_redir_in(t_table *table, t_exec *fds)
 						return (-1);
 				}
 				if (tmp->type == LESSLESS)
-				{
-					pipe(fds->here_fd);
-					heredoc(tmp->file, fds, tmp->type);
-					dup2(fds->here_fd[WRITE], STDOUT_FILENO);
-					close(fds->here_fd[WRITE]);
-				}
+					route_heredoc(fds, tmp);
 			}
 			tmp = tmp->next;
 		}

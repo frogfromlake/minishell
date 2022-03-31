@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 18:33:12 by fquist            #+#    #+#             */
-/*   Updated: 2022/01/30 22:56:06 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/30 23:54:26 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 void	ft_eval_input(t_info *info)
 {
 	int					number;
-	static t_formatter	*functions_array[E_LENGTH] =
-	{
+	static t_formatter	*functions_array[E_LENGTH] = {
 	[e_char] = ft_solve_char,
 	[e_string] = ft_solve_string,
 	[e_pointer] = ft_solve_pointer,

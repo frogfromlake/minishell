@@ -67,6 +67,7 @@ void	ft_exit(t_table *table)
 			return ;
 		}
 		g_exit_status = SUCCESS;
+		free_table(&table);
 		valid_exit();
 	}
 }

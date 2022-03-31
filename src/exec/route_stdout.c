@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:26:17 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/29 23:37:49 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/31 02:07:45 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	route_stdout(t_table *table, t_exec *fds)
 	last_out = get_last_out_redir(table->redir);
 	if (last_out)
 		last_redir_out(fds, last_out);
-	else
+	else if (!last_out)
 		handle_redir_out(table, fds);
 }
 

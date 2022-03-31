@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 19:56:07 by fquist            #+#    #+#             */
-/*   Updated: 2022/01/30 22:57:21 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/30 23:54:44 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	ft_solve_uint(t_info *info)
 		tmp /= 10;
 	}
 	diff = info->precision - nbrlen;
-	if (diff < 0 )
+	if (diff < 0)
 		diff = 0;
 	handle_uint(info, nbr, nbrlen, diff);
 }

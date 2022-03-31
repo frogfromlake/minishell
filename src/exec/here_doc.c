@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:28:45 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/30 00:04:18 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/30 22:58:15 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	here_doc_print(t_exec *fds)
 {
 	while (fds->cmd_count)
 	{
-		// write(2, "> ", 2);
+		write(2, "> ", 2);
 		fds->cmd_count--;
 	}
-	// write(2, "> ", 2);
+	write(2, "> ", 2);
 }
 
 int	heredoc(char *delimiter, t_exec *fds, int type)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sighandler.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 23:59:21 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/29 23:59:42 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/30 18:06:50 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,13 @@ void	sigint_handler_heredoc(int sig)
 void	sigchild_handler(int sig)
 {
 	if (sig == SIGINT)
+	{
 		write(1, "\n", 1);
+		g_exit_status = 130;
+	}
 	if (sig == SIGQUIT)
-		write(1, "Quit: 3\n", 9);
+	{
+		write(2, "Quit: 3\n", 9);
+		g_exit_status = SUCCESS;
+	}
 }

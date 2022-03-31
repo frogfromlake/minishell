@@ -6,11 +6,9 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:30:58 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/26 23:50:11 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/30 23:40:12 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// TODO: check again, if freeing correctly
 
 #include "../../include/minishell.h"
 

@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/30 01:28:20 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/31 00:34:02 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,15 @@ extern int	g_exit_status;
 /* ************************************************************************** */
 char	*get_prompt(void);
 void	print_header(void);
+void	init_snake_shell(t_node **head, t_table **table);
 
-/* ************************************************************************** */
-/* 	FREES																	  */
-/* ************************************************************************** */
 void	print_nodes(t_node *node);
 void	print_tokens(t_token *token);
 void	print_cmd_table(t_table *table);
 
+/* ************************************************************************** */
+/* 	FREES																	  */
+/* ************************************************************************** */
 void	free_node(t_node **node);
 void	free_token(t_token **token);
 void	free_table(t_table **table);

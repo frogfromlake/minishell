@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:04:43 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/29 19:08:40 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/03/30 23:20:48 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static void	dollar_special_expand(t_stringbuilder **sb, char **tmp)
 		sb_append_int(*sb, g_exit_status);
 		(*tmp)++;
 	}
-	else if (**tmp == ' ')
+	else if (ft_is_digit(**tmp))
+		(*tmp)++;
+	else if (!**tmp || **tmp == ' ')
 	{
 		sb_append_char((*sb), '$');
 		(*tmp)++;
 	}
-	else if (ft_is_digit(**tmp))
-		(*tmp)++;
 }
 
 static char	*get_word_envname(char **tmp)

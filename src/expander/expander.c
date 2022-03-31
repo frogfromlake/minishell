@@ -18,13 +18,20 @@ void	dquote_expand(t_stringbuilder **sb, char **tmp)
 	(*tmp)++;
 	while (**tmp && **tmp != DQUOTE)
 	{
-		if (**tmp == '$')
+		if (**tmp == '$' && (*(*tmp + 1) == DQUOTE || *(*tmp + 1) == ' '))
+			sb_append_char(*sb, '$');
+		else if (**tmp == '$')
 		{
 			dollar_expand(sb, tmp);
 			continue ;
 		}
 		else
 			sb_append_char(*sb, **tmp);
+		(*tmp)++;
+	}
+	if (**tmp)
+	{
+		sb_append_char(*sb, **tmp);
 		(*tmp)++;
 	}
 }
@@ -72,8 +79,7 @@ static bool	check_valid_expand_arg(char *str)
 {
 	if (ft_strchr(str, '$')
 		|| ft_strchr(str, SQUOTE)
-		|| (ft_strchr(str, DQUOTE)
-			&& ft_strcmp(str, "\"\"")))
+		|| ft_strchr(str, DQUOTE))
 		return (true);
 	return (false);
 }
