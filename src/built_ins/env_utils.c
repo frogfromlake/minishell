@@ -52,7 +52,7 @@ char	*get_var_name(t_env *env)
 
 	sb = sb_create();
 	i = 0;
-	while (env->var[i] != '=')
+	while (env->var[i] && env->var[i] != '=')
 		i++;
 	sb_append_strn(sb, env->var, i);
 	res = sb_get_str(sb);

@@ -21,7 +21,7 @@ static void	get_quoted_word(t_stringbuilder **sb, char **input)
 	i = 1;
 	while ((*input)[i] && (*input)[i] != quote)
 		i++;
-	sb_append_strn(*sb, *input, i + 1);
+	sb_append_strn(*sb, *input, i);
 	(*input) += i;
 }
 
@@ -36,8 +36,10 @@ char	*get_word(char **input)
 		if (check_quotes(**input))
 			get_quoted_word(&sb, input);
 		else
+		{
 			sb_append_char(sb, **input);
-		(*input)++;
+			(*input)++;
+		}
 	}
 	res = sb_get_str(sb);
 	sb_destroy(sb);

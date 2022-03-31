@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:39:49 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/30 23:21:58 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/31 19:22:48 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static void	nonbuiltin_parser(t_token *token, t_table **new)
 
 int	command_parser(t_token *token, t_table **new)
 {
+	if ((*new)->exe)
+		free((*new)->exe);
 	(*new)->exe = ft_strdup(token->name);
 	if (!check_builtin(*new))
 		nonbuiltin_parser(token, new);

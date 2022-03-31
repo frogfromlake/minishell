@@ -58,6 +58,7 @@ static void	rm_env_var(char *str, t_env	*curr_env, t_env *prev)
 				curr_env->var = NULL;
 				free(curr_env);
 				curr_env = NULL;
+				free(tmp);
 				break ;
 			}
 			if (tmp)

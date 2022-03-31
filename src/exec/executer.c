@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/31 01:22:27 by fquist           ###   ########.fr       */
+/*   Updated: 2022/03/31 18:55:10 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	exec_loop(t_table *table)
 			break ;
 		else
 		{
+			fds->i++;
 			if (create_prcs(tmp, fds) < 0)
 				end_prcs(fds);
 		}
-		fds->i++;
 		tmp = tmp->next;
 	}
 	end_prcs(fds);
@@ -68,7 +68,8 @@ static int	create_prcs(t_table *table, t_exec *fds)
 		{
 			if (route_stdin(table, fds) < 0)
 				return (-1);
-			route_stdout(table, fds);
+			if (route_stdout(table, fds) < 0)
+				return (-1);
 			g_exit_status = exec(table);
 		}
 	}
