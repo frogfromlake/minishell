@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   route_stdin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:24:55 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/31 21:05:47 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/01 23:42:53 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static int	last_route(t_redir *last_in, t_exec *fds)
 	{
 		fds->file_fd = open_file(last_in->file, O_RDONLY, 0);
 		if (fds->file_fd < 0)
+		{
+			free(fds);
 			return (-1);
+		}
 		dup2(fds->file_fd, STDIN_FILENO);
 		close(fds->file_fd);
 	}
@@ -37,7 +40,10 @@ int	route_stdin(t_table *table, t_exec *fds)
 
 	last_in = get_last_in_redir(table->redir);
 	if (multiple_redir_in(table, fds) < 0)
+	{
+		free(fds);
 		return (-1);
+	}
 	if (last_in)
 	{
 		if (last_route(last_in, fds) < 0)

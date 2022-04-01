@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   last_redir_out.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 23:30:34 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/31 18:42:35 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/02 00:53:28 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ int	route_append(t_redir *head, t_redir *out)
 		return (g_exit_status);
 	}
 	if (access(out->file, W_OK) < 0)
+	{
 		g_exit_status = 1;
+		return (-1);
+	}
 	return (g_exit_status);
 }
 
@@ -43,7 +46,10 @@ t_redir	*get_last_out_redir(t_redir *head)
 				}
 			}
 			else if (head->type == GREATGREAT)
-				route_append(head, out);
+			{
+				if (route_append(head, out) < 0)
+					break ;
+			}
 		}
 		head = head->next;
 	}

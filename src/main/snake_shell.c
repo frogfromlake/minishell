@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   snake_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 23:48:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/31 22:20:10 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/02 00:51:32 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+// < file1 cat < file2 cat should give an error but doesnt.
+// other variants like < file1 cat < file2 or cat < file1 < file2 
+// working fine i guess.
+
+// Problem whith access().
+// -to many forks (childs). (1 for every cmd but also 1 for no file permission
+// 		and 1 for creating a file for the first time because fds->i not counting
+//		correctly)
+// -some wrong exitvalues. 0 instead of 1 if there is no file write permission
+// -multiple redir outs should create all files instead of last one.
+// -(also for the double free btw but i fixed that. maybe reimplement
+// 		free(fds) in endprcs() to save lines.)
+// Solution: rework route stdout and stdin a little bit. access returns -1
+// when the file hast not been created yet which is the problem.
+// -> also double check other functions using access.
 
 int	g_exit_status;
 

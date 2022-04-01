@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 00:59:26 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/31 18:30:24 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/01 23:41:57 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,17 @@ t_redir	*get_last_in_redir(t_redir *head)
 	{
 		if (head->type == LESS || head->type == LESSLESS
 			|| head->type == LESSLESS + 1)
+		{
 			in = head;
+			if (head->type == LESS)
+			{
+				if (access(in->file, R_OK) < 0)
+				{
+					g_exit_status = 1;
+					break ;
+				}
+			}
+		}
 		head = head->next;
 	}
 	return (in);

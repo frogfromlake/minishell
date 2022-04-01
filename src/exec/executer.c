@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/31 20:08:22 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/02 00:53:13 by nelix            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ static void	end_prcs(t_exec *fds)
 			g_exit_status = WEXITSTATUS(fds->pid);
 		fds->i--;
 	}
-	if (fds)
-		free(fds);
+	// if (fds)
+	// 	free(fds);
 }
 
 int	exec(t_table *table)
