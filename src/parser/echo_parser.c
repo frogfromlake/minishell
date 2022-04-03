@@ -62,7 +62,7 @@ static bool	check_opt(t_token **token)
 	return (true);
 }
 
-int	define_echo_args(t_token *token, t_table **new)
+int	define_echo_args(t_token *token, t_table **new) // TODO: one arg at the time, add static var to check if opt arg is done
 {
 	t_stringbuilder	*sb;
 	int				opt;

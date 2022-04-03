@@ -22,7 +22,7 @@ static int	get_arr_size(char **arr)
 	return (res);
 }
 
-static int	insert_cmd_arr(char ***arr, char *str)
+int	insert_cmd_arr(char ***arr, char *str)
 {
 	int		i;
 	int		size;
@@ -40,6 +40,7 @@ static int	insert_cmd_arr(char ***arr, char *str)
 	(*arr)[i] = ft_strdup(str);
 	ft_free_split(tmp);
 	return (1);
+	// return (SUCCESS);
 }
 
 void	add_args_to_arr(t_token *token, t_table **new)

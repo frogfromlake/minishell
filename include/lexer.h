@@ -16,6 +16,7 @@
 int		lexer(t_node **head, char *input);
 
 char	*get_word(char **input);
+char	*get_redir_char(char **input);
 
 bool	check_whitespace(char c);
 bool	check_metachar(char c);

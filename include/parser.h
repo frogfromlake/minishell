@@ -15,8 +15,10 @@
 
 int		parser(t_node **node, t_table **table);
 void	add_args_to_arr(t_token *token, t_table **new);
+int		insert_cmd_arr(char ***arr, char *str);
 int		set_cmd_path(t_table **new);
 int		command_parser(t_token *token, t_table **new);
+int		arg_parser(t_token **token, t_table **new);
 int		define_echo_args(t_token *token, t_table **new);
 int		valid_name(t_token **token);
 int		redir_parser(t_token *curr_t, t_table **new);

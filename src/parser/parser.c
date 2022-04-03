@@ -53,7 +53,7 @@ static void	define_node(t_node *node, t_table **new)
 		g_exit_status = error_msg("syntax error: unclosed quotes", FAIL);
 }
 
-static void	create_cmd_table(t_node **node, t_table **table)
+static void	create_cmd_table(t_node **node, t_table **table) // TODO: error if LOG_OP consecutively and if LOG_OP not PIPE
 {
 	t_node	*curr_n;
 	t_table	*new;
