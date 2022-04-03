@@ -51,3 +51,19 @@ char	*get_word(char **input)
 	sb_destroy(sb);
 	return (res);
 }
+
+char	*get_redir_char(char **input)
+{
+	t_stringbuilder	*sb;
+	char			*res;
+
+	sb = sb_create();
+	while (**input && check_redir(**input))
+	{
+		sb_append_char(sb, **input);
+		(*input)++;
+	}
+	res = sb_get_str(sb);
+	sb_destroy(sb);
+	return (res);
+}

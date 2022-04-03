@@ -20,20 +20,13 @@ static int	create_redir_token(t_node **node, char **input)
 		type =  (*input)[0] * 4;
 	else
 		type = (*input)[0];
-	append_token(&(*node)->tokens, new_token(get_word(input), type));
+	append_token(&(*node)->tokens, new_token(get_redir_char(input), type));
 	while (check_whitespace(**input))
 		(*input)++;
 	append_token(&(*node)->tokens, new_token(get_word(input), REDIR_FILE));
 	while (check_whitespace(**input))
 		(*input)++;
 	return (1);
-}
-
-static bool	check_redir_char(char c)
-{
-	if (c == LESS || c == GREAT)
-		return (true);
-	return (false);
 }
 
 static int	create_tokens(t_node **node, char **input)
@@ -44,7 +37,7 @@ static int	create_tokens(t_node **node, char **input)
 	cmd_present = 0;
 	while ((**input && !check_metachar(**input)))
 	{
-		if (check_redir_char(**input))
+		if (check_redir(**input))
 		{
 			create_redir_token(node, input);
 			continue ;
