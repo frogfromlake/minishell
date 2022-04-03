@@ -12,6 +12,34 @@
 
 #include "../../include/minishell.h"
 
+static int	parser_error(int type, int r_value)
+{
+	t_stringbuilder	*sb;
+	char			*err_msg;
+
+	sb = sb_create();
+	if (r_value == 127)
+		sb_append_str(sb, " line 2: command not found");
+	else
+		sb_append_str(sb, "syntax error: near unexpected token '");
+	if (type == PIPE || type == AMPERSAND)
+		sb_append_char(sb, type);
+	else
+	{
+		if (type == OR)
+			sb_append_str(sb, "||");
+		else if (type == AND)
+			sb_append_str(sb, "&&");
+	}
+	if (r_value != 127)
+		sb_append_str(sb, "'");
+	err_msg = sb_get_str(sb);
+	sb_destroy(sb);
+	error_msg(err_msg, r_value);
+	free(err_msg);
+	return (r_value);
+}
+
 static void	define_node(t_node *node, t_table **new)
 {
 	if (valid_name(&node->tokens) == SUCCESS)
@@ -48,34 +76,6 @@ static void	create_cmd_table(t_node **node, t_table **table)
 	}
 }
 
-static int	parser_error(int type, int r_value)
-{
-	t_stringbuilder	*sb;
-	char			*err_msg;
-
-	sb = sb_create();
-	if (r_value == 127)
-		sb_append_str(sb, " line 2: command not found");
-	else
-		sb_append_str(sb, "syntax error: near unexpected token '");
-	if (type == PIPE || type == AMPERSAND)
-		sb_append_char(sb, type);
-	else
-	{
-		if (type == OR)
-			sb_append_str(sb, "||");
-		else if (type == AND)
-			sb_append_str(sb, "&&");
-	}
-	if (r_value != 127)
-		sb_append_str(sb, "'");
-	err_msg = sb_get_str(sb);
-	sb_destroy(sb);
-	error_msg(err_msg, r_value);
-	free(err_msg);
-	return (r_value);
-}
-
 static bool	check_valid_first_token(t_type type)
 {
 	if (type == PIPE || type == AMPERSAND || type == OR || type == AND)
@@ -86,19 +86,14 @@ static bool	check_valid_first_token(t_type type)
 int	parser(t_node **node, t_table **table)
 {
 	if (!check_valid_first_token((*node)->type))
-	{
 		g_exit_status = parser_error((*node)->type, 258);
-		return (g_exit_status);
-	}
 	if (!(*node)->prev && !(*node)->next
 		&& (!ft_strcmp((*node)->tokens->name, "\"\"")
 			|| !ft_strcmp((*node)->tokens->name, "\'\'")
 			|| !ft_strcmp((*node)->tokens->name, "\".\"")
 			|| !ft_strcmp((*node)->tokens->name, "\'.\'")))
-	{
 		g_exit_status = parser_error((*node)->type, 127);
-		return (g_exit_status);
-	}
-	create_cmd_table(node, table);
+	if (g_exit_status == SUCCESS)
+		create_cmd_table(node, table);
 	return (g_exit_status);
 }

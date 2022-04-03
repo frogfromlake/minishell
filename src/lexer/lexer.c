@@ -16,11 +16,24 @@ static int	create_redir_token(t_node **node, char **input)
 {
 	t_type	type;
 
-	type = (*node)->type;
-	while (check_redir(**input) || check_whitespace(**input))
-		(*input)++;
+	if ((*input)[0] == (*input)[1])
+		type =  (*input)[0] * 4;
+	else
+		type = (*input)[0];
 	append_token(&(*node)->tokens, new_token(get_word(input), type));
+	while (check_whitespace(**input))
+		(*input)++;
+	append_token(&(*node)->tokens, new_token(get_word(input), REDIR_FILE));
+	while (check_whitespace(**input))
+		(*input)++;
 	return (1);
+}
+
+static bool	check_redir_char(char c)
+{
+	if (c == LESS || c == GREAT)
+		return (true);
+	return (false);
 }
 
 static int	create_tokens(t_node **node, char **input)
@@ -28,23 +41,23 @@ static int	create_tokens(t_node **node, char **input)
 	int		cmd_present;
 	t_type	type;
 
-	if (check_redir((*node)->type))
-		create_redir_token(node, input);
-	else
+	cmd_present = 0;
+	while ((**input && !check_metachar(**input)))
 	{
-		cmd_present = 0;
-		while ((**input && !check_metachar(**input)))
+		if (check_redir_char(**input))
 		{
-			if (!(cmd_present++))
-				type = COMMAND;
-			else if (**input == '-')
-				type = OPTION;
-			else
-				type = ARG;
-			append_token(&(*node)->tokens, new_token(get_word(input), type));
-			while (check_whitespace(**input))
-				(*input)++;
+			create_redir_token(node, input);
+			continue ;
 		}
+		if (!(cmd_present++))
+			type = COMMAND;
+		else if (**input == '-')
+			type = OPTION;
+		else
+			type = ARG;
+		append_token(&(*node)->tokens, new_token(get_word(input), type));
+		while (check_whitespace(**input))
+			(*input)++;
 	}
 	return (1);
 }

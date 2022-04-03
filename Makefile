@@ -61,7 +61,8 @@ SRCS		=	main.c \
 				route_stdout.c \
 				here_doc.c \
 				last_redir_out.c \
-				snake_shell.c
+				snake_shell.c \
+				struct_utils.c
 
 ODIR		= obj
 OBJS		= $(addprefix $(ODIR)/, $(SRCS:.c=.o))

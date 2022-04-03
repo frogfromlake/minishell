@@ -66,17 +66,20 @@ char	*get_prompt(void)
 
 static void	snake_shell(t_node **head, t_table **table, char *read)
 {
+	(void) table;
 	add_history(read);
 	if (!check_empty_input(read))
 	{
 		lexer(head, read);
-		expander(head);
-		parser(head, table);
-		if (g_exit_status == SUCCESS)
-		{
-			change_termios(false);
-			exec_loop(*table);
-		}
+		print_nodes(*head);
+		// expander(head);
+		// parser(head, table);
+		// print_cmd_table(*table);
+		// if (g_exit_status == SUCCESS)
+		// {
+		// 	change_termios(false);
+		// 	exec_loop(*table);
+		// }
 	}
 }
 

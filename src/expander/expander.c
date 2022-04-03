@@ -92,7 +92,7 @@ int	expander(t_node **head)
 	node = *head;
 	while (node)
 	{
-		if (!check_log_op(node->type) && node->type != LESSLESS && node->tokens)
+		if (!check_log_op(node->type) && node->tokens)
 		{
 			token = node->tokens;
 			while (token)
