@@ -83,22 +83,22 @@ static char	*get_home_dir(void)
 
 void	ft_cd(t_table *table)
 {
-	if (!table->args || !ft_strcmp(table->args, "~")
-		|| !ft_strcmp(table->args, "--"))
+	if (!(*table->cmd_arr) || !ft_strcmp(*table->cmd_arr, "~")
+		|| !ft_strcmp(*table->cmd_arr, "--"))
 	{
-		if (table->args)
-			free(table->args);
-		table->args = ft_strdup(get_home_dir());
+		if (*table->cmd_arr)
+			free(*table->cmd_arr);
+		*table->cmd_arr = ft_strdup(get_home_dir());
 	}
-	else if (!ft_strcmp(table->args, "-"))
+	else if (!ft_strcmp(*table->cmd_arr, "-"))
 	{
-		free(table->args);
-		table->args = ft_strdup(get_env_var("OLDPWD"));
-		printf("%s\n", table->args);
+		free(*table->cmd_arr);
+		*table->cmd_arr = ft_strdup(get_env_var("OLDPWD"));
+		printf("%s\n", *table->cmd_arr);
 	}
-	if (chdir(table->args) == -1)
+	if (chdir(*table->cmd_arr) == -1)
 	{
-		g_exit_status = cd_error(table->args, FAIL);
+		g_exit_status = cd_error(*table->cmd_arr, FAIL);
 		return ;
 	}
 	change_pwd_var();

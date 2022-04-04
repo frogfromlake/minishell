@@ -22,7 +22,7 @@ bool	check_whitespace(char c)
 bool	check_metachar(char c)
 {
 	if (c == PIPE || c == AMPERSAND
-		|| c == LESS || c == GREAT
+		// || c == LESS || c == GREAT
 		|| c == LPAREN || c == RPAREN)
 		return (true);
 	return (false);

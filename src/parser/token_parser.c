@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   token_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/25 16:15:14 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/28 22:57:46 by dmontema         ###   ########.fr       */
+/*   Created: 2022/04/02 23:09:51 by dmontema          #+#    #+#             */
+/*   Updated: 2022/04/04 14:50:52 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include "../../include/minishell.h"
 
-int		lexer(t_node **head, char *input);
-
-char	*get_word(char **input);
-char	*get_redir_char(char **input);
-
-bool	check_whitespace(char c);
-bool	check_metachar(char c);
-bool	check_quotes(char c);
-bool	check_redir(t_type type);
-bool	check_log_op(t_type c);
-
-#endif
+void	token_parser(t_token *token, t_table **new)
+{
+	while (token && (g_exit_status == SUCCESS))
+	{
+		if (token->type == COMMAND)
+			g_exit_status = command_parser(&token, new);
+		else if (check_redir(token->type))
+			g_exit_status = redir_parser(&token, new);
+		else
+			g_exit_status = arg_parser(&token, new);
+	}
+}

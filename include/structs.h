@@ -20,9 +20,10 @@
 typedef enum e_type
 {
 	COMMAND = 0,
-	OPTION = -2,
+	OPTION = -3,
 	ARG,
-	NONEXISTENV = -3,
+	REDIR_FILE,
+	NONEXISTENV = -5,
 	SQUOTE = '\'',
 	DQUOTE = '\"',
 	PIPE = '|',

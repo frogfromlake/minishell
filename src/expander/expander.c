@@ -84,7 +84,7 @@ static bool	check_valid_expand_arg(char *str)
 	return (false);
 }
 
-int	expander(t_node **head)
+int	expander(t_node **head) // TODO: case [echo $"USER" = $USER -> also in bash?]
 {
 	t_node	*node;
 	t_token	*token;
@@ -92,7 +92,7 @@ int	expander(t_node **head)
 	node = *head;
 	while (node)
 	{
-		if (!check_log_op(node->type) && node->type != LESSLESS && node->tokens)
+		if (!check_log_op(node->type) && node->tokens)
 		{
 			token = node->tokens;
 			while (token)
