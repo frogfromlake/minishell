@@ -43,18 +43,12 @@ static int	parser_error(int type, int r_value)
 static void	define_node(t_node *node, t_table **new)
 {
 	if (valid_name(&node->tokens) == SUCCESS)
-	{
 		token_parser(node->tokens, new);
-	// 	if (check_redir(node->type))
-	// 		redir_parser(node->tokens, new);
-	// 	else if (node->type == COMMAND)
-	// 		command_parser(node->tokens, new);
-	}
 	else
 		g_exit_status = error_msg("syntax error: unclosed quotes", FAIL);
 }
 
-static void	create_cmd_table(t_node **node, t_table **table) // TODO: error if LOG_OP consecutively and if LOG_OP not PIPE
+static void	create_cmd_table(t_node **node, t_table **table)
 {
 	t_node	*curr_n;
 	t_table	*new;
@@ -62,18 +56,24 @@ static void	create_cmd_table(t_node **node, t_table **table) // TODO: error if L
 	curr_n = *node;
 	while (curr_n)
 	{
+		if (check_log_op(curr_n->type) && curr_n->type != PIPE)
+		{
+			g_exit_status = parser_error(curr_n->type, FAIL);
+			break ;
+		}
 		new = append_table(table, new_table());
 		if (check_log_op(curr_n->type))
 		{
 			new->log_op = curr_n->type;
-			curr_n = curr_n->next;
-			continue ;
+			if (!curr_n->next || check_log_op(curr_n->next->type))
+			{
+				g_exit_status = parser_error(curr_n->type, FAIL);
+				break ;
+			}
 		}
-		while (curr_n && !check_log_op(curr_n->type))
-		{
+		else
 			define_node(curr_n, &new);
-			curr_n = curr_n->next;
-		}
+		curr_n = curr_n->next;
 	}
 }
 
