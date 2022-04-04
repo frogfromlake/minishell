@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelix <nelix@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 22:45:30 by dmontema          #+#    #+#             */
-/*   Updated: 2022/04/02 00:53:13 by nelix            ###   ########.fr       */
+/*   Updated: 2022/04/04 15:29:13 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ void	exec_loop(t_table *table)
 			break ;
 		else
 		{
-			fds->i++;
 			if (create_prcs(tmp, fds) < 0)
-				end_prcs(fds);
+			{
+				g_exit_status = 1;
+				return ;
+			}
 		}
 		tmp = tmp->next;
 	}
@@ -57,6 +59,7 @@ static int	create_prcs(t_table *table, t_exec *fds)
 {
 	pipe(fds->fd);
 	define_sig_prc(table);
+	fds->i++;
 	fds->pid = fork();
 	if (fds->pid == 0)
 	{
@@ -67,9 +70,9 @@ static int	create_prcs(t_table *table, t_exec *fds)
 		else
 		{
 			if (route_stdin(table, fds) < 0)
-				return (-1);
+				exit(1);
 			if (route_stdout(table, fds) < 0)
-				return (-1);
+				exit(1);
 			g_exit_status = exec(table);
 		}
 	}
@@ -92,8 +95,6 @@ static void	end_prcs(t_exec *fds)
 			g_exit_status = WEXITSTATUS(fds->pid);
 		fds->i--;
 	}
-	// if (fds)
-	// 	free(fds);
 }
 
 int	exec(t_table *table)

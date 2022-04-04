@@ -6,7 +6,7 @@
 /*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 17:00:44 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/31 17:45:28 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/04 15:37:19 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,5 @@ int		exec(t_table *table);
 
 int		open_file(char *file, int mod, int rights);
 int		file_error(char *name_b, char *msg, char *name_a);
-
-// bonus
-int		operation_logic(t_table *table, t_exec *fds);
 
 #endif
