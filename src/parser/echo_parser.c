@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 03:09:51 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/27 23:20:45 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/04 14:53:00 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static bool	check_opt(t_token **token)
 	return (true);
 }
 
-int	define_echo_args(t_token *token, t_table **new) // TODO: one arg at the time, add static var to check if opt arg is done
+int	define_echo_args(t_token *token, t_table **new)
 {
 	t_stringbuilder	*sb;
 	int				opt;

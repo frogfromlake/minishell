@@ -44,10 +44,11 @@ static void	define_node(t_node *node, t_table **new)
 {
 	if (valid_name(&node->tokens) == SUCCESS)
 	{
-		if (check_redir(node->type))
-			redir_parser(node->tokens, new);
-		else if (node->type == COMMAND)
-			command_parser(node->tokens, new);
+		token_parser(node->tokens, new);
+	// 	if (check_redir(node->type))
+	// 		redir_parser(node->tokens, new);
+	// 	else if (node->type == COMMAND)
+	// 		command_parser(node->tokens, new);
 	}
 	else
 		g_exit_status = error_msg("syntax error: unclosed quotes", FAIL);

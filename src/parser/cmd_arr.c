@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 01:46:59 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/29 19:45:41 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/04/04 14:52:12 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int	insert_cmd_arr(char ***arr, char *str)
 	}
 	(*arr)[i] = ft_strdup(str);
 	ft_free_split(tmp);
-	return (1);
-	// return (SUCCESS);
+	return (SUCCESS);
 }
 
 void	add_args_to_arr(t_token *token, t_table **new)
