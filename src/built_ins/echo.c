@@ -66,15 +66,19 @@ void	ft_echo(t_table *table)
 	int		i;
 
 	opt = false;
-	i = skip_valid_opt(table->cmd_arr, &opt);
-	while (table->cmd_arr[i])
+	if (get_arr_size(table->cmd_arr) > 0)
 	{
-		if (!check_empty_arg(table->cmd_arr[i]))
-			printf("%s", table->cmd_arr[i]);
-		if (ft_strcmp(table->cmd_arr[i], "")
-			&& table->cmd_arr[i + 1] && ft_strcmp(table->cmd_arr[i + 1], ""))
-			printf(" ");
-		i++;
+		i = skip_valid_opt(table->cmd_arr, &opt);
+		while (table->cmd_arr[i])
+		{
+			if (!check_empty_arg(table->cmd_arr[i]))
+				printf("%s", table->cmd_arr[i]);
+			if (ft_strcmp(table->cmd_arr[i], "")
+				&& table->cmd_arr[i + 1]
+				&& ft_strcmp(table->cmd_arr[i + 1], ""))
+				printf(" ");
+			i++;
+		}
 	}
 	if (!opt)
 		printf("\n");

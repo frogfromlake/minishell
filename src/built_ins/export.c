@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:35:16 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/31 20:23:53 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/05 23:41:52 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ void	ft_export(t_table *table)
 	t_env	**env;
 
 	env = get_env(NULL);
-	if (!table->args)
+	if (get_arr_size(table->cmd_arr) == 0)
 		print_env_vars(*env);
-	else if (!*table->args)
+	else if (!(**table->cmd_arr))
 	{
 		g_exit_status = error_msg("export: not a valid identifier", FAIL);
 		return ;

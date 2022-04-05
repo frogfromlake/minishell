@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 22:30:58 by dmontema          #+#    #+#             */
-/*   Updated: 2022/03/30 23:40:12 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/05 23:45:19 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ void	free_table(t_table **table)
 			free_cmd_arr(curr->cmd_arr);
 		if (curr->exe)
 			free(curr->exe);
-		if (curr->args)
-			free(curr->args);
 		if (curr->redir)
 			free_redir(&curr->redir);
 		free(curr);

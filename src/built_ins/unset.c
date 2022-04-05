@@ -77,9 +77,9 @@ void	ft_unset(t_table *table)
 	int		i;
 
 	g_exit_status = 0;
-	if (!table->args)
+	if (get_arr_size(table->cmd_arr) == 0)
 		return ;
-	if (!*table->args)
+	if (!(**table->cmd_arr))
 	{
 		g_exit_status = error_msg("unset: not a valid identifier", FAIL);
 		return ;
