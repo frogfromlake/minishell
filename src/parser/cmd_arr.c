@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static int	get_arr_size(char **arr)
+int	get_arr_size(char **arr)
 {
 	int	res;
 

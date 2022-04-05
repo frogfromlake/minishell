@@ -12,6 +12,20 @@
 
 #include "../../include/minishell.h"
 
+static void rm_dollar(char **str)
+{
+	t_stringbuilder	*sb;
+
+	if (**str == '$' && (*(*str + 1) == DQUOTE || *(*str + 1) == SQUOTE))
+	{
+		sb = sb_create();
+		sb_append_str(sb, (*str + 1));
+		free(*str);
+		*str = sb_get_str(sb);
+		sb_destroy(sb);
+	}
+}
+
 static void	get_word_trim(t_stringbuilder **sb, char **str)
 {
 	char	quote;
@@ -57,9 +71,12 @@ void	trim_quotes(t_token **token)
 	{
 		if (ft_strchr(tmp->name, SQUOTE) || ft_strchr(tmp->name, DQUOTE))
 		{
+			if (tmp->prev && tmp->prev->type == LESSLESS)
+			{
+				rm_dollar(&tmp->name);
+				tmp->prev->type++;
+			}
 			get_quoted_word(&tmp);
-			if (tmp->type == LESSLESS)
-				tmp->type++;
 		}
 		tmp = tmp->next;
 	}

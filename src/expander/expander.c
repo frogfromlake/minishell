@@ -75,11 +75,16 @@ void	expand(char **str)
 	sb_destroy(sb);
 }
 
-static bool	check_valid_expand_arg(char *str)
+static bool	check_valid_expand_arg(t_token **token)
 {
-	if (ft_strchr(str, '$')
-		|| ft_strchr(str, SQUOTE)
-		|| ft_strchr(str, DQUOTE))
+	if ((*token)->type == LESSLESS)
+	{
+		(*token) = (*token)->next;
+		return (false);
+	}
+	if (ft_strchr((*token)->name, '$')
+		|| ft_strchr((*token)->name, SQUOTE)
+		|| ft_strchr((*token)->name, DQUOTE))
 		return (true);
 	return (false);
 }
@@ -97,7 +102,7 @@ int	expander(t_node **head) // TODO: case [echo $"USER" = $USER -> also in bash?
 			token = node->tokens;
 			while (token)
 			{
-				if (check_valid_expand_arg(token->name))
+				if (check_valid_expand_arg(&token))
 				{
 					expand(&token->name);
 					if (!ft_strcmp(token->name, "\"\"") || !(*token->name))

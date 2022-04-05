@@ -88,12 +88,14 @@ int	parser(t_node **node, t_table **table)
 {
 	if (!check_valid_first_token((*node)->type))
 		g_exit_status = parser_error((*node)->type, 258);
-	if (!(*node)->prev && !(*node)->next
+	else if (!(*node)->prev && !(*node)->next
 		&& (!ft_strcmp((*node)->tokens->name, "\"\"")
 			|| !ft_strcmp((*node)->tokens->name, "\'\'")
 			|| !ft_strcmp((*node)->tokens->name, "\".\"")
 			|| !ft_strcmp((*node)->tokens->name, "\'.\'")))
 		g_exit_status = parser_error((*node)->type, 127);
+	else
+		g_exit_status = SUCCESS;
 	if (g_exit_status == SUCCESS)
 		create_cmd_table(node, table);
 	return (g_exit_status);

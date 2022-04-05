@@ -59,15 +59,15 @@ static void	snake_shell(t_node **head, t_table **table, char *read)
 	if (!check_empty_input(read))
 	{
 		lexer(head, read);
-		print_nodes(*head);
-		// expander(head);
-		// parser(head, table);
+		expander(head);
+		parser(head, table);
+		// print_nodes(*head);
 		// print_cmd_table(*table);
-		// if (g_exit_status == SUCCESS)
-		// {
-		// 	change_termios(false);
-		// 	exec_loop(*table);
-		// }
+		if (g_exit_status == SUCCESS)
+		{
+			change_termios(false);
+			exec_loop(*table);
+		}
 	}
 }
 

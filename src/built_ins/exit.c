@@ -53,14 +53,14 @@ void	ft_exit(t_table *table)
 {
 	if (!ft_strcmp(table->exe, "exit"))
 	{
-		if (table->args)
+		if (get_arr_size(table->cmd_arr) > 0)
 		{
-			if (ft_is_alpha(*table->args) || !ft_strrchr(table->args, ' '))
+			if (ft_is_alpha(**table->cmd_arr) || get_arr_size(table->cmd_arr) == 1)
 			{
-				if (check_valid_arg(table->args))
-					g_exit_status = ft_atoi(table->args);
+				if (check_valid_arg(*table->cmd_arr))
+					g_exit_status = ft_atoi(*table->cmd_arr);
 				else
-					g_exit_status = exit_error(table->args, 255);
+					g_exit_status = exit_error(*table->cmd_arr, 255);
 				free_table(&table);
 				valid_exit();
 			}

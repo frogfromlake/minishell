@@ -21,10 +21,11 @@ static int	create_redir_token(t_node **node, char **input)
 	else
 		type = (*input)[0];
 	append_token(&(*node)->tokens, new_token(get_redir_char(input), type));
-	while (check_whitespace(**input))
+	while (**input && check_whitespace(**input))
 		(*input)++;
-	append_token(&(*node)->tokens, new_token(get_word(input), REDIR_FILE));
-	while (check_whitespace(**input))
+	if (**input)
+		append_token(&(*node)->tokens, new_token(get_word(input), REDIR_FILE));
+	while (**input && check_whitespace(**input))
 		(*input)++;
 	return (1);
 }
