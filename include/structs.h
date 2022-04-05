@@ -128,7 +128,4 @@ t_redir	*get_last_out_redir(t_redir *head);
 
 t_exec	*new_exec(void);
 
-char	*lstlast(t_token *lst);
-int		lstsize(t_token *lst);
-
 #endif

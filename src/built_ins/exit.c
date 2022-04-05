@@ -55,7 +55,8 @@ void	ft_exit(t_table *table)
 	{
 		if (get_arr_size(table->cmd_arr) > 0)
 		{
-			if (ft_is_alpha(**table->cmd_arr) || get_arr_size(table->cmd_arr) == 1)
+			if (ft_is_alpha(**table->cmd_arr)
+				|| get_arr_size(table->cmd_arr) == 1)
 			{
 				if (check_valid_arg(*table->cmd_arr))
 					g_exit_status = ft_atoi(*table->cmd_arr);

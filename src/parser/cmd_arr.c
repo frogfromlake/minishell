@@ -41,20 +41,3 @@ int	insert_cmd_arr(char ***arr, char *str)
 	ft_free_split(tmp);
 	return (SUCCESS);
 }
-
-void	add_args_to_arr(t_token *token, t_table **new)
-{
-	t_stringbuilder	*sb;
-
-	sb = sb_create();
-	while (token)
-	{
-		sb_append_str(sb, token->name);
-		if (token->next)
-			sb_append_char(sb, ' ');
-		insert_cmd_arr(&(*new)->cmd_arr, token->name);
-		token = token->next;
-	}
-	(*new)->args = sb_get_str(sb);
-	sb_destroy(sb);
-}

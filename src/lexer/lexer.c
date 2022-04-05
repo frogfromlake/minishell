@@ -17,7 +17,7 @@ static int	create_redir_token(t_node **node, char **input)
 	t_type	type;
 
 	if ((*input)[0] == (*input)[1])
-		type =  (*input)[0] * 4;
+		type = (*input)[0] * 4;
 	else
 		type = (*input)[0];
 	append_token(&(*node)->tokens, new_token(get_redir_char(input), type));

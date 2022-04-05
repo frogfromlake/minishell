@@ -47,8 +47,6 @@ void	exec_loop(t_table *table)
 			if (create_prcs(tmp, fds) < 0)
 			{
 				g_exit_status = 1;
-				// end_prcs(fds);
-				// return ;
 				break ;
 			}
 		}

@@ -39,7 +39,6 @@ SRCS		=	main.c \
 				command_parser.c \
 				cmd_paths.c \
 				cmd_arr.c \
-				echo_parser.c \
 				built_in.c \
 				pwd.c \
 				cd.c \
@@ -62,7 +61,6 @@ SRCS		=	main.c \
 				here_doc.c \
 				last_redir_out.c \
 				snake_shell.c \
-				struct_utils.c \
 				token_parser.c \
 				arg_parser.c
 

@@ -61,8 +61,6 @@ static void	snake_shell(t_node **head, t_table **table, char *read)
 		lexer(head, read);
 		expander(head);
 		parser(head, table);
-		// print_nodes(*head);
-		// print_cmd_table(*table);
 		if (g_exit_status == SUCCESS)
 		{
 			change_termios(false);

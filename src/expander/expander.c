@@ -89,7 +89,7 @@ static bool	check_valid_expand_arg(t_token **token)
 	return (false);
 }
 
-int	expander(t_node **head) // TODO: case [echo $"USER" = $USER -> also in bash?]
+int	expander(t_node **head)
 {
 	t_node	*node;
 	t_token	*token;

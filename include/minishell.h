@@ -30,7 +30,6 @@
 # include <sys/stat.h>
 # include <signal.h>
 # include <termios.h>
-# include <dirent.h>
 
 # include "../libs/libft/include/libft.h"
 # include "stringbuilder.h"
@@ -59,30 +58,7 @@ extern int	g_exit_status;
 # define RESET	"\e[0m"
 
 # define SIGINT 2
-# define SIGHUP 1
 # define SIGQUIT 3
-# define SIGABRT 6
-# define GENERAL_STATE -5
-# define SQUOTED_STATE -2
-# define DQUOTED_STATE -3
-# define END -4
-# define HERE_DOC -7
-# define PIPEIN -3
-# define PIPEOUT -2
-# define ERROR -1
-# define VAR_NAME 0
-# define VAR_CONTENT 1
-# define VAR_VALUE 0
-# define NEW_NODE 1
-# define TRUE 1
-# define FALSE 0
-# define EXIT 1
-# define NO_EXIT 0
-# define NORIGHTS 13
-# define NOFILE 2
-# define LOG 0
-# define HEAD 0
-# define NEW 1
 # define WRITE 1
 # define READ 0
 # define SUCCESS 0
@@ -94,10 +70,6 @@ extern int	g_exit_status;
 char	*get_prompt(void);
 void	print_header(void);
 void	init_snake_shell(t_node **head, t_table **table);
-
-void	print_nodes(t_node *node);
-void	print_tokens(t_token *token);
-void	print_cmd_table(t_table *table);
 
 /* ************************************************************************** */
 /* 	FREES																	  */

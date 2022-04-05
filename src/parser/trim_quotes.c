@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static void rm_dollar(char **str)
+static void	rm_dollar(char **str)
 {
 	t_stringbuilder	*sb;
 
