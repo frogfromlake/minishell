@@ -37,25 +37,21 @@ static bool	check_valid_redir(char *redir, t_type type)
 {
 	if (type == LESS)
 	{
-		// if (redir[0] == LESS && !redir[1])
 		if (!ft_strcmp(redir, "<"))
 			return (true);
 	}
 	if (type == LESSLESS || type == LESSLESS + 1)
 	{
-		// if (redir[0] == LESS && redir[1] == LESS && !redir[2])
 		if (!ft_strcmp(redir, "<<"))
 			return (true);
 	}
 	if (type == GREAT)
 	{
-		// if (redir[0] == GREAT && !redir[1])
 		if (!ft_strcmp(redir, ">"))
 			return (true);
 	}
 	if (type == GREATGREAT)
 	{
-		// if (redir[0] == GREAT && redir[1] == GREAT && !redir[2])
 		if (!ft_strcmp(redir, ">>"))
 			return (true);
 	}
