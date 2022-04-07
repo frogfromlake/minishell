@@ -87,6 +87,8 @@ int	set_cmd_path(t_table **new)
 	len = ft_strlen((*new)->exe) - 1;
 	if (*(*new)->exe == '/' && (*new)->exe[len] == '/')
 		return (126);
+	else if (!ft_strncmp((*new)->exe, "..", 2) || *(*new)->exe == '.')
+		return (127);
 	if (access((*new)->exe, X_OK) == 0)
 	{
 		(*new)->cmd_arr[0] = ft_strdup((*new)->exe);
@@ -98,7 +100,7 @@ int	set_cmd_path(t_table **new)
 	env = *get_env(NULL);
 	cmd_paths = get_env_path(env);
 	if (cmd_paths == NULL)
-		return (ENOMEM);
+		return (127);
 	exit = join_cmd_path(new, cmd_paths);
 	return (exit);
 }

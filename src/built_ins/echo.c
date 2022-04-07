@@ -12,18 +12,18 @@
 
 #include "../../include/minishell.h"
 
-int	check_empty_arg(char *input)
-{
-	int	i;
+// int	check_empty_arg(char *input)
+// {
+// 	int	i;
 
-	i = 0;
-	while (check_whitespace(input[i]))
-		i++;
-	if (input[i] == '\0')
-		return (1);
-	else
-		return (0);
-}
+// 	i = 0;
+// 	while (check_whitespace(input[i]))
+// 		i++;
+// 	if (input[i] == '\0')
+// 		return (1);
+// 	else
+// 		return (0);
+// }
 
 static bool	check_valid_opt(char *opt)
 {
@@ -71,7 +71,7 @@ void	ft_echo(t_table *table)
 		i = skip_valid_opt(table->cmd_arr, &opt);
 		while (table->cmd_arr[i])
 		{
-			if (!check_empty_arg(table->cmd_arr[i]))
+			if (ft_strlen(table->cmd_arr[i]))
 				printf("%s", table->cmd_arr[i]);
 			if (ft_strcmp(table->cmd_arr[i], "")
 				&& table->cmd_arr[i + 1]

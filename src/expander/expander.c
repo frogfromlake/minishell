@@ -79,7 +79,8 @@ static bool	check_valid_expand_arg(t_token **token)
 {
 	if ((*token)->type == LESSLESS)
 	{
-		(*token) = (*token)->next;
+		if ((*token)->next)
+			(*token) = (*token)->next;
 		return (false);
 	}
 	if (ft_strchr((*token)->name, '$')

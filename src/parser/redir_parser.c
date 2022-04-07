@@ -37,22 +37,26 @@ static bool	check_valid_redir(char *redir, t_type type)
 {
 	if (type == LESS)
 	{
-		if (redir[0] == LESS && !redir[1])
+		// if (redir[0] == LESS && !redir[1])
+		if (!ft_strcmp(redir, "<"))
 			return (true);
 	}
 	if (type == LESSLESS || type == LESSLESS + 1)
 	{
-		if (redir[0] == LESS && redir[1] == LESS && !redir[2])
+		// if (redir[0] == LESS && redir[1] == LESS && !redir[2])
+		if (!ft_strcmp(redir, "<<"))
 			return (true);
 	}
 	if (type == GREAT)
 	{
-		if (redir[0] == GREAT && !redir[1])
+		// if (redir[0] == GREAT && !redir[1])
+		if (!ft_strcmp(redir, ">"))
 			return (true);
 	}
 	if (type == GREATGREAT)
 	{
-		if (redir[0] == GREAT && redir[1] == GREAT && !redir[2])
+		// if (redir[0] == GREAT && redir[1] == GREAT && !redir[2])
+		if (!ft_strcmp(redir, ">>"))
 			return (true);
 	}
 	return (false);
@@ -64,11 +68,14 @@ int	redir_parser(t_token **token, t_table **new)
 	char	*name;
 
 	if (!check_valid_redir((*token)->name, (*token)->type))
-		return (redir_parser_error((*token)->name, FAIL));
+		return (redir_parser_error((*token)->name, 2));
 	type = (*token)->type;
 	if (!(*token)->next)
-		return (redir_parser_error(NULL, FAIL));
+		return (redir_parser_error(NULL, 2));
 	(*token) = (*token)->next;
+	if (check_redir((*token)->name[0])
+		|| check_redir((*token)->name[ft_strlen((*token)->name) - 1]))
+		return (redir_parser_error((*token)->name, 2));
 	name = ft_strdup((*token)->name);
 	append_redir(&(*new)->redir, new_redir(type, name));
 	g_exit_status = SUCCESS;

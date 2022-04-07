@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:49:49 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/31 00:34:02 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/06 15:34:07 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ extern int	g_exit_status;
 char	*get_prompt(void);
 void	print_header(void);
 void	init_snake_shell(t_node **head, t_table **table);
+
+void	print_nodes(t_node *node);
+void	print_tokens(t_token *token);
+void	print_cmd_table(t_table *table);
 
 /* ************************************************************************** */
 /* 	FREES																	  */

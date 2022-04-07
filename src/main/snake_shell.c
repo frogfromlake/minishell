@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   snake_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 23:48:10 by fquist            #+#    #+#             */
-/*   Updated: 2022/04/04 15:48:13 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/06 17:53:57 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static void	snake_shell(t_node **head, t_table **table, char *read)
 	{
 		lexer(head, read);
 		expander(head);
+		// print_cmd_table(*table);
 		parser(head, table);
 		if (g_exit_status == SUCCESS)
 		{
@@ -83,24 +84,78 @@ static void	reset_snake_shell(t_node **head, t_table **table, char *read)
 	dup2(s_out, STDOUT_FILENO);
 }
 
+static char	*ft_appendi(char *line, char c)
+{
+	int		length;
+	int		i;
+	char	*longer;
+
+	if (line == NULL)
+		return (NULL);
+	length = ft_strlen(line);
+	longer = ft_calloc(length + 2, sizeof(char));
+	if (longer == NULL)
+		ft_free((void *)&line);
+	i = 0;
+	while (line && line[i] != '\0')
+	{
+		longer[i] = line[i];
+		i++;
+	}
+	if (longer)
+		longer[i] = c;
+	if (line)
+		free(line);
+	return (longer);
+}
+
+static int	ex_get_next_line(char **line, int fd)
+{
+	char	buffer;
+	int		flag;
+	if (line == NULL)
+		return(-1);
+	*line = malloc(1);
+	if (*line == NULL)
+		return(-1);
+	*line[0] = '\0';
+	while ((flag = read(fd, &buffer, 1) > 0))
+	{
+		if (buffer == '\n')
+			break ;
+		*line = ft_appendi(*line, buffer);
+	}
+	return(flag);
+}
+
 void	init_snake_shell(t_node **head, t_table **table)
 {
 	char	*read;
 	char	*tmp;
 
-	print_header();
+	// print_header();
 	while (true)
 	{
 		handle_interactive();
-		tmp = get_prompt();
-		read = readline(tmp);
+		if (isatty(0))
+		{
+			tmp = get_prompt();
+			read = readline("");
+		}
+		else
+		{
+			if (ex_get_next_line(&read, STDIN_FILENO) == 0)
+				read = NULL;
+		}
+		// tmp = get_prompt();
+		// read = readline(tmp);
 		free(tmp);
 		if (read != NULL && ft_strcmp(read, ""))
 			snake_shell(head, table, read);
 		reset_snake_shell(head, table, read);
 		if (!read)
 		{
-			write(2, "exit\n", 5);
+			// write(2, "exit\n", 5);
 			free_env();
 			break ;
 		}

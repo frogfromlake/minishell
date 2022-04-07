@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fquist <fquist@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 14:28:45 by fquist            #+#    #+#             */
-/*   Updated: 2022/03/31 22:19:45 by fquist           ###   ########.fr       */
+/*   Updated: 2022/04/06 17:37:54 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	here_doc_print(t_exec *fds)
 {
 	while (fds->cmd_count)
 	{
-		write(2, "> ", 2);
+		write(0, "> ", 2);
 		fds->cmd_count--;
 	}
-	write(2, "> ", 2);
+	write(0, "> ", 2);
 }
 
 int	heredoc(char *delimiter, t_exec *fds, int type)
