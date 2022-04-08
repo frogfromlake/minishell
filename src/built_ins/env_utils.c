@@ -72,7 +72,10 @@ char	*get_env_var(char *str)
 		if (!ft_strcmp(var_name, str))
 		{
 			free(var_name);
-			return (ft_strchr(env->var, '=') + 1);
+			if (ft_strchr(env->var, '='))
+				return (ft_strchr(env->var, '=') + 1);
+			else
+				return (NULL);
 		}
 		free(var_name);
 		env = env->next;
