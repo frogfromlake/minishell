@@ -87,8 +87,6 @@ int	set_cmd_path(t_table **new)
 	len = ft_strlen((*new)->exe) - 1;
 	if (*(*new)->exe == '/' && (*new)->exe[len] == '/')
 		return (126);
-	else if (!ft_strncmp((*new)->exe, "..", 2) || *(*new)->exe == '.')
-		return (127);
 	if (access((*new)->exe, X_OK) == 0)
 	{
 		(*new)->cmd_arr[0] = ft_strdup((*new)->exe);

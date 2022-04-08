@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
+/*   By: fquist <fquist@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 23:09:51 by dmontema          #+#    #+#             */
-/*   Updated: 2022/04/04 14:50:52 by dmontema         ###   ########.fr       */
+/*   Updated: 2022/04/08 21:49:19 by fquist           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	token_parser(t_token *token, t_table **new)
 {
-	while (token && (g_exit_status == SUCCESS))
+	while (token)
 	{
 		if (token->type == COMMAND)
 			g_exit_status = command_parser(&token, new);
