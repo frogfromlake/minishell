@@ -42,7 +42,7 @@ static bool	check_valid_arg(char *str)
 	return (true);
 }
 
-static void	rm_env_var(char *str, t_env	*curr_env, t_env *prev)
+static void	rm_env_var(char *str, t_env **env,  t_env *curr_env, t_env *prev)
 {
 	char	*tmp;
 
@@ -51,21 +51,27 @@ static void	rm_env_var(char *str, t_env	*curr_env, t_env *prev)
 		while (curr_env)
 		{
 			tmp = get_var_name(curr_env);
-			if (!ft_strcmp(tmp, str))
+			if (!ft_strcmp(tmp, str) && !ft_strcmp(curr_env->var, prev->var))
+			{
+				prev = curr_env->next;
+				free(curr_env->var);
+				free(curr_env);
+				*env = prev;
+				break ;
+			}
+			else if (!ft_strcmp(tmp, str))
 			{
 				prev->next = curr_env->next;
 				free(curr_env->var);
-				curr_env->var = NULL;
 				free(curr_env);
 				curr_env = NULL;
-				free(tmp);
 				break ;
 			}
-			if (tmp)
-				free(tmp);
 			prev = curr_env;
 			curr_env = curr_env->next;
 		}
+		if (tmp)
+			free(tmp);
 	}
 	else
 		g_exit_status = unset_error(str, FAIL);
@@ -73,7 +79,7 @@ static void	rm_env_var(char *str, t_env	*curr_env, t_env *prev)
 
 void	ft_unset(t_table *table)
 {
-	t_env	*curr_env;
+	t_env	**curr_env;
 	int		i;
 
 	g_exit_status = 0;
@@ -85,10 +91,10 @@ void	ft_unset(t_table *table)
 		return ;
 	}
 	i = 0;
-	curr_env = *(get_env(NULL));
+	curr_env = get_env(NULL);
 	while (table->cmd_arr[i])
 	{
-		rm_env_var(table->cmd_arr[i], curr_env, curr_env);
+		rm_env_var(table->cmd_arr[i], curr_env, *curr_env, *curr_env);
 		i++;
 	}
 }
